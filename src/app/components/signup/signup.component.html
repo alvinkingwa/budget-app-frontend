@@ -1,39 +1,75 @@
 <div class="bg-background min-h-screen flex flex-col justify-center items-center">
 
-    <h3 class="font-normal text-3xl font-display mb-10">Trail<span class="text-primary">evy</span> Expense Budget App
+    <h3 class="font-normal text-3xl font-display mb-5">Trail<span class="text-primary">evy</span> Expense Budget App
     </h3>
+    <div class="bg-white rounded-lg p-4 w-auto sm:w-96 md:w-80 lg:w-96 xl:w-120 shadow-2xl ">
+        <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+            <div class="flex flex-col mb-2 sm:flex-row sm:justify-between items-start">
+                <div class="flex flex-col w-full sm:w-1/2 mr-4">
+                    <label for="firstName" class="text-black  ">First Name</label>
+                    <input type="text" formControlName="firstName" placeholder="firstName"
+                        [class.error]="signUpForm.controls['firstName'].dirty && signUpForm.hasError('required','firstName')"
+                        class="border border-gray-300 focus:border-primary rounded-lg p-2 w-full focus:outline-none"
+                        id="firstName" name="firstName" required>
+                    <small *ngIf="signUpForm.controls['firstName'].dirty && signUpForm.hasError('required','firstName')"
+                        class="text-red-500">first name required</small>
+                </div>
+                <div class="flex flex-col w-full sm:w-1/2">
+                    <label for="secondName" class="text-black  ">Last Name</label>
+                    <input type="text" formControlName="secondName"
+                        [class.error]="signUpForm.controls['secondName'].dirty && signUpForm.hasError('required','secondName')"
+                        class="border border-gray-300 focus:border-primary rounded-lg p-2 w-full focus:outline-none"
+                        id="secondName" name="secondName" placeholder="last name" required>
+                    <small *ngIf="signUpForm.controls['secondName'].dirty && signUpForm.hasError('required','secondName')"
+                        class="text-red-500">last name required</small>
 
-    <form class="bg-white rounded-lg p-4 w-auto sm:w-96 md:w-80 lg:w-96 xl:w-120 shadow-2xl ">
-        
-        <div class="flex flex-col mb-2 sm:flex-row sm:justify-between items-start">
-            <div class="flex flex-col w-full sm:w-1/2 mr-4">
-                <label for="firstName" class="text-black  ">First Name</label>
-                <input type="text" class="border border-gray-300 focus:border-primary rounded-lg p-2 w-full focus:outline-none" id="firstName" name="firstName" required>
+                </div>
             </div>
-            <div class="flex flex-col w-full sm:w-1/2">
-                <label for="lastName" class="text-black  ">Last Name</label>
-                <input type="text" class="border border-gray-300 focus:border-primary rounded-lg p-2 w-full focus:outline-none" id="lastName" name="lastName" required>
+            <div class="flex flex-col mb-2">
+                <label for="email" class="text-black  ">Email</label>
+                <input type="email" formControlName="email"
+                    [class.error]="signUpForm.controls['email'].dirty && signUpForm.hasError('required','email')"
+                    class="border border-gray-300 focus:border-primary rounded-lg p-2 w-full focus:outline-none"
+                    id="email" name="email" placeholder="email" required>
+                <small *ngIf="signUpForm.controls['email'].dirty && signUpForm.hasError('required','email')"
+                    class="text-red-500">email required</small>
+
             </div>
-        </div>
-        <div class="flex flex-col mb-2">
-            <label for="email" class="text-black  ">Email</label>
-            <input type="email" class="border border-gray-300 focus:border-primary rounded-lg p-2 w-full focus:outline-none" id="email" name="email" required>
-        </div>
-        <div class="flex flex-col mb-2">
-            <label for="password" class="text-black  ">Create Password</label>
-            <input type="password" class="border border-gray-300 focus:border-primary rounded-lg p-2 w-full focus:outline-none" id="CreatePass" name="password" required>
-        </div>
-        <div class="flex flex-col mb-4">
-            <label for="password" class="text-black ">Confirm Password</label>
-            <input type="password" class="border border-gray-300 focus:border-primary rounded-lg p-2 w-full focus:outline-none" id="ConfirmPass" name="password" required>
-        </div>
-        <button type="submit" class="bg-primary text-black  py-2 px-4 rounded-lg w-full hover:opacity-80 transition duration-300 ">Sign Up</button>
-        <div
-            class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-400 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-400">
-            <p class="mx-4 mb-0 text-center font-semibold dark:text-black">
-                Or
-            </p>
-        </div>
+
+            <div class="flex flex-col mb-2 relative">
+                <label for="password" class="text-black">Create Password</label>
+                <input [type]="type" formControlName="password"
+                    [class.error]="signUpForm.controls['password'].dirty && signUpForm.hasError('required','password')"
+                    class="border border-gray-300 focus:border-primary rounded-lg p-2 w-full focus:outline-none pr-10"
+                    id="CreatePass" name="password" placeholder="password" required>
+                <span class="absolute mt-5 inset-y-0 right-0 pr-3 flex items-center">
+                    <fa-icon [icon]="type === 'password' ? slashEye: faEye"
+                        class="text-gray-400 cursor-pointer hover:text-black"
+                        (click)="type = type === 'password' ? 'text' : 'password'"></fa-icon>
+                </span>
+            </div>
+            <div class="flex flex-col mb-4">
+                <label for="password" class="text-black ">Confirm Password</label>
+                <input [type]="type" formControlName="password"
+                    [class.error]="signUpForm.controls['password'].dirty && signUpForm.hasError('required','password')"
+                    class="border border-gray-300 focus:border-primary rounded-lg p-2 w-full focus:outline-none"
+                    id="ConfirmPass" name="password" placeholder="password" required>
+                <small *ngIf="signUpForm.controls['password'].dirty && signUpForm.hasError('required','password')"
+                    class="text-red-500">password is required</small>
+            </div>
+            <button type="submit"
+                class="bg-primary text-black  py-2 px-4 rounded-lg w-full hover:opacity-80 transition duration-300 ">Sign
+                Up</button>
+            <p class=" mt-2 flex items-center justify-center font-light">already have an account? <span
+                    class="text-black font-normal underline hover:text-primary hover:cursor-pointer"> login</span> </p>
+            <div
+                class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-400 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-400">
+                <p class="mx-4 mb-0 text-center font-semibold dark:text-black">
+                    Or
+                </p>
+            </div>
+
+        </form>
         <button
             class="w-full mb-2 flex items-center justify-center bg-background border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm  text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
             <svg class="h-6 w-6 mr-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -62,7 +98,8 @@
             </svg>
             <span class="text-black">Sign Up with Google</span>
         </button>
-        <p class=" mb-4 flex items-center justify-center font-light">already have an account? <span class="text-black font-normal underline hover:text-primary hover:cursor-pointer"> login</span> </p>
-    </form>
+
+    </div>
+
 
 </div>

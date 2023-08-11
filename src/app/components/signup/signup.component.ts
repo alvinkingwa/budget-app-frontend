@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import {   } from '@angular/common/http';
+import { faEyeSlash, faEye } from '@fortawesome/free-regular-svg-icons';
+import ValidateForm from 'src/app/helpers/validateform';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -8,44 +16,42 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
-  signupForm!: FormGroup;
+  faEye = faEye;
+  slashEye = faEyeSlash;
+  type: string = 'password';
+  public signUpForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient){}
+  constructor(private fb: FormBuilder, private auth: AuthService) {}
 
-  ngOnInit(){
-        this.signupForm = this.formBuilder.group({
-          firstName:['',Validators.required ],
-          lastName:['',Validators.required],
-          email:['',Validators.required],
-          password:['',Validators.required]
-        });
-      }
-      onsubmit(){
-        if(this.signupForm.valid){
-          const data = {
-            firsName:this.signupForm.get('firstName')?.value,
-            lastName:this.signupForm.get('lastName')?.value,
-            email:this.signupForm.get('email')?.value,
-            password:this.signupForm.get('password')?.value
-          };
-          this.http.post('/api/v1/users',data).subscribe(
-            (res:any) =>{
-              console.log(res);
-              this.alert('signup successful!')   
-            },
-            (err:any)=>{
-              console.log(err);
-              this.alert('signup failed')
-            }
-          )
-        }
-      }
-      alert(message:String){
-        const Toast = this.alertController.create({
-          message:MessageChannel,
-          duration:3000
-        })
-        Toast.present();
-      }
+  ngOnInit(): void { 
+    this.signUpForm = this.fb.group({
+      firstName: ['', Validators.required],
+      secondName: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+    });
   }
 
+  onSubmit() {
+    if (this.signUpForm.valid) {
+      this.auth.signUp(this.signUpForm.value).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.signUpForm.reset();
+          // alert(res.message);
+          if (res && res.message){
+            alert(res.message)
+          }else{
+            alert('user signed up successfully')
+          }
+        },
+        error: (err) => {
+          alert(err.error.message);
+        },
+      });
+      console.log(this.signUpForm.value);
+    } else {
+      ValidateForm.validateAllFormFields(this.signUpForm);
+    }
+  }
+}
