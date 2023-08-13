@@ -5,10 +5,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import {   } from '@angular/common/http';
+import {} from '@angular/common/http';
 import { faEyeSlash, faEye } from '@fortawesome/free-regular-svg-icons';
 import ValidateForm from 'src/app/helpers/validateform';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -20,10 +21,16 @@ export class SignupComponent implements OnInit {
   slashEye = faEyeSlash;
   type: string = 'password';
   public signUpForm!: FormGroup;
+  signupMessage: string | null = null;
+  signupErrorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private auth: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.signUpForm = this.fb.group({
       firstName: ['', Validators.required],
       secondName: ['', Validators.required],
@@ -38,15 +45,23 @@ export class SignupComponent implements OnInit {
         next: (res) => {
           console.log(res);
           this.signUpForm.reset();
-          // alert(res.message);
-          if (res && res.message){
-            alert(res.message)
-          }else{
-            alert('user signed up successfully')
+          this.signupErrorMessage = null;
+          if (res && res.message) {
+            this.signupMessage = res.message;
+          } else {
+            this.signupMessage = 'User signed up successfully';
           }
+          setTimeout(() => {
+            this.signupMessage = null;
+          }, 5000);
         },
         error: (err) => {
-          alert(err.error.message);
+          console.error(err);
+          this.signupMessage = null;
+          this.signupErrorMessage = err.error.message;
+          setTimeout(() => {
+            this.signupErrorMessage = null;
+          }, 5000);
         },
       });
       console.log(this.signUpForm.value);

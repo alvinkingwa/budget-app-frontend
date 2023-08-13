@@ -3,6 +3,9 @@
     <h3 class="font-normal text-3xl font-display mb-10">Trail<span class="text-primary">evy</span> Expense Budget App
     </h3>
     <div class="bg-white rounded-lg p-4 w-auto sm:w-96 md:w-80 lg:w-96 xl:w-120 shadow-2xl ">
+        <div *ngIf="loginErrorMessage" class="text-red-500 mb-2">
+            {{ loginErrorMessage}}
+          </div> 
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="flex flex-col mt-3 mb-2">
                 <label for="email" class="text-black  ">Email</label>
@@ -31,8 +34,11 @@
             <button type="submit"
                 class="bg-primary text-black  py-2 px-4 rounded-lg w-full hover:opacity-80 transition duration-300 ">Sign
                 Up</button>
-            <p class=" mt-4 flex items-center justify-center font-light">Don't have an account? <span
-                    class="text-black font-normal underline hover:text-primary hover:cursor-pointer"> Sign Up</span>
+            <p class=" mt-4 flex items-center justify-center font-light">
+                <span *ngIf="loginMessage" class="text-green-500"> {{loginMessage}} </span>
+                <span *ngIf="!loginMessage">Don't have an account? <span
+                        class="text-black font-normal underline hover:text-primary hover:cursor-pointer">Sign
+                        Up</span></span>
             </p>
             <div
                 class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-400 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-400">
