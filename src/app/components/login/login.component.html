@@ -5,7 +5,7 @@
     <div class="bg-white rounded-lg p-4 w-auto sm:w-96 md:w-80 lg:w-96 xl:w-120 shadow-2xl ">
         <div *ngIf="loginErrorMessage" class="text-red-500 mb-2">
             {{ loginErrorMessage}}
-          </div> 
+        </div>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="flex flex-col mt-3 mb-2">
                 <label for="email" class="text-black  ">Email</label>
@@ -29,26 +29,28 @@
                         (click)="type = type === 'password' ? 'text' : 'password'"></fa-icon>
                 </span>
                 <small *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required','password')"
-                    class="text-red-500">first name required</small>
+                    class="text-red-500">password required</small>
             </div>
             <button type="submit"
                 class="bg-primary text-black  py-2 px-4 rounded-lg w-full hover:opacity-80 transition duration-300 ">Sign
-                Up</button>
-            <p class=" mt-4 flex items-center justify-center font-light">
-                <span *ngIf="loginMessage" class="text-green-500"> {{loginMessage}} </span>
-                <span *ngIf="!loginMessage">Don't have an account? <span
-                        class="text-black font-normal underline hover:text-primary hover:cursor-pointer">Sign
-                        Up</span></span>
-            </p>
-            <div
-                class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-400 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-400">
-                <p class="mx-4 mb-0 text-center font-semibold dark:text-black">
-                    Or
-                </p>
-            </div>
-
-
+                In</button>
         </form>
+        <div class="w-full flex justify-end mt-2">
+            <button (click)="forgotPassword()" class="text-gray-400 underline hover:text-black text-xs pr-2">Forgot your
+                password?</button>
+        </div>
+        <p class=" mt-2 flex items-center justify-center font-light">
+            <span *ngIf="loginMessage" class="text-green-500"> {{loginMessage}} </span>
+            <span *ngIf="!loginMessage">Don't have an account? <span (click)="navigate()"
+                    class="text-black font-normal underline hover:text-primary hover:cursor-pointer">Sign
+                    Up</span></span>
+        </p>
+        <div
+            class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-400 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-400">
+            <p class="mx-4 mb-0 text-center font-semibold dark:text-black">
+                Or
+            </p>
+        </div>
 
         <button
             class="w-full mb-4 flex items-center justify-center bg-background border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm  text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">

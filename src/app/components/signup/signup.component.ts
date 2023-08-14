@@ -38,6 +38,9 @@ export class SignupComponent implements OnInit {
       password: ['', Validators.required],
     });
   }
+  // navigate(){
+  //   this.router.navigate(['login'])
+  // }
 
   onSubmit() {
     if (this.signUpForm.valid) {
@@ -46,6 +49,7 @@ export class SignupComponent implements OnInit {
           console.log(res);
           this.signUpForm.reset();
           this.signupErrorMessage = null;
+          this.router.navigate(['login'])
           if (res && res.message) {
             this.signupMessage = res.message;
           } else {

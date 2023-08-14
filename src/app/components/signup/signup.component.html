@@ -5,7 +5,7 @@
     <div class="bg-white rounded-lg p-4 w-auto sm:w-96 md:w-80 lg:w-96 xl:w-120 shadow-2xl ">
         <div *ngIf="signupErrorMessage" class="text-red-500 mb-2">
             {{ signupErrorMessage }}
-          </div>          
+        </div>
         <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
             <div class="flex flex-col mb-2 sm:flex-row sm:justify-between items-start">
                 <div class="flex flex-col w-full sm:w-1/2 mr-4">
@@ -64,20 +64,22 @@
             <button type="submit"
                 class="bg-primary text-black  py-2 px-4 rounded-lg w-full hover:opacity-80 transition duration-300 ">Sign
                 Up</button>
-            <p class=" mt-2 flex items-center justify-center font-light">
-                <span *ngIf="signupMessage" class="text-green-500"> {{signupMessage}} </span>
-                <span *ngIf="!signupMessage">already have an account?<span
-                        class="text-black font-normal underline hover:text-primary hover:cursor-pointer">login</span>
-                </span>
-            </p>
-            <div
-                class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-400 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-400">
-                <p class="mx-4 mb-0 text-center font-semibold dark:text-black">
-                    Or
-                </p>
-            </div>
+
 
         </form>
+        <p class=" mt-2 flex items-center justify-center font-light">
+            <span *ngIf="signupMessage" class="text-green-500"> {{signupMessage}} </span>
+            <span *ngIf="!signupMessage">already have an account?<span 
+                    class="text-black font-normal underline hover:text-primary hover:cursor-pointer">login</span>
+            </span>
+        </p>
+        <div
+            class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-400 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-400">
+            <p class="mx-4 mb-0 text-center font-semibold dark:text-black">
+                Or
+            </p>
+        </div>
+
         <button
             class="w-full mb-2 flex items-center justify-center bg-background border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm  text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
             <svg class="h-6 w-6 mr-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
