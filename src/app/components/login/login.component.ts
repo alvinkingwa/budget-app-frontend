@@ -30,14 +30,7 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
     });
 
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        console.log('Navigation started');
-      }
-      if (event instanceof NavigationEnd) {
-        console.log('Navigation ended');
-      }
-    });
+
   }
   
   forgotPassword() {

@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     SignupComponent,
     LoginComponent,
     DashboardComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    LineChartComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +29,8 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    NgChartsModule,
+    
     
     
   ],
