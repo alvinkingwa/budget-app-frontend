@@ -1,8 +1,8 @@
 <!-- YourComponent.component.html -->
 <div class="flex bg-latestbg h-screen w-full">
     <!-- Sidebar Column -->
-    <div class="w-1/4  p-6">
-        <div class="px-16 ">
+    <div class="w-2/12  p-6">
+        <div class="px-8 ">
             <h1 class="text-4xl font-display">Trail<span class="text-primary">evy</span></h1>
         </div>
         <ul class="mt-4 pl-4 space-y-4">
@@ -40,7 +40,7 @@
 
     <!-- Middle Column -->
 
-    <div class="w-1/2 bg-white">
+    <div class="w-7/12 bg-white">
         <nav class="flex justify-between mt-8 px-4">
             <div class="font-medium text-lg">
                 welcome Alvin
@@ -58,9 +58,9 @@
                         <div class="flex flex-wrap -mx-3">
                             <div class="flex-none w-2/3 max-w-full px-3">
                                 <div>
-                                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Today's Money</p>
+                                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Income This Month</p>
                                     <h5 class="mb-0 font-bold">
-                                        $53,000
+                                        ksh 53,000
                                         <span
                                             class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
                                     </h5>
@@ -68,8 +68,8 @@
                             </div>
                             <div class="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
                                 <div
-                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500 shadow-soft-2xl">
-                                    <fa-icon [icon]="faCoins" class="text-lg relative top-3.5 text-white"></fa-icon>
+                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tr from-primary  via-purple-600 to-primary  shadow-soft-2xl">
+                                    <fa-icon [icon]="faMoney" class="text-lg relative top-3.5 text-white"></fa-icon>
                                 </div>
                             </div>
                         </div>
@@ -86,9 +86,9 @@
                         <div class="flex flex-wrap -mx-3">
                             <div class="flex-none w-2/3 max-w-full px-3">
                                 <div>
-                                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Today's Money</p>
+                                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Expense This Month</p>
                                     <h5 class="mb-0 font-bold">
-                                        $53,000
+                                        ksh 53,000
                                         <span
                                             class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
                                     </h5>
@@ -96,8 +96,8 @@
                             </div>
                             <div class="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
                                 <div
-                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500 shadow-soft-2xl">
-                                    <fa-icon [icon]="faCoins" class="text-lg relative top-3.5 text-white"></fa-icon>
+                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tr from-primary  via-purple-600 to-primary  shadow-soft-2xl">
+                                    <fa-icon [icon]="faWallet" class="text-lg relative top-3.5 text-white"></fa-icon>
                                 </div>
                             </div>
                         </div>
@@ -115,9 +115,9 @@
                         <div class="flex flex-wrap -mx-3">
                             <div class="flex-none w-2/3 max-w-full px-3">
                                 <div>
-                                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Today's Money</p>
+                                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Savings This Month</p>
                                     <h5 class="mb-0 font-bold">
-                                        $53,000
+                                        ksh 53,000
                                         <span
                                             class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
                                     </h5>
@@ -125,8 +125,8 @@
                             </div>
                             <div class="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
                                 <div
-                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500 shadow-soft-2xl">
-                                    <fa-icon [icon]="faCoins" class="text-lg relative top-3.5 text-white"></fa-icon>
+                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tr from-primary  via-purple-600 to-primary shadow-soft-2xl">
+                                    <fa-icon [icon]="faPiggy" class="text-lg relative top-3.5 text-white"></fa-icon>
                                 </div>
                             </div>
                         </div>
@@ -141,17 +141,17 @@
                 <div class="flex flex-wrap -mx-3">
                     <div class="flex-none w-2/3 max-w-full px-3">
                         <div>
-                            <p class="mb-0 font-sans font-semibold leading-normal text-sm">Today's Money</p>
+                            <p class="mb-0 font-sans font-semibold leading-normal text-sm">Today's Spending</p>
                             <h5 class="mb-0 font-bold">
-                                $53,000
+                                ksh 53,000
                                 <span class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
                             </h5>
                         </div>
                     </div>
                     <div class="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
                         <div
-                            class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500 shadow-soft-2xl">
-                            <fa-icon [icon]="faCoins" class="text-lg relative top-3.5 text-white"></fa-icon>
+                            class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 via-primary to-pink-500 shadow-soft-2xl">
+                            <fa-icon [icon]="faCredit" class="text-lg relative top-3.5 text-white"></fa-icon>
                         </div>
                     </div>
                 </div>
@@ -159,13 +159,41 @@
 
         </div>
         <div class="px-4 mt-2">
-            <app-line-chart></app-line-chart>
+            <app-transaction-table></app-transaction-table>
 
         </div>
     </div>
 
+<!-- last column -->
+    <div class="w-3/12 b p-4">
+        <div class=" flex justify-end">
+            <button class="flex items-center justify-center  hover:bg-opacity-60 p-2 w-30 m-4 h-10 bg-primary text-black rounded-md shadow-md">
+                Deposit Money <span class="pl-2">+</span>
+            </button>
+        </div>
+             
+        <div class="bg-primary p-3 shadow-2xl rounded-md">
+            
+            <div class="mb-1 ">
+                <label for="" class="text-lg font-semibold font-display">Total Balance:</label>
+            </div>
+            <div class=" text-center ">
+                <span class="outline-none bg-transparent block font-mono ">ksh 2000</span>
+            </div>
+            <div class="w-full flex flex-row justify-between">
+                <div class="w-full flex flex-col">
+                    <label for="" class="font-display">Card holder</label>
+                    <input type="text" id=""  value="Alvin kingwa" readonly class="outline-none bg-transparent font-mono">
+                </div>
+                <div class="w-1/4 flex flex-col">
+                    <label for="">Expires</label>
+                    <input type="text" id="" value="Null" readonly class="outline-none bg-transparent">
+                </div>
+            </div>
+        </div>
+    <app-line-chart></app-line-chart>
 
-    <div class="w-1/4 b p-4">
-        Right Column
     </div>
+
+
 </div>

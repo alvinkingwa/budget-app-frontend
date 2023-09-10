@@ -5,6 +5,11 @@ import { faCoins } from '@fortawesome/free-solid-svg-icons';
 import { faDashboard } from '@fortawesome/free-solid-svg-icons';
 import { faExchange } from '@fortawesome/free-solid-svg-icons';
 import { faChartPie } from '@fortawesome/free-solid-svg-icons';
+import { faMoneyBill } from '@fortawesome/free-solid-svg-icons';
+import { faPiggyBank } from '@fortawesome/free-solid-svg-icons';
+import { faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
+
 
 
 @Component({
@@ -17,6 +22,11 @@ export class DashboardComponent implements OnInit {
   faExchange = faExchange
   faDashboard = faDashboard;
   faCoins = faCoins;
+  faPiggy=faPiggyBank;
+  faMoney=faMoneyBill;
+  faWallet=faWallet;
+  faCredit=faCreditCard;
+  
   public userName: any = '';
 
   constructor(private auth: AuthService, private user: UserService) {}

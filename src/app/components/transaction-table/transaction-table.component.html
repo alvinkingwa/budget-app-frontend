@@ -1,0 +1,145 @@
+<div>
+    <div>
+        <h1>Transaction History</h1>
+    </div>
+    <!-- transaction table -->
+    <div
+        class="relative overflow-x-auto h-transaction-table-h shadow-md sm:rounded-lg scrollbar-thumb-slate-300 scrollbar-thin scrollbar-thumb-rounded-sm">
+        <table class="w-full text-sm text-left  dark:text-gray-400">
+            <thead class="text-xs sticky top-0  uppercase bg-gray-300  dark:text-black ">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Categories
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        spent
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        amount limit
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        remaining
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody class="text-black relative ">
+                <tr class="bg-white border-b ">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                        food
+                    </th>
+                    <td class="px-6 py-4">
+                        ksh2000
+                    </td>
+                    <td class="px-6 py-4 relative">
+                        <mat-progress-bar class="bg-slate-200 text-primary rounded-sm absolute z-0 " mode="determinate"
+                            [value]="88"></mat-progress-bar>
+                    </td>
+                    <td class="px-6 py-4">
+                        ksh230
+                    </td>
+
+                </tr>
+                <tr class="border-b  bg-gray-200 ">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                        electronics
+                    </th>
+                    <td class="px-6 py-4">
+                        ksh30000
+                    </td>
+                    <td class="px-6 py-4 relative">
+                        <mat-progress-bar class="bg-white text-primary rounded-sm absolute z-0" mode="determinate"
+                            [value]="40"></mat-progress-bar>
+                    </td>
+                    <td class="px-6 py-4">
+                        ksh60
+                    </td>
+
+                </tr>
+                <tr class="bg-white border-b">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                        shoes
+                    </th>
+                    <td class="px-6 py-4">
+                        ksh20
+                    </td>
+                    <td class="px-6 py-4">
+                        <mat-progress-bar class="bg-slate-200 text-primary rounded-sm absolute z-0" mode="determinate"
+                            [value]="66"></mat-progress-bar>
+                    </td>
+                    <td class="px-6 py-4">
+                        ksh344
+                    </td>
+
+                </tr>
+                <tr class="border-b bg-gray-200  ">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                        health
+                    </th>
+                    <td class="px-6 py-4">
+                        sh780
+                    </td>
+                    <td class="px-6 py-4">
+                        <mat-progress-bar class="bg-white text-primary rounded-sm absolute z-0" mode="determinate"
+                            [value]="40"></mat-progress-bar>
+                    </td>
+                    <td class="px-6 py-4">
+                        ksh790
+                    </td>
+
+                </tr>
+                <tr>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                        data
+                    </th>
+                    <td class="px-6 py-4">
+                        sh60
+                    </td>
+                    <td class="px-6 py-4">
+                        <mat-progress-bar class="bg-slate-200 text-primary rounded-sm absolute z-0" mode="determinate"
+                            [value]="24"></mat-progress-bar>
+                    </td>
+                    <td class="px-6 py-4">
+                        ksh990
+                    </td>
+
+                </tr>
+                <tr class="border-b bg-gray-200">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                        electricity
+                    </th>
+                    <td class="px-6 py-4">
+                        ksh520
+                    </td>
+                    <td class="px-6 py-4">
+                        <mat-progress-bar class="bg-white text-red-600 rounded-sm absolute z-0" mode="determinate"
+                            [value]="100"></mat-progress-bar>
+                    </td>
+                    <td class="px-6 py-4">
+                        ksh500
+                    </td>
+
+                </tr>
+                <tr>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                    rent
+                    </th>
+                    <td class="px-6 py-4">
+                        sh100
+                    </td>
+                    <td class="px-6 py-4">
+                        <mat-progress-bar class="bg-slate-200 text-primary rounded-sm absolute z-0" mode="determinate"
+                            [value]="90"></mat-progress-bar>
+                    </td>
+                    <td class="px-6 py-4">
+                        ksh120
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+        
+    </div>
+    
+</div>

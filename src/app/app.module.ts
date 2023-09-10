@@ -12,6 +12,11 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { NgChartsModule } from 'ng2-charts';
+import { TransactionTableComponent } from './components/transaction-table/transaction-table.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { NgApexchartsModule } from 'ng-apexcharts';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +25,8 @@ import { NgChartsModule } from 'ng2-charts';
     LoginComponent,
     DashboardComponent,
     ForgotPasswordComponent,
-    LineChartComponent
+    LineChartComponent,
+    TransactionTableComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +36,10 @@ import { NgChartsModule } from 'ng2-charts';
     FormsModule,
     HttpClientModule,
     NgChartsModule,
+    BrowserAnimationsModule,
+    MatProgressBarModule,
+    NgApexchartsModule
+
     
     
     
