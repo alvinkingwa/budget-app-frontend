@@ -1,23 +1,8 @@
 import { Component,ViewChild } from '@angular/core';
-import { ChartComponent } from 'ng-apexcharts';
-import {
-  ApexNonAxisChartSeries,
-  ApexResponsive,
-  ApexChart,
-  ApexFill,
-  ApexDataLabels,
-  ApexLegend
-} from "ng-apexcharts";
+import { ChartData,ChartEvent,ChartType } from 'chart.js';
 
-export type ChartOptions = {
-  series: ApexNonAxisChartSeries;
-  chart: ApexChart;
-  responsive: ApexResponsive[];
-  labels: any;
-  fill: ApexFill;
-  legend: ApexLegend;
-  dataLabels: ApexDataLabels;
-};
+
+
 
 @Component({
   selector: 'app-line-chart',
@@ -25,41 +10,41 @@ export type ChartOptions = {
   styleUrls: ['./line-chart.component.css'],
 })
 export class LineChartComponent {
-  @ViewChild("chart") chart: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
+  public doughnutChartLabels: string[] = [
+    'food',
+    'shoes',
+    'rent',
+  ];
+  public doughnutChartData: ChartData<'doughnut'> = {
+    labels: this.doughnutChartLabels,
+    datasets: [
+      { data: [350, 450, 100] },
+      // { data: [50, 150, 120] },
+      // { data: [250, 130, 70] },
+    ],
+  };
+    public doughnutChartType: ChartType = 'doughnut';
 
-  constructor(){
-    this.chartOptions = {
-      series: [44, 55, 41, 17, 15],
-      chart: {
-        width: 380,
-        type: "donut"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      fill: {
-        type: "gradient"
-      },
-      legend: {
-        formatter: function(val, opts) {
-          return val + " - " + opts.w.globals.series[opts.seriesIndex];
-        }
-      },
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              position: "bottom"
-            }
-          }
-        }
-      ]
-    };
+  // events
+  public chartClicked({
+    event,
+    active,
+  }: {
+    event: ChartEvent;
+    active: object[];
+  }): void {
+    console.log(event, active);
   }
 
+  public chartHovered({
+    event,
+    active,
+  }: {
+    event: ChartEvent;
+    active: object[];
+  }): void {
+    console.log(event, active);
+  }
+
+ 
 }

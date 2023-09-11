@@ -1,0 +1,216 @@
+<div class="flex bg-latestbg h-screen w-full">
+    <div class="w-2/12  p-6">
+        <div class="px-8 ">
+            <h1 class="text-4xl font-display">Trail<span class="text-primary">evy</span></h1>
+        </div>
+        <ul class="mt-4 pl-4 space-y-4">
+            <li>
+                <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}
+                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-purple-400 hover:text-black transition duration-300">
+                    <div class="">
+                        <fa-icon [icon]="faDashboard" class="text-lg text-primary"></fa-icon>
+                    </div>
+                    <span class="ml-2">Dashboard</span>
+                </a>
+            </li>
+            <!-- second link -->
+            <li>
+                <a routerLink="/transaction" routerLinkActive="active"
+                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-purple-300 hover:text-black transition duration-300">
+                    <div class="">
+                        <fa-icon [icon]="faExchange" class="text-lg text-primary "></fa-icon>
+                    </div>
+                    <span class="ml-2">Transactions</span>
+                </a>
+            </li>
+            <!-- third link -->
+            <li>
+                <a routerLink="/set-budget" routerLinkActive="active"
+                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-purple-300 hover:text-black transition duration-300">
+                    <div class="">
+                        <fa-icon [icon]="faBudget" class="text-lg text-primary"></fa-icon>
+                    </div>
+                    <span class="ml-2">Set Budget</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="w-7/12 bg-white">
+        <nav class="flex justify-between mt-8 px-4">
+            <div class="font-medium text-lg">
+                All Transactions
+            </div>
+            <input
+            class="appearance-none border-2 p-4 border-gray-300 hover:border-gray-400 transition-colors rounded-md  py-1 px-1 text-gray-800 leading-tight focus:outline-none focus:ring-primary focus:border-primary focus:shadow-outline"
+            id="username"
+            type="text"
+            placeholder="Search..."
+          />
+        </nav>
+
+        <!-- transaction table -->
+        <div class=" bg-white m-4 ">
+            <div class="overflow-x-auto h-trans-h shadow-xl rounded-md">
+                <table class="min-w-full border-collapse table-auto">
+                    <thead class="text-xs sticky top-0 uppercase bg-gray-300 dark:text-black">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left">
+                                Reciever
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left">
+                                Categories
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left">
+                                Amount Spent
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left">
+                                spend
+                            </th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <tr>
+                            <td class="px-4 py-2">
+                                <div class="flex items-center space-x-3">
+                                    <div>
+                                        <p> Duka </p>
+                                        <p class="text-gray-500 text-xs font-bold tracking-wide">
+                                            25 March ,2023 at 7:15 AM</p>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td class=" px-4 py-2">Groceries</td>
+                            <td class=" px-4 py-2 text-red-600">Ksh 20.00</td>
+                            <td class=" px-4 py-2 hover:underline"><a href="#">Edit</a></td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">
+                                <div class="flex items-center space-x-3">
+                                    <div>
+                                        <p> Mama mboga</p>
+                                        <p class="text-gray-500 text-xs font-bold tracking-wide">
+                                            25 March ,2023 at 7:15 AM</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class=" px-4 py-2">Mboga</td>
+                            <td class=" px-4 py-2 text-red-600">Ksh 10.00</td>
+                            <td class=" px-4 py-2 hover:underline"><a href="#">Edit</a></td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">
+                                <div class="flex items-center space-x-3">
+                                    <div>
+                                        <p> Naivas </p>
+                                        <p class="text-gray-500 text-xs font-bold tracking-wide">
+                                            25 March ,2023 at 7:15 AM</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class=" px-4 py-2">Food</td>
+                            <td class=" px-4 py-2 text-red-600">Ksh 40.00</td>
+                            <td class=" px-4 py-2 "><a href="#">Edit</a></td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">
+                                <div class="flex items-center space-x-3">
+                                    <div>
+                                        <p> Mpesa</p>
+                                        <p class="text-gray-500 text-xs font-bold tracking-wide">
+                                            25 March ,2023 at 7:15 AM</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class=" px-4 py-2">Deposit</td>
+                            <td class=" px-4 py-2 text-green-600">Ksh 40.00</td>
+                            <td class=" px-4 py-2"><a href="#">Edit</a></td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">
+                                <div class="flex items-center space-x-3">
+                                    <div>
+                                        <p> Electronics </p>
+                                        <p class="text-gray-500 text-xs font-bold tracking-wide">
+                                            25 March ,2023 at 7:15 AM</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class=" px-4 py-2">Electronics</td>
+                            <td class=" px-4 py-2 text-red-600">Ksh 60.00</td>
+                            <td class=" px-4 py-2"><a href="#">Edit</a></td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">
+                                <div class="flex items-center space-x-3">
+                                    <div>
+                                        <p> Mpesa </p>
+                                        <p class="text-gray-500 text-xs font-bold tracking-wide">
+                                            25 March ,2023 at 7:15 AM</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class=" px-4 py-2">Travel</td>
+                            <td class=" px-4 py-2 text-green-600">Ksh 80.00</td>
+                            <td class=" px-4 py-2"><a href="#">Edit</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="w-3/12 p-4">
+        <div class="flex flex-col">
+            <button class="flex items-center justify-center hover:bg-opacity-60 p- w-30 m-4 h-10 bg-primary text-black rounded-md shadow-md">
+                Spend On Category <span class="pl-2">+</span>
+            </button>
+            <div>
+                <h1 class="text-lg text-center font-medium">Spending Limit</h1>
+            </div>
+            <div>
+                <h1 class="text-xs pl-6 pt-1 text-gray-600">Monthly Transaction Limit</h1>
+                <p class="text-xs font-semibold pl-2 pt-2">Ksh 140000 of 80000</p>
+
+                <div class="flex justify-between mb-1">
+                    <span class="text-base  font-medium text-blue-700 dark:text-gray-400">Spendings</span>
+                    <span class="text-sm font-medium text-blue-700 dark:text-black">45%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-300">
+                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 45%"></div>
+                  </div>
+                  <span class="pt-2 text-xs text-red-600">! Your spendings has reached limits</span>
+            </div>
+
+
+            <div class="mt-8">
+                <h1 class="font-medium text-gray-500">Monthly Transaction Totals</h1>
+
+                <div class="flex flex-col m-6 mt-2">
+                    <div class="flex justify-between">
+                        <span class="font-medium">Food</span>
+                        <span class="text-red-600">Ksh 100.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-medium ">Rent</span>
+                        <span class="text-red-600">Ksh 75.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-medium">Deposit</span>
+                        <span class="text-green-600">Ksh 50.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-medium">Shoes</span>
+                        <span class="text-red-600">Ksh 50.00</span>
+                    </div>
+                    <!-- Add more categories as needed -->
+                </div>
+            </div>
+            
+           
+        </div>
+    </div>
+    
+</div>

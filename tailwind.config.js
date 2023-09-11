@@ -18,7 +18,8 @@ module.exports = {
         display: ["Eczar", "serif"],
       },
       height: {
-        'transaction-table-h': '21rem'
+        'transaction-table-h': '21rem',
+        'trans-h':'33rem'
       },
       width: {
         '120': '25rem',

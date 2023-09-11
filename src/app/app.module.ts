@@ -16,6 +16,8 @@ import { TransactionTableComponent } from './components/transaction-table/transa
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { TransactionComponent } from './components/transaction/transaction.component';
+import { SetBudgetComponent } from './components/set-budget/set-budget.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     DashboardComponent,
     ForgotPasswordComponent,
     LineChartComponent,
-    TransactionTableComponent
+    TransactionTableComponent,
+    TransactionComponent,
+    SetBudgetComponent
   ],
   imports: [
     BrowserModule,
