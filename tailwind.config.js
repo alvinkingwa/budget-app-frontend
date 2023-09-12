@@ -19,7 +19,8 @@ module.exports = {
       },
       height: {
         'transaction-table-h': '21rem',
-        'trans-h':'33rem'
+        'trans-h':'33rem',
+        'set-budget':'33rem'
       },
       width: {
         '120': '25rem',

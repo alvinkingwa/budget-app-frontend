@@ -37,6 +37,28 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+
+// modal 
+showModal = false;
+
+  openModal(): void {
+    this.showModal = true;
+  }
+
+  closeModal(): void {
+    this.showModal = false;
+  }
+
+  deposit(): void {
+    // Implement your deposit logic here
+    // You can send data to your backend, update balances, etc.
+    // After depositing, close the modal
+    this.closeModal();
+  }
+
+
+
+
   logout() {
     this.auth.signOut();
     this.userName = null;

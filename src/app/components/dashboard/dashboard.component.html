@@ -59,7 +59,7 @@
                             <div class="flex-none w-2/3 max-w-full px-3">
                                 <div>
                                     <p class="mb-0 font-sans font-semibold leading-normal text-sm">Income This Month</p>
-                                    <h5 class="mb-0 font-bold">
+                                    <h5 class="mb-0 font-mono">
                                         ksh 53,000
                                         <span
                                             class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
@@ -88,7 +88,7 @@
                                 <div>
                                     <p class="mb-0 font-sans font-semibold leading-normal text-sm">Expense This Month
                                     </p>
-                                    <h5 class="mb-0 font-bold">
+                                    <h5 class="mb-0 font-mono">
                                         ksh 53,000
                                         <span
                                             class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
@@ -118,7 +118,7 @@
                                 <div>
                                     <p class="mb-0 font-sans font-semibold leading-normal text-sm">Savings This Month
                                     </p>
-                                    <h5 class="mb-0 font-bold">
+                                    <h5 class="mb-0 font-mono">
                                         ksh 53,000
                                         <span
                                             class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
@@ -144,7 +144,7 @@
                     <div class="flex-none w-2/3 max-w-full px-3">
                         <div>
                             <p class="mb-0 font-sans font-semibold leading-normal text-sm">Today's Spending</p>
-                            <h5 class="mb-0 font-bold">
+                            <h5 class="mb-0 font-mono">
                                 ksh 53,000
                                 <span class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
                             </h5>
@@ -169,11 +169,57 @@
     <!-- last column -->
     <div class="w-3/12 b p-4">
         <div class=" flex justify-end">
-            <button
+            <button type="button" (click)="openModal()"
                 class="flex items-center justify-center  hover:bg-opacity-60 p-2 w-30 m-4 h-10 bg-primary text-black rounded-md shadow-md">
                 Deposit Money <span class="pl-2">+</span>
             </button>
         </div>
+        <!-- modal start for deposit -->
+        <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="showModal">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
+                <!-- Modal backdrop -->
+                <div class="fixed inset-0 transition-opacity" (click)="closeModal()" aria-hidden="true">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+
+                <!-- Modal content -->
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                    role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                    <!-- Modal header -->
+                    <div class="bg-gray-200 px-4 py-2">
+                        <h3 class="text-lg font-mono text-gray-800" id="modal-headline">Deposit Funds</h3>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <!-- Your deposit form content goes here -->
+                        <!-- Example: -->
+                        <form>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="amount">
+                                    Amount
+                                </label>
+                                <input type="text"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary"
+                                    id="amount" placeholder="Enter amount">
+                            </div>
+
+                            <!-- Additional form fields for deposit -->
+
+                            <div class="mt-4 flex justify-end">
+                                <button
+                                    class="bg-primary hover:bg-primary text-black  font-mono py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                    type="button" (click)="deposit()">Deposit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end of modal  -->
+
+
+
 
         <div class="bg-primary p-3 shadow-2xl rounded-md hover:bg-opacity-60">
 

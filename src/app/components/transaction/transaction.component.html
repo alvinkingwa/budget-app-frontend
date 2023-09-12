@@ -6,7 +6,7 @@
         <ul class="mt-4 pl-4 space-y-4">
             <li>
                 <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}
-                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-purple-400 hover:text-black transition duration-300">
+                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300">
                     <div class="">
                         <fa-icon [icon]="faDashboard" class="text-lg text-primary"></fa-icon>
                     </div>
@@ -16,7 +16,7 @@
             <!-- second link -->
             <li>
                 <a routerLink="/transaction" routerLinkActive="active"
-                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-purple-300 hover:text-black transition duration-300">
+                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300">
                     <div class="">
                         <fa-icon [icon]="faExchange" class="text-lg text-primary "></fa-icon>
                     </div>
@@ -26,7 +26,7 @@
             <!-- third link -->
             <li>
                 <a routerLink="/set-budget" routerLinkActive="active"
-                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-purple-300 hover:text-black transition duration-300">
+                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300">
                     <div class="">
                         <fa-icon [icon]="faBudget" class="text-lg text-primary"></fa-icon>
                     </div>
@@ -41,11 +41,8 @@
                 All Transactions
             </div>
             <input
-            class="appearance-none border-2 p-4 border-gray-300 hover:border-gray-400 transition-colors rounded-md  py-1 px-1 text-gray-800 leading-tight focus:outline-none focus:ring-primary focus:border-primary focus:shadow-outline"
-            id="username"
-            type="text"
-            placeholder="Search..."
-          />
+                class="appearance-none border-2 p-4 border-gray-300 hover:border-gray-400 transition-colors rounded-md  py-1 px-1 text-gray-800 leading-tight focus:outline-none focus:ring-primary focus:border-primary focus:shadow-outline"
+                id="username" type="text" placeholder="Search..." />
         </nav>
 
         <!-- transaction table -->
@@ -68,9 +65,9 @@
                             </th>
                         </tr>
                     </thead>
-                    
+
                     <tbody>
-                        <tr>
+                        <tr >
                             <td class="px-4 py-2">
                                 <div class="flex items-center space-x-3">
                                     <div>
@@ -83,7 +80,17 @@
 
                             <td class=" px-4 py-2">Groceries</td>
                             <td class=" px-4 py-2 text-red-600">Ksh 20.00</td>
-                            <td class=" px-4 py-2 hover:underline"><a href="#">Edit</a></td>
+                            <div class="py-3">
+                                <button
+                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" class="h-4 w-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                </button>
+                            </div>
+
                         </tr>
                         <tr>
                             <td class="px-4 py-2">
@@ -97,7 +104,16 @@
                             </td>
                             <td class=" px-4 py-2">Mboga</td>
                             <td class=" px-4 py-2 text-red-600">Ksh 10.00</td>
-                            <td class=" px-4 py-2 hover:underline"><a href="#">Edit</a></td>
+                            <div class="py-3">
+                                <button
+                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" class="h-4 w-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </tr>
                         <tr>
                             <td class="px-4 py-2">
@@ -111,7 +127,16 @@
                             </td>
                             <td class=" px-4 py-2">Food</td>
                             <td class=" px-4 py-2 text-red-600">Ksh 40.00</td>
-                            <td class=" px-4 py-2 "><a href="#">Edit</a></td>
+                            <div class="py-3">
+                                <button
+                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" class="h-4 w-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </tr>
                         <tr>
                             <td class="px-4 py-2">
@@ -125,7 +150,16 @@
                             </td>
                             <td class=" px-4 py-2">Deposit</td>
                             <td class=" px-4 py-2 text-green-600">Ksh 40.00</td>
-                            <td class=" px-4 py-2"><a href="#">Edit</a></td>
+                            <div class="py-3">
+                                <button
+                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" class="h-4 w-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </tr>
                         <tr>
                             <td class="px-4 py-2">
@@ -139,7 +173,16 @@
                             </td>
                             <td class=" px-4 py-2">Electronics</td>
                             <td class=" px-4 py-2 text-red-600">Ksh 60.00</td>
-                            <td class=" px-4 py-2"><a href="#">Edit</a></td>
+                            <div class="py-3">
+                                <button
+                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" class="h-4 w-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </tr>
                         <tr>
                             <td class="px-4 py-2">
@@ -153,7 +196,16 @@
                             </td>
                             <td class=" px-4 py-2">Travel</td>
                             <td class=" px-4 py-2 text-green-600">Ksh 80.00</td>
-                            <td class=" px-4 py-2"><a href="#">Edit</a></td>
+                            <div class="py-3">
+                                <button
+                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" class="h-4 w-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </tr>
                     </tbody>
                 </table>
@@ -164,7 +216,8 @@
     </div>
     <div class="w-3/12 p-4">
         <div class="flex flex-col">
-            <button class="flex items-center justify-center hover:bg-opacity-60 p- w-30 m-4 h-10 bg-primary text-black rounded-md shadow-md">
+            <button
+                class="flex items-center justify-center hover:bg-opacity-60 p- w-30 m-4 h-10 bg-primary text-black rounded-md shadow-md">
                 Spend On Category <span class="pl-2">+</span>
             </button>
             <div>
@@ -177,11 +230,11 @@
                 <div class="flex justify-between mb-1">
                     <span class="text-base  font-medium text-blue-700 dark:text-gray-400">Spendings</span>
                     <span class="text-sm font-medium text-blue-700 dark:text-black">45%</span>
-                  </div>
-                  <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-300">
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-300">
                     <div class="bg-blue-600 h-2.5 rounded-full" style="width: 45%"></div>
-                  </div>
-                  <span class="pt-2 text-xs text-red-600">! Your spendings has reached limits</span>
+                </div>
+                <span class="pt-2 text-xs text-red-600">! Your spendings has reached limits</span>
             </div>
 
 
@@ -208,9 +261,9 @@
                     <!-- Add more categories as needed -->
                 </div>
             </div>
-            
-           
+
+
         </div>
     </div>
-    
+
 </div>
