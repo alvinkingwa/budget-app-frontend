@@ -56,12 +56,13 @@ showModal = false;
     this.closeModal();
   }
 
-
+getUserName(){
+  this.auth.getUserNameFromToken()
+}
 
 
   logout() {
     this.auth.signOut();
-    this.userName = null;
-    console.log('clicked');
+   
   }
 }

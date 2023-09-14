@@ -14,8 +14,79 @@ export class TransactionComponent implements OnInit{
   faBudget = faChartPie
   faExchange = faExchange
   faDashboard = faDashboard;
+  editCategoryName: string | undefined;
+  editCategorySpending: number | undefined;
+  showEditModal = false;
+
+
 
   ngOnInit(): void {
       
   }
+
+
+  // Function to open the edit modal
+  openEditModal(categoryName: string, spending: number) {
+    this.editCategoryName = categoryName;
+    this.editCategorySpending = spending;
+    this.showEditModal = true;
+    console.log("hope it work")
+  }
+
+  // Function to close the edit modal
+  closeEditModal() {
+    this.showEditModal = false;
+    this.editCategoryName = undefined;
+    this.editCategorySpending = undefined;
+  }
+
+  // Function to save the edited spending
+  saveEditedSpending() {
+    // Implement logic to save the edited spending
+    console.log('Category Name:', this.editCategoryName);
+    console.log('Edited Spending:', this.editCategorySpending);
+
+    // Close the modal
+    this.closeEditModal();
+  }
+
+
+
+
+
+
+
+  newCategoryName: string = '';
+  newSpending: string = '';
+  newAmountLimit: number | undefined;
+
+  // Variables for managing the modal state
+  showCreateCategoryModal = false;
+
+  // Function to open the Create Category modal
+  openCreateCategoryModal() {
+    this.showCreateCategoryModal = true;
+    console.log("opnnned")
+  }
+
+  // Function to close the Create Category modal
+  closeCreateCategoryModal() {
+    this.showCreateCategoryModal = false;
+  }
+
+  // Function to create a new category
+  createCategory() {
+    // Implement logic to create the new category with the provided inputs
+    console.log('Creating a new category:');
+    console.log('Category Name:', this.newCategoryName);
+    console.log('Spending:', this.newSpending);
+    console.log('Amount Limit:', this.newAmountLimit);
+
+    // Close the modal
+    this.closeCreateCategoryModal();
+  }
+
+
+
+
 }

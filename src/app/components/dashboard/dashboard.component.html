@@ -36,6 +36,10 @@
                 </a>
             </li>
         </ul>
+
+        <div class="p-4 rounded-lg text-center hover:cursor-pointer bg-red-300">
+            <button (click)="logout()" class="">logout</button>
+        </div>
     </div>
 
     <!-- Middle Column -->
@@ -43,7 +47,7 @@
     <div class="w-7/12 bg-white">
         <nav class="flex justify-between mt-8 px-4">
             <div class="font-medium text-lg">
-                welcome Alvin
+                welcome {{userName}}
             </div>
             <div class="text-gray-400 text-sm">
                 24 March, 2023

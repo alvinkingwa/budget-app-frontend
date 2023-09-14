@@ -3,9 +3,7 @@
     <h3 class="font-normal text-3xl font-display mb-5">Trail<span class="text-primary">evy</span> Expense Budget App
     </h3>
     <div class="bg-white rounded-lg p-4 w-auto sm:w-96 md:w-80 lg:w-96 xl:w-120 shadow-2xl ">
-        <div *ngIf="signupErrorMessage" class="text-red-500 mb-2">
-            {{ signupErrorMessage }}
-        </div>
+       
         <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
             <div class="flex flex-col mb-2 sm:flex-row sm:justify-between items-start">
                 <div class="flex flex-col w-full sm:w-1/2 mr-4">
@@ -60,6 +58,9 @@
                     id="ConfirmPass" name="password" placeholder="password" required>
                 <small *ngIf="signUpForm.controls['password'].dirty && signUpForm.hasError('required','password')"
                     class="text-red-500">password is required</small>
+            </div>
+            <div *ngIf="signupErrorMessage" class="text-red-500 mb-2 ">
+                {{ signupErrorMessage }}
             </div>
             <button type="submit"
                 class="bg-primary text-black  py-2 px-4 rounded-lg w-full hover:opacity-80 transition duration-300 ">Sign

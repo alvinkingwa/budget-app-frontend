@@ -105,21 +105,91 @@
                             </svg>
                         </button>
                     </tr>
-                    <tr>
-                        <td class="px-4 py-2">
 
+
+
+                    <!-- test subject -->
+
+                    <tr>
+                        <td class="px-4 py-2"></td>
+                        <td class="px-4 py-2">Testsubject</td>
+                        <td class="px-4 py-2 text-purple-600">Ksh 40.00</td>
+                        <td>
+                            <button (click)="openEditModal('Testsubject', '40.00')"
+                                class="flex items-center justify-center hover:bg-opacity-60 w-7 h-7 bg-gray-200 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" class="h-4 w-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                            </button>
                         </td>
-                        <td class=" px-4 py-2">Deposit</td>
-                        <td class=" px-4 py-2 text-purple-600">Ksh 40.00</td>
-                        <button
-                            class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" class="h-4 w-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                            </svg>
-                        </button>
                     </tr>
+
+                    <!-- modal Modal for editing amount -->
+                    <div *ngIf="showModalTransaction" class="fixed z-10 inset-0 overflow-y-auto">
+                        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
+                            <!-- Modal backdrop -->
+                            <div class="fixed inset-0 transition-opacity" (click)="closeModal()" aria-hidden="true">
+                                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                            </div>
+
+                            <!-- Modal content -->
+                            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                                role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                                <!-- Modal header -->
+                                <div class="bg-gray-200 px-4 py-2">
+                                    <h3 class="text-lg font-medium text-gray-800" id="modal-headline">Edit Amount Limit
+                                    </h3>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                    <div class="mb-4">
+                                        <label class="block text-gray-700 text-sm font-bold mb-2"
+                                            for="editedAmount">Category Name</label>
+                                        <p class="text-gray-800">{{ selectedCategory }}</p>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="block text-gray-700 text-sm font-bold mb-2"
+                                            for="editedAmount">Previous Amount</label>
+                                        <p class="text-purple-600">{{ previousAmount }}</p>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="block text-gray-700 text-sm font-bold mb-2"
+                                            for="editedAmount">Edited Amount</label>
+                                        <input type="number"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            id="editedAmount" [(ngModel)]="editedAmount"
+                                            placeholder="Enter edited amount">
+                                    </div>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="bg-gray-200 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                    <button type="button"
+                                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm"
+                                        (click)="saveEditedAmount()">Save</button>
+                                    <button type="button"
+                                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm"
+                                        (click)="closeModal()">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+
+
+
+
+
+
+
+
+
+                    <!-- tesing  -->
+
+
                     <tr>
                         <td class="px-4 py-2">
 
@@ -216,90 +286,24 @@
             <div class="mt-8">
                 <h1 class="font-medium text-gray-500 pl-6">Categories Created</h1>
 
-                <div class="flex flex-col m-10 mt-2 space-y-3">
-                    <div class="flex justify-between">
-                        <span class="font-medium text-lg">Food</span>
-                        <fa-icon [icon]="faTrash" class="text-lg  text-black"></fa-icon>
-
-
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="font-medium text-lg">Rent</span>
-                        <fa-icon [icon]="faTrash" class="text-lg  text-black"></fa-icon>
-
-
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="font-medium text-lg">Deposit</span>
-                        <fa-icon [icon]="faTrash" class="text-lg  text-black"></fa-icon>
-
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="font-medium text-lg">Shoes</span>
-                        <fa-icon [icon]="faTrash" class="text-lg  text-black"></fa-icon>
-
-
-                    </div>
+                    <div class="flex flex-col m-10 mt-2 space-y-3">
+                        <div *ngFor="let category of categories" class="flex justify-between items-center">
+                          <span class="font-medium text-lg">{{ category.name }}</span>
+                          <fa-icon [icon]="faTrash" class="text-lg text-black cursor-pointer" (click)="deleteCategory(category)"></fa-icon>
+                        </div>
+                      </div>
+                      
 
                     <!-- testtttting  -->
 
 
-                    <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="showModal">
-                        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
-                            <!-- Modal backdrop -->
-                            <div class="fixed inset-0 transition-opacity" (click)="closeModal()" aria-hidden="true">
-                                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                            </div>
-
-                            <!-- Modal content -->
-                            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-                                role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                                <!-- Modal header -->
-                                <div class="bg-gray-200 px-4 py-2">
-                                    <h3 class="text-lg font-medium text-gray-800" id="modal-headline">Manage Category
-                                    </h3>
-                                </div>
-
-                                <!-- Modal body -->
-                                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                    <!-- Edit Category Name -->
-                                    <div class="mb-4">
-                                        <button
-                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                            type="button" (click)="editCategoryName()">Edit Category Name</button>
-                                    </div>
-
-                                    <!-- Delete Category -->
-                                    <div class="mb-4">
-                                        <button
-                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                            type="button" (click)="deleteCategory()">Delete Category</button>
-                                    </div>
-
-                                    <!-- Set Budget Limit -->
-                                    <div class="mb-4">
-                                        <button
-                                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                            type="button" (click)="setBudgetLimit()">Set Budget Limit</button>
-                                    </div>
-
-                                    <!-- Additional form fields for category -->
-
-                                    <!-- Close Modal Button -->
-                                    <div class="mt-4">
-                                        <button
-                                            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                            type="button" (click)="closeModal()">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
 
 
-                    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                        (click)="openModal()">Edit/Delete Category</button>
+
+
+
+
 
 
 

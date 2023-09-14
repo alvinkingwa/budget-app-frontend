@@ -67,7 +67,7 @@
                     </thead>
 
                     <tbody>
-                        <tr >
+                        <tr>
                             <td class="px-4 py-2">
                                 <div class="flex items-center space-x-3">
                                     <div>
@@ -92,29 +92,100 @@
                             </div>
 
                         </tr>
+
+
+                        <!--testing -->
                         <tr>
                             <td class="px-4 py-2">
                                 <div class="flex items-center space-x-3">
                                     <div>
                                         <p> Mama mboga</p>
                                         <p class="text-gray-500 text-xs font-bold tracking-wide">
-                                            25 March ,2023 at 7:15 AM</p>
+                                            25 March ,2023 at 7:15 AM
+                                        </p>
                                     </div>
                                 </div>
                             </td>
                             <td class=" px-4 py-2">Mboga</td>
                             <td class=" px-4 py-2 text-red-600">Ksh 10.00</td>
-                            <div class="py-3">
+                            <td class="py-3">
                                 <button
-                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
+                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full"
+                                    (click)="openEditModal('Mama boga', 10.00)">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke="currentColor" class="h-4 w-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                                        </path>
                                     </svg>
                                 </button>
-                            </div>
+                            </td>
                         </tr>
+
+                        <!-- modal for testing  -->
+                        <!-- Modal for Editing Spending -->
+                        <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="showEditModal">
+                            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
+                                <!-- Modal backdrop -->
+                                <div class="fixed inset-0 transition-opacity" (click)="closeEditModal()"
+                                    aria-hidden="true">
+                                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                </div>
+
+                                <!-- Modal content -->
+                                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                                    role="dialog" aria-modal="true">
+                                    <!-- Modal header -->
+                                    <div class="bg-gray-200 px-4 py-2">
+                                        <h3 class="text-lg font-medium text-gray-800">Edit Spending</h3>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                        <form>
+                                            <!-- Category Name Display -->
+                                            <div class="mb-4">
+                                                <label class="block text-gray-700 text-sm font-bold mb-2">Category
+                                                    Name:</label>
+                                                <p class="text-gray-800 font-medium">{{ editCategoryName }}</p>
+                                            </div>
+
+                                            <!-- Edit Spending Input -->
+                                            <div class="mb-4">
+                                                <label class="block text-gray-700 text-sm font-bold mb-2"
+                                                    for="editSpending">Edit Spending:</label>
+                                                <input type="number"
+                                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                    id="editSpending" [(ngModel)]="editCategorySpending"
+                                                    placeholder="Edit spending">
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="bg-gray-200 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                        <button
+                                            class="bg-primary hover:bg-opacity-60 text-black font-mono py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                            type="button" (click)="saveEditedSpending()">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         <tr>
                             <td class="px-4 py-2">
                                 <div class="flex items-center space-x-3">
@@ -216,10 +287,85 @@
     </div>
     <div class="w-3/12 p-4">
         <div class="flex flex-col">
-            <button
+            <button (click)="openCreateCategoryModal()"
                 class="flex items-center justify-center hover:bg-opacity-60 p- w-30 m-4 h-10 bg-primary text-black rounded-md shadow-md">
-                Spend On Category <span class="pl-2">+</span>
+                Create Category
             </button>
+
+            <!-- Modal for Creating a Category -->
+            <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="showCreateCategoryModal">
+                <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
+                    <!-- Modal backdrop -->
+                    <div class="fixed inset-0 transition-opacity" (click)="closeCreateCategoryModal()"
+                        aria-hidden="true">
+                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                    </div>
+
+                    <!-- Modal content -->
+                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                        role="dialog" aria-modal="true">
+                        <!-- Modal header -->
+                        <div class="bg-gray-200 px-4 py-2">
+                            <h3 class="text-lg font-medium text-gray-800">Create Category</h3>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <form>
+                                <!-- Category Name Input -->
+                                <div class="mb-2">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2"
+                                        for="categoryName">Category Name</label>
+                                    <input type="text"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:shadow-outline"
+                                        id="categoryName" [(ngModel)]="newCategoryName"
+                                        placeholder="Enter category name">
+                                </div>
+
+                                <!-- Spending Input -->
+                                <div class="mb-2">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2"
+                                        for="spending">Spending</label>
+                                    <input type="text"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:shadow-outline"
+                                        id="spending" [(ngModel)]="newSpending" placeholder="Enter spending">
+                                    <span class="p-1 text-xs text-gray-500">optional</span>
+                                </div>
+
+
+                                <!-- Amount Limit Input -->
+                                <div class="mb-2">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="amountLimit">Amount
+                                        Limit</label>
+                                    <input type="number"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:shadow-outline"
+                                        id="amountLimit" [(ngModel)]="newAmountLimit" placeholder="Enter amount limit">
+                                    <span class="p-1 text-xs text-gray-500">optional</span>
+
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="bg-gray-200 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <button
+                                class="bg-primary hover:bg-opacity-60 text-black font-mono py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                type="button" (click)="createCategory()">Create</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
             <div>
                 <h1 class="text-lg text-center font-medium">Spending Limit</h1>
             </div>
@@ -261,6 +407,14 @@
                     <!-- Add more categories as needed -->
                 </div>
             </div>
+
+            <!-- testing now -->
+
+
+
+
+
+
 
 
         </div>
