@@ -1,17 +1,18 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private baseUrl: string = 'http://localhost:3001/api/';
-  private userPayload:any;
+  private userPayload: any;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.userPayload = this.decodedToken()
+    this.userPayload = this.decodedToken();
   }
 
   signUp(userObj: any) {
@@ -23,6 +24,21 @@ export class AuthService {
     const endpoint = 'user/login';
     return this.http.post<any>(`${this.baseUrl}${endpoint}`, loginObj);
   }
+
+  deposit(amount: number):Observable<any> {
+    const endpoint = 'account/deposit';
+
+    const token = this.getToken();
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    const depositAmount = { amount };
+
+    return this.http.patch<any>(`${this.baseUrl}${endpoint}`,depositAmount,{
+      headers,
+    });
+  }
+
   // storeToken(tokenValue: string) {
   //   localStorage.setItem('token', tokenValue);
   //   console.log(tokenValue);
@@ -45,8 +61,7 @@ export class AuthService {
     return jwtHelper.decodeToken(access_token);
   }
 
-  getUserNameFromToken(){
-    if(this.userPayload)
-    return this.userPayload.firstName
+  getUserNameFromToken() {
+    if (this.userPayload) return this.userPayload.firstName;
   }
 }

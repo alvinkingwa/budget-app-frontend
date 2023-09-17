@@ -10,24 +10,24 @@ import { faPiggyBank } from '@fortawesome/free-solid-svg-icons';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
 
-
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  faBudget = faChartPie
-  faExchange = faExchange
+  faBudget = faChartPie;
+  faExchange = faExchange;
   faDashboard = faDashboard;
   faCoins = faCoins;
-  faPiggy=faPiggyBank;
-  faMoney=faMoneyBill;
-  faWallet=faWallet;
-  faCredit=faCreditCard;
-  
+  faPiggy = faPiggyBank;
+  faMoney = faMoneyBill;
+  faWallet = faWallet;
+  faCredit = faCreditCard;
+
   public userName: any = '';
+  isDepositInProgress = false;
+  depositAmount: number = 0;
 
   constructor(private auth: AuthService, private user: UserService) {}
   ngOnInit(): void {
@@ -37,9 +37,8 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-
-// modal 
-showModal = false;
+  // modal
+  showModal = false;
 
   openModal(): void {
     this.showModal = true;
@@ -50,19 +49,18 @@ showModal = false;
   }
 
   deposit(): void {
-    // Implement your deposit logic here
-    // You can send data to your backend, update balances, etc.
-    // After depositing, close the modal
+    this.auth.deposit(this.depositAmount).subscribe({
+      next: (response) => console.log(response),
+      error: (error) => console.log(error),
+    });
     this.closeModal();
   }
 
-getUserName(){
-  this.auth.getUserNameFromToken()
-}
-
+  getUserName() {
+    this.auth.getUserNameFromToken();
+  }
 
   logout() {
     this.auth.signOut();
-   
   }
 }
