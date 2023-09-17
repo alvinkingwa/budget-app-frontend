@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { faChartPie } from '@fortawesome/free-solid-svg-icons';
 import { faExchange } from '@fortawesome/free-solid-svg-icons';
 import { faDashboard } from '@fortawesome/free-solid-svg-icons';
@@ -20,6 +21,7 @@ export class SetBudgetComponent {
   selectedCategory: string = '';
   previousAmount: string = '';
   editedAmount: string = '';
+  public categoriesNoSpend:any = [];
 
 
   categories: { name: string }[] = [
@@ -29,7 +31,7 @@ export class SetBudgetComponent {
     { name: 'Shoes' }
     // Add more categories as needed
   ];
-
+constructor(private auth:AuthService){}
 
   deleteCategory(category: { name: string }) {
     // Implement logic to delete the selected category
@@ -37,6 +39,13 @@ export class SetBudgetComponent {
     if (index !== -1) {
       this.categories.splice(index, 1);
     }
+  }
+  categoriesWithNoSpend():void{
+    this.auth.categoryWithNoSpend().subscribe({
+      next:(response)=>{this.categoriesNoSpend = response.categoriesNoSpend},
+      error:(err)=>console.log(err),
+      complete:()=>console.log('complete')
+    })
   }
 
 

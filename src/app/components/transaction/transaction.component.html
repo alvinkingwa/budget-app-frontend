@@ -156,9 +156,9 @@
                                                     for="editSpending">Edit Spending:</label>
                                                 <input type="number"
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="editSpending" [(ngModel)]="editCategorySpending"
-                                                    placeholder="Edit spending">
-                                            </div>
+                                                    id="editSpending" [(ngModel)]="editCategorySpending" name="editSpending"
+                                                    placeholder=" Edit spending">
+                                            </div>"
                                         </form>
                                     </div>
 
@@ -318,7 +318,7 @@
                                         for="categoryName">Category Name</label>
                                     <input type="text"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:shadow-outline"
-                                        id="categoryName" [(ngModel)]="newCategoryName"
+                                        id="categoryName" [(ngModel)]="newCategoryName" name="categoryName"
                                         placeholder="Enter category name">
                                 </div>
 
@@ -328,7 +328,7 @@
                                         for="spending">Spending</label>
                                     <input type="text"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:shadow-outline"
-                                        id="spending" [(ngModel)]="newSpending" placeholder="Enter spending">
+                                        id="spending" [(ngModel)]="newSpending" name="spending" placeholder="Enter spending">
                                     <span class="p-1 text-xs text-gray-500">optional</span>
                                 </div>
 
@@ -339,7 +339,7 @@
                                         Limit</label>
                                     <input type="number"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:shadow-outline"
-                                        id="amountLimit" [(ngModel)]="newAmountLimit" placeholder="Enter amount limit">
+                                        id="amountLimit" [(ngModel)]="newAmountLimit" name="amountLimit" placeholder="Enter amount limit">
                                     <span class="p-1 text-xs text-gray-500">optional</span>
 
                                 </div>
@@ -385,25 +385,14 @@
 
 
             <div class="mt-8">
-                <h1 class="font-medium text-gray-500">Monthly Transaction Totals</h1>
+                <h1 class="font-medium text-gray-500">Monthly Category Totals</h1>
 
                 <div class="flex flex-col m-6 mt-2">
-                    <div class="flex justify-between">
-                        <span class="font-medium">Food</span>
-                        <span class="text-red-600">Ksh 100.00</span>
+                    <div *ngFor="let category of categories"  class="flex justify-between">
+                        <span class="font-medium">{{category.name}}</span>
+                        <span class="text-red-600"> {{category.amountSpent.toFixed(2)}} </span>
                     </div>
-                    <div class="flex justify-between">
-                        <span class="font-medium ">Rent</span>
-                        <span class="text-red-600">Ksh 75.00</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="font-medium">Deposit</span>
-                        <span class="text-green-600">Ksh 50.00</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="font-medium">Shoes</span>
-                        <span class="text-red-600">Ksh 50.00</span>
-                    </div>
+        
                     <!-- Add more categories as needed -->
                 </div>
             </div>

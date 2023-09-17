@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
+import { UserDataService } from './user-data.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,11 @@ export class AuthService {
   private baseUrl: string = 'http://localhost:3001/api/';
   private userPayload: any;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private userDataService: UserDataService
+  ) {
     this.userPayload = this.decodedToken();
   }
 
@@ -25,24 +30,35 @@ export class AuthService {
     return this.http.post<any>(`${this.baseUrl}${endpoint}`, loginObj);
   }
 
-  deposit(amount: number):Observable<any> {
+  deposit(amount: number): void {
     const endpoint = 'account/deposit';
-
-    const token = this.getToken();
-
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
     const depositAmount = { amount };
 
-    return this.http.patch<any>(`${this.baseUrl}${endpoint}`,depositAmount,{
-      headers,
-    });
+    this.http
+      .patch<any>(`${this.baseUrl}${endpoint}`, depositAmount)
+      .subscribe({
+        next: (response) => {
+          this.userDataService.setUserBalance(response.account.balance);
+        },
+        error: (error) => console.log(error),
+        complete: () => console.log('complete'),
+      });
+  }
+  getUserBalance(userId: string): Observable<any> {
+    const endpoint = `user/${userId}`;
+    return this.http.get<any>(`${this.baseUrl}${endpoint}`);
+  }
+  // categoryTransaction(userId: string): Observable<any> {
+  //   const categoryEndpoint = `account/all-transaction/${userId}`;
+  //   return this.http.get<any>(`${this.baseUrl}${categoryEndpoint}`);
+  // }
+  categoryWithNoSpend():Observable<any> {
+    const noSpentCategoryEndpoint= "categories/without-amount-spent";
+    return this.http.get<any>(`${this.baseUrl}${noSpentCategoryEndpoint}`)
   }
 
-  // storeToken(tokenValue: string) {
-  //   localStorage.setItem('token', tokenValue);
-  //   console.log(tokenValue);
-  // }
+
+
   getToken() {
     return localStorage.getItem('access_token');
   }
@@ -63,5 +79,8 @@ export class AuthService {
 
   getUserNameFromToken() {
     if (this.userPayload) return this.userPayload.firstName;
+  }
+  getUserIdFromToken() {
+    if (this.userPayload) return this.userPayload.userId;
   }
 }

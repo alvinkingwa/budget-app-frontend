@@ -64,7 +64,7 @@
                                 <div>
                                     <p class="mb-0 font-sans font-semibold leading-normal text-sm">Income This Month</p>
                                     <h5 class="mb-0 font-mono">
-                                        ksh 53,000
+                                        ksh {{incomeAmount | number}}
                                         <span
                                             class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
                                     </h5>
@@ -93,7 +93,7 @@
                                     <p class="mb-0 font-sans font-semibold leading-normal text-sm">Expense This Month
                                     </p>
                                     <h5 class="mb-0 font-mono">
-                                        ksh 53,000
+                                        {{spending | number}}
                                         <span
                                             class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
                                     </h5>
@@ -231,7 +231,8 @@
                 <label for="" class="text-lg font-semibold font-display">Total Balance:</label>
             </div>
             <div class=" text-center ">
-                <span class="outline-none bg-transparent block font-mono ">ksh 2000</span>
+                <span class="outline-none bg-transparent block font-mono ">ksh {{incomeAmount | number}}
+                </span>
             </div>
             <div class="w-full flex flex-row justify-between">
                 <div class="w-full flex flex-col">

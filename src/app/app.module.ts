@@ -7,7 +7,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
@@ -18,7 +18,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { TransactionComponent } from './components/transaction/transaction.component';
 import { SetBudgetComponent } from './components/set-budget/set-budget.component';
-
+import { TokenInterceptorInterceptor } from './services/token-interceptor.interceptor';
 
 @NgModule({
   declarations: [
@@ -48,7 +48,11 @@ import { SetBudgetComponent } from './components/set-budget/set-budget.component
     
     
   ],
-  providers: [],
+  providers: [{
+    provide:HTTP_INTERCEPTORS,
+    useClass:TokenInterceptorInterceptor,
+    multi:true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

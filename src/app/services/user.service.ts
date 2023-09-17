@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class UserService {
   private userName$ = new BehaviorSubject<string>('');
+  private userId$ = new BehaviorSubject<string>('');
+
 
   constructor() {}
 
@@ -14,5 +16,9 @@ export class UserService {
   }
   public setFullName(userName: string) {
     this.userName$.next(userName);
+  }
+
+  public getUserId(){
+    return this.userId$.asObservable()
   }
 }

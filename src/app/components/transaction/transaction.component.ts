@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faDashboard } from '@fortawesome/free-solid-svg-icons';
 import { faChartPie } from '@fortawesome/free-solid-svg-icons';
 import { faExchange } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-transaction',
@@ -18,11 +19,29 @@ export class TransactionComponent implements OnInit{
   editCategorySpending: number | undefined;
   showEditModal = false;
 
+  public categories:any = []
 
 
+constructor(private auth:AuthService){}
   ngOnInit(): void {
-      
+      this.auth.getUserIdFromToken();
+      this.listCategory()
   }
+
+
+listCategory():void{
+  const userId = this.auth.getUserIdFromToken()
+if(userId){
+  this.auth.getUserBalance(userId).subscribe({
+    next:(data)=>{
+      this.categories = data.categories},
+    error:(err)=> console.log(err),
+    complete:()=>console.log('complete')
+  })
+}
+
+}
+
 
 
   // Function to open the edit modal
