@@ -10,7 +10,7 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
   templateUrl: './set-budget.component.html',
   styleUrls: ['./set-budget.component.css'],
 })
-export class SetBudgetComponent {
+export class SetBudgetComponent implements OnInit{
   faBudget = faChartPie;
   faExchange = faExchange;
   faDashboard = faDashboard;
@@ -22,27 +22,51 @@ export class SetBudgetComponent {
   previousAmount: string = '';
   editedAmount: string = '';
   public categoriesNoSpend:any = [];
+  public newCategory:string = ''
 
 
-  categories: { name: string }[] = [
-    { name: 'Food' },
-    { name: 'Rent' },
-    { name: 'Deposit' },
-    { name: 'Shoes' }
-    // Add more categories as needed
-  ];
+
 constructor(private auth:AuthService){}
-
-  deleteCategory(category: { name: string }) {
-    // Implement logic to delete the selected category
-    const index = this.categories.findIndex(c => c.name === category.name);
-    if (index !== -1) {
-      this.categories.splice(index, 1);
-    }
+ngOnInit(): void {
+    this.categoriesWithNoSpend()
+    
+}
+createCategory(){
+  const newCategoryData = {
+    name:this.newCategory,
   }
+  this.auth.createCategory(newCategoryData).subscribe({
+    next:(response)=>{
+      this.closeModal()
+      console.log('category created',response);
+      this.newCategory = ''
+    },
+    error:(error)=>{
+      console.log('error creating category',error)
+    }
+
+  })
+}
+
+
+deleteCategory(category:{categoryId:string}):void{
+  this.auth.deleteCategory(category.categoryId).subscribe({
+    next:()=>{
+      console.log(`category ${category.categoryId} deleted successful`)
+    },
+    error:(err)=>console.log(err),
+    complete:()=>{
+      this.categoriesWithNoSpend()
+    }
+  })
+}
+
+
   categoriesWithNoSpend():void{
     this.auth.categoryWithNoSpend().subscribe({
-      next:(response)=>{this.categoriesNoSpend = response.categoriesNoSpend},
+      next:(response)=>{
+        console.log(response)
+        this.categoriesNoSpend = response},
       error:(err)=>console.log(err),
       complete:()=>console.log('complete')
     })
@@ -116,4 +140,9 @@ constructor(private auth:AuthService){}
     // After adding the category, close the modal
     this.closeModal();
   }
+
+
+
+
+  
 }

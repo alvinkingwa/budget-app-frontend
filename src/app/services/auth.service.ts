@@ -52,12 +52,20 @@ export class AuthService {
   //   const categoryEndpoint = `account/all-transaction/${userId}`;
   //   return this.http.get<any>(`${this.baseUrl}${categoryEndpoint}`);
   // }
-  categoryWithNoSpend():Observable<any> {
+  categoryWithNoSpend():Observable<any[]> {
     const noSpentCategoryEndpoint= "categories/without-amount-spent";
-    return this.http.get<any>(`${this.baseUrl}${noSpentCategoryEndpoint}`)
+    return this.http.get<any[]>(`${this.baseUrl}${noSpentCategoryEndpoint}`)
   }
 
-
+  deleteCategory(categoryId:string):Observable<void>{
+    const endpoint = `categories/${categoryId}/delete`;
+    return this.http.delete<void>(`${this.baseUrl}${endpoint}`);
+  }
+createCategory(category:any):Observable<any>{
+  const endpoint = 'categories/create';
+  return this.http.post<any>(`${this.baseUrl}${endpoint}`,category)
+  
+}
 
   getToken() {
     return localStorage.getItem('access_token');
