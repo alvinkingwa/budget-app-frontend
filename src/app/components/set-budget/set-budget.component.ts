@@ -10,71 +10,71 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
   templateUrl: './set-budget.component.html',
   styleUrls: ['./set-budget.component.css'],
 })
-export class SetBudgetComponent implements OnInit{
+export class SetBudgetComponent implements OnInit {
   faBudget = faChartPie;
   faExchange = faExchange;
   faDashboard = faDashboard;
-  faTrash = faTrashAlt
-
+  faTrash = faTrashAlt;
 
   showModalTransaction = false;
+  showModalAmountLimit =false;
   selectedCategory: string = '';
   previousAmount: string = '';
   editedAmount: string = '';
-  public categoriesNoSpend:any = [];
-  public newCategory:string = ''
+  public categoriesNoSpend: any = [];
+  public newCategory: string = '';
+  selectedCategoryLimit: any;
 
+  amountLimit: number = 0;
 
-
-constructor(private auth:AuthService){}
-ngOnInit(): void {
-    this.categoriesWithNoSpend()
-    
-}
-createCategory(){
-  const newCategoryData = {
-    name:this.newCategory,
+  constructor(private auth: AuthService) {}
+  ngOnInit(): void {
+    this.categoriesWithNoSpend();
   }
-  this.auth.createCategory(newCategoryData).subscribe({
-    next:(response)=>{
-      this.closeModal()
-      console.log('category created',response);
-      this.newCategory = ''
-    },
-    error:(error)=>{
-      console.log('error creating category',error)
-    }
+  createCategory() {
+    const newCategoryData = {
+      name: this.newCategory,
+    };
+    this.auth.createCategory(newCategoryData).subscribe({
+      next: (response) => {
+        this.closeModal();
+        console.log('category created', response);
+        this.newCategory = '';
+      },
+      error: (error) => {
+        console.log('error creating category', error);
+      },
+    });
+  }
 
-  })
-}
+  deleteCategory(category: { categoryId: string }): void {
+    this.auth.deleteCategory(category.categoryId).subscribe({
+      next: () => {
+        console.log(`category ${category.categoryId} deleted successful`);
+      },
+      error: (err) => console.log(err),
+      complete: () => {
+        this.categoriesWithNoSpend();
+      },
+    });
+  }
 
-
-deleteCategory(category:{categoryId:string}):void{
-  this.auth.deleteCategory(category.categoryId).subscribe({
-    next:()=>{
-      console.log(`category ${category.categoryId} deleted successful`)
-    },
-    error:(err)=>console.log(err),
-    complete:()=>{
-      this.categoriesWithNoSpend()
-    }
-  })
-}
-
-
-  categoriesWithNoSpend():void{
+  categoriesWithNoSpend(): void {
     this.auth.categoryWithNoSpend().subscribe({
-      next:(response)=>{
-        console.log(response)
-        this.categoriesNoSpend = response},
-      error:(err)=>console.log(err),
-      complete:()=>console.log('complete')
-    })
+      next: (response) => {
+        console.log(response);
+        this.categoriesNoSpend = response;
+      },
+      error: (err) => console.log(err),
+      complete: () => console.log('complete'),
+    });
   }
 
-
-
-
+  openAmountLimitModal(category: any) {
+    this.selectedCategoryLimit = category;
+    this.amountLimit = category.amountLimit;
+  }
+  saveAmountLimit() {}
 
   openEditModal(category: string, previousAmount: string) {
     // Open the modal and pass the selected category and previous amount
@@ -92,24 +92,26 @@ deleteCategory(category:{categoryId:string}):void{
     console.log('Category:', this.selectedCategory);
     console.log('Previous Amount:', this.previousAmount);
     console.log('Edited Amount:', this.editedAmount);
-    this.showModalTransaction = false
+    this.showModalTransaction = false;
 
     // Close the modal (you can implement this using Tailwind CSS classes or Angular ngIf/ngClass)
     // For example, you can remove the CSS class to hide the modal
   }
 
-
-
-  
   showModal = false;
- 
+
   openModal(): void {
     this.showModal = true;
+  }
+  closeAmountLimitModal(): void {
+    console.log("not working ")
+    this.showModalAmountLimit = false;
   }
 
   closeModal(): void {
     this.showModal = false;
     this.showModalTransaction = false;
+    this.showModalAmountLimit = false
   }
 
   editCategoryName(): void {
@@ -132,17 +134,10 @@ deleteCategory(category:{categoryId:string}):void{
     this.closeModal();
   }
 
-  
-
   addCategory(): void {
     // Implement your category addition logic here
     // You can send data to your backend, update categories, etc.
     // After adding the category, close the modal
     this.closeModal();
   }
-
-
-
-
-  
 }
