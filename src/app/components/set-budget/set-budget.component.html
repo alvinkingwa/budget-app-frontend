@@ -285,9 +285,6 @@
 
             <div class="mt-8">
                 <h1 class="font-medium text-gray-500 pl-6">Categories Created</h1>
-
-
-
                 <div class="flex flex-col m-10 mt-2 space-y-3">
                     <div *ngFor="let category of categoriesNoSpend" class="flex justify-between items-center">
                         <a href="javascript:void(0);" class="font-medium text-lg"
@@ -299,10 +296,11 @@
 
                 <!-- set amount Limit modal -->
                 <!-- Modal for setting amount limit -->
-                <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="selectedCategoryLimit">
+                <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="selectedCategoryLimitModel">
                     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
                         <!-- Modal backdrop -->
-                        <div class="fixed inset-0 transition-opacity" (click)="closeAmountLimitModal()" aria-hidden="true">
+                        <div class="fixed inset-0 transition-opacity" (click)="closeAmountLimitModal()"
+                            aria-hidden="true">
                             <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
                         </div>
 
@@ -311,7 +309,8 @@
                             role="dialog" aria-modal="true" aria-labelledby="modal-headline">
                             <!-- Modal header -->
                             <div class="bg-gray-200 px-4 py-2">
-                                <h3 class="text-lg font-medium text-gray-800" id="modal-headline">Set Amount Limit for {{ selectedCategoryLimit.name }}</h3>
+                                <h3 class="text-lg font-medium text-gray-800" id="modal-headline">Set Amount Limit for
+                                    {{ selectedCategoryLimit.name }}</h3>
                             </div>
 
                             <!-- Modal body -->
@@ -328,57 +327,26 @@
                                             id="categoryName" placeholder="Enter budget Limit">
                                     </div>
 
+                                    <div *ngIf="selectedCategoryLimit && !selectedCategoryLimit.limit">
+                                        <!-- Display a message if the amount limit is null -->
+                                        <p class="text-sm text-red-600 font">No amount limit set for {{ selectedCategoryLimit.name }}</p>
+                                      </div>
+
                                     <!-- Additional form fields for category -->
 
-                                    <div class="mt-4">
+                                    <div class="mt-4 flex flex-row-reverse">
                                         <button type="button"
-                                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm"
-                                        (click)="saveAmountLimit()">Save</button>
-                                    <button type="button"
-                                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm"
-                                        (click)="closeModal()">Cancel</button>
+                                            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm"
+                                            (click)="saveAmountLimit()">Save</button>
+                                        <button type="button"
+                                            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm"
+                                            (click)="closeModal()">Cancel</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-                <!-- <div class="modal" *ngIf="selectedCategoryLimit">
-                    <div class="modal-content">
-                        <h2>Set Amount Limit for {{ selectedCategoryLimit.name }}</h2>
-                        <input type="number" [(ngModel)]="amountLimit" placeholder="Enter amount limit">
-                        <button (click)="saveAmountLimit()">Save</button>
-                        <button (click)="closeAmountLimitModal()">Cancel</button>
-                    </div>
-                </div> -->
-
-
-                <!-- testtttting  -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
         </div>
     </div>

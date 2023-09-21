@@ -17,15 +17,17 @@ export class SetBudgetComponent implements OnInit {
   faTrash = faTrashAlt;
 
   showModalTransaction = false;
-  showModalAmountLimit =false;
+  showModalAmountLimit = false;
   selectedCategory: string = '';
   previousAmount: string = '';
   editedAmount: string = '';
   public categoriesNoSpend: any = [];
   public newCategory: string = '';
   selectedCategoryLimit: any;
+  selectedCategoryLimitModel = false;
+  showModal = false;
 
-  amountLimit: number = 0;
+   amountLimit: number | null = null;
 
   constructor(private auth: AuthService) {}
   ngOnInit(): void {
@@ -47,17 +49,18 @@ export class SetBudgetComponent implements OnInit {
     });
   }
 
-  deleteCategory(category: { categoryId: string }): void {
+  deleteCategory(category: { categoryId: string }){
     this.auth.deleteCategory(category.categoryId).subscribe({
       next: () => {
         console.log(`category ${category.categoryId} deleted successful`);
       },
-      error: (err) => console.log(err),
+      error: (err) => console.log("cannot delete",err),
       complete: () => {
         this.categoriesWithNoSpend();
       },
     });
   }
+
 
   categoriesWithNoSpend(): void {
     this.auth.categoryWithNoSpend().subscribe({
@@ -73,8 +76,22 @@ export class SetBudgetComponent implements OnInit {
   openAmountLimitModal(category: any) {
     this.selectedCategoryLimit = category;
     this.amountLimit = category.amountLimit;
+    this.selectedCategoryLimitModel = true;
   }
-  saveAmountLimit() {}
+  saveAmountLimit() {
+    if(this.selectedCategoryLimit && this.amountLimit ){
+      this.auth.amountLimit(this.selectedCategoryLimit.categoryId,this.amountLimit).subscribe({
+        next:(response)=>{
+          console.log('amount Limit set:',response);
+          this.closeAmountLimitModal()
+          
+        },error:(error)=>{
+          console.log("cannot set amount Limit twice",error)
+        }
+      })
+    }
+    
+  }
 
   openEditModal(category: string, previousAmount: string) {
     // Open the modal and pass the selected category and previous amount
@@ -98,20 +115,22 @@ export class SetBudgetComponent implements OnInit {
     // For example, you can remove the CSS class to hide the modal
   }
 
-  showModal = false;
-
   openModal(): void {
     this.showModal = true;
   }
-  closeAmountLimitModal(): void {
-    console.log("not working ")
-    this.showModalAmountLimit = false;
+  closeAmountLimitModal(): void {   
+     this.selectedCategoryLimitModel = false;
+     this.selectedCategoryLimit = null;
+     this.amountLimit = 0
+     
+
   }
 
   closeModal(): void {
     this.showModal = false;
     this.showModalTransaction = false;
-    this.showModalAmountLimit = false
+    this.showModalAmountLimit = false;
+    this.selectedCategoryLimitModel = false;
   }
 
   editCategoryName(): void {

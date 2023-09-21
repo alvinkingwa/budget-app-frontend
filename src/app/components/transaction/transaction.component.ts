@@ -18,6 +18,7 @@ export class TransactionComponent implements OnInit{
   editCategoryName: string | undefined;
   editCategorySpending: number | undefined;
   showEditModal = false;
+  showCreateCategoryModal = false;
 
   public categories:any = []
 
@@ -79,8 +80,6 @@ if(userId){
   newSpending: string = '';
   newAmountLimit: number | undefined;
 
-  // Variables for managing the modal state
-  showCreateCategoryModal = false;
 
   // Function to open the Create Category modal
   openCreateCategoryModal() {
