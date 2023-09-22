@@ -50,24 +50,14 @@
         </nav>
         <div class="overflow-x-auto h-set-budget shadow-xl bg-slate-100 rounded-md pt-6">
             <table class="min-w-full border-collapse table-auto ">
-                <!-- <thead class="text-xs sticky top-0 uppercase bg-gray-300 dark:text-black">
-                    <tr>
-
-
-
-                    </tr>
-                </thead> -->
-
                 <tbody class="mt-6">
-                    <tr>
+                    <tr *ngFor="let categories of displayAmountLimit">
                         <td class="px-4 py-2">
-
                         </td>
-
-                        <td class=" px-4 py-2">Groceries</td>
-                        <td class=" px-4 py-2 text-purple-600">Ksh 20.00</td>
-                        <button
-                            class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
+                        <td class=" px-4 py-2"> {{categories.name}} </td>
+                        <td class=" px-4 py-2 text-purple-600"> {{categories.limit?.limitAmount}} </td>
+                        <button (click)="openEditModal(categories.name, categories.limit?.limitAmount)"
+                            class="flex items-center justify-center hover:bg-opacity-60 w-7 h-7 bg-gray-200 rounded-full">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor" class="h-4 w-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -75,57 +65,6 @@
                             </svg>
                         </button>
                     </tr>
-                    <tr>
-                        <td class="px-4 py-2">
-
-                        </td>
-                        <td class=" px-4 py-2">Mboga</td>
-                        <td class=" px-4 py-2 text-purple-600">Ksh 10.00</td>
-                        <button
-                            class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" class="h-4 w-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                            </svg>
-                        </button>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-2">
-
-                        </td>
-                        <td class=" px-4 py-2">Food</td>
-                        <td class=" px-4 py-2 text-purple-600">Ksh 40.00</td>
-                        <button
-                            class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" class="h-4 w-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                            </svg>
-                        </button>
-                    </tr>
-
-
-
-                    <!-- test subject -->
-
-                    <tr>
-                        <td class="px-4 py-2"></td>
-                        <td class="px-4 py-2">Testsubject</td>
-                        <td class="px-4 py-2 text-purple-600">Ksh 40.00</td>
-                        <td>
-                            <button (click)="openEditModal('Testsubject', '40.00')"
-                                class="flex items-center justify-center hover:bg-opacity-60 w-7 h-7 bg-gray-200 rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" class="h-4 w-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-
                     <!-- modal Modal for editing amount -->
                     <div *ngIf="showModalTransaction" class="fixed z-10 inset-0 overflow-y-auto">
                         <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
@@ -160,7 +99,7 @@
                                             for="editedAmount">Edited Amount</label>
                                         <input type="number"
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="editedAmount" [(ngModel)]="editedAmount"
+                                            id="editedAmount" [(ngModel)]="editedAmount" name="editedAmount"
                                             placeholder="Enter edited amount">
                                     </div>
                                 </div>
@@ -169,7 +108,7 @@
                                 <div class="bg-gray-200 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                     <button type="button"
                                         class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm"
-                                        (click)="saveEditedAmount()">Save</button>
+                                        (click)="updateCategoryLimit(selectedCategory, editedAmount)">Save</button>
                                     <button type="button"
                                         class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm"
                                         (click)="closeModal()">Cancel</button>
@@ -177,54 +116,9 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
-
-
-
-
-                    <!-- tesing  -->
-
-
-                    <tr>
-                        <td class="px-4 py-2">
-
-                        </td>
-                        <td class=" px-4 py-2">Electronics</td>
-                        <td class=" px-4 py-2 text-purple-600">Ksh 60.00</td>
-                        <button
-                            class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" class="h-4 w-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                            </svg>
-                        </button>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-2">
-
-                        </td>
-                        <td class=" px-4 py-2">Travel</td>
-                        <td class=" px-4 py-2 text-purple-600">Ksh 80.00</td>
-                        <button
-                            class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" class="h-4 w-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                            </svg>
-                        </button>
-                    </tr>
                 </tbody>
             </table>
         </div>
-
-
     </div>
 
 
@@ -322,15 +216,16 @@
                                         <label class="block text-gray-700 text-sm font-bold mb-2" for="categoryName">
                                             {{selectedCategoryLimit.name}}
                                         </label>
-                                        <input type="text" [(ngModel)]="amountLimit" name="amountLimit"
+                                        <input type="number" [(ngModel)]="amountLimit" name="amountLimit"
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                             id="categoryName" placeholder="Enter budget Limit">
                                     </div>
 
                                     <div *ngIf="selectedCategoryLimit && !selectedCategoryLimit.limit">
                                         <!-- Display a message if the amount limit is null -->
-                                        <p class="text-sm text-red-600 font">No amount limit set for {{ selectedCategoryLimit.name }}</p>
-                                      </div>
+                                        <p class="text-sm text-red-600 font">No amount limit set for {{
+                                            selectedCategoryLimit.name }}</p>
+                                    </div>
 
                                     <!-- Additional form fields for category -->
 

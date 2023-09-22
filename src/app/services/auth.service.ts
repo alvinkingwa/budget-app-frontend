@@ -57,6 +57,18 @@ export class AuthService {
     return this.http.get<any[]>(`${this.baseUrl}${noSpentCategoryEndpoint}`);
   }
 
+  updateCategoryLimit(categoryId: string,amountLimit:number): Observable<void> {
+    const endpoint = `amountLimit/${categoryId}/update`;
+    const requestBody = {categoryId,amountLimit}
+    return this.http.patch<any>(`${this.baseUrl}${endpoint}`,requestBody);
+  }
+
+  getTransactionsForUser(userId: string): Observable<any[]> {
+    const endpoint = `account/all-transaction/${userId}`;
+    return this.http.get<any[]>(`${this.baseUrl}${endpoint}`);
+  }
+
+
   deleteCategory(categoryId: string): Observable<void> {
     const endpoint = `categories/${categoryId}/delete`;
     return this.http.delete<void>(`${this.baseUrl}${endpoint}`);

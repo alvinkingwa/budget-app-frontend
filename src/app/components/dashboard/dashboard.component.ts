@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit {
     if (userId) {
       this.auth.getUserBalance(userId).subscribe({
         next: (data) => {
-          // console.log(data)
+          console.log('this is user inform', data);
 
           {
             this.incomeAmount = data.account.balance;

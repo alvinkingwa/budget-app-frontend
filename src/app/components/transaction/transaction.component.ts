@@ -19,6 +19,7 @@ export class TransactionComponent implements OnInit{
   editCategorySpending: number | undefined;
   showEditModal = false;
   showCreateCategoryModal = false;
+  public transactions:any[] = []
 
   public categories:any = []
 
@@ -29,6 +30,22 @@ constructor(private auth:AuthService){}
       this.listCategory()
   }
 
+
+  fetchUserTransaction(){
+    const userId = this.auth.getUserIdFromToken()
+    if(userId){
+      this.auth.getTransactionsForUser(userId).subscribe({
+        next:(response)=>{
+          this.transactions = response
+        },
+        error: (error) => {
+          console.error('Error fetching transactions', error);
+        },
+      });
+    }else{
+      console.log("errorrrrr")
+    }
+  }
 
 listCategory():void{
   const userId = this.auth.getUserIdFromToken()
@@ -42,6 +59,7 @@ if(userId){
 }
 
 }
+
 
 
 
