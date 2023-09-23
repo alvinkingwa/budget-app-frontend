@@ -18,7 +18,8 @@ export class TransactionComponent implements OnInit {
   showEditModal = false;
   showCreateCategoryModal = false;
   public transactions: any[] = [];
-
+  depositAmount: number = 0;
+  receiverName: string = '';
   public categories: any = [];
 
   constructor(private auth: AuthService) {}
@@ -27,15 +28,23 @@ export class TransactionComponent implements OnInit {
     this.listCategory();
     this.loadTransaction();
   }
+  // deposit(): void {
+  //   this.auth.deposit(this.receiverName, this.depositAmount);
+  //   console.log('checking if patch is intitiated');
+  //   this.closeEditModal();
+  // }
+
   loadTransaction(): void {
     const userId = this.auth.getUserIdFromToken();
     this.auth.getTransaction(userId).subscribe({
       next: (data) => {
         console.log('transaction category shown', data);
-        this.transactions = data.map((transaction)=>({
+        this.transactions = data.map((transaction) => ({
           ...transaction,
-          receiverName:transaction.receiver?transaction.receiver.name:'N/A'
-        }))
+          receiverName: transaction.receiver
+            ? transaction.receiver.name
+            : 'N/A',
+        }));
       },
       error: (error) => {
         console.log('error fetching transaction', error);
@@ -57,10 +66,11 @@ export class TransactionComponent implements OnInit {
   }
 
   // Function to open the edit modal
-  openEditModal(categoryName: string, spending: number) {
+  openEditModal(categoryName: string, spending: number,receiverName:string) {
     this.editCategoryName = categoryName;
     this.editCategorySpending = spending;
     this.showEditModal = true;
+    this.receiverName = receiverName
     console.log('hope it work');
   }
 
@@ -72,8 +82,10 @@ export class TransactionComponent implements OnInit {
   }
 
   // Function to save the edited spending
-  saveEditedSpending() {
-    // Implement logic to save the edited spending
+  saveEditedSpending(): void {
+    this.auth.deposit(this.receiverName, this.depositAmount);
+    console.log('checking if patch is intitiated');
+
     console.log('Category Name:', this.editCategoryName);
     console.log('Edited Spending:', this.editCategorySpending);
 

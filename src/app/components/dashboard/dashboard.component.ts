@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit {
 
   isDepositInProgress = false;
   depositAmount: number = 0;
+  receiverName: string = '';
 
   constructor(
     private auth: AuthService,
@@ -69,7 +70,7 @@ export class DashboardComponent implements OnInit {
   }
 
   deposit(): void {
-    this.auth.deposit(this.depositAmount);
+    this.auth.deposit(this.receiverName,this.depositAmount);
     this.closeModal();
   }
 

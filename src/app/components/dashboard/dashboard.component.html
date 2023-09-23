@@ -201,6 +201,12 @@
                         <form>
                             <div class="mb-4">
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="amount">
+                                    Received From
+                                </label>
+                                <input type="string" [(ngModel)]="receiverName" name="receiverName"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary"
+                                    id="amount" placeholder="money received from...">
+                                <label class="block text-gray-700 text-sm font-bold m-2" for="amount">
                                     Amount
                                 </label>
                                 <input type="number" [(ngModel)]="depositAmount" name="depositAmount"

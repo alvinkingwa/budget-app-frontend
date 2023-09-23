@@ -30,9 +30,9 @@ export class AuthService {
     return this.http.post<any>(`${this.baseUrl}${endpoint}`, loginObj);
   }
 
-  deposit(amount: number): void {
+  deposit(receiverName:string,amount: number): void {
     const endpoint = 'account/deposit';
-    const depositAmount = { amount };
+    const depositAmount = { receiverName,amount };
 
     this.http
       .patch<any>(`${this.baseUrl}${endpoint}`, depositAmount)
