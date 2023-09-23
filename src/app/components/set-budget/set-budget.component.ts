@@ -102,8 +102,8 @@ throw new Error('Method not implemented.');
   }
 
   openAmountLimitModal(category: any) {
-    this.selectedCategoryLimit = category;
-    this.amountLimit = category.amountLimit;
+    // this.selectedCategoryLimit = category;
+    // this.amountLimit = category.amountLimit;
     this.selectedCategoryLimitModel = true;
     console.log('check if it is working ', this.amountLimit);
   }

@@ -67,22 +67,27 @@
                     </thead>
 
                     <tbody>
-                        <tr>
+
+                        <tr *ngFor="let transaction of transactions">
                             <td class="px-4 py-2">
                                 <div class="flex items-center space-x-3">
                                     <div>
-                                        <p> Duka </p>
+                                        <p> {{transaction.receiverName}} </p>
                                         <p class="text-gray-500 text-xs font-bold tracking-wide">
-                                            25 March ,2023 at 7:15 AM</p>
+                                            {{ transaction.timestamp | date: 'dd MMM, yyyy at h:mm a' }}</p>
                                     </div>
                                 </div>
                             </td>
-
-                            <td class=" px-4 py-2">Groceries</td>
-                            <td class=" px-4 py-2 text-red-600">Ksh 20.00</td>
+                            <td class=" px-4 py-2"> {{transaction.category ? transaction.category.name:transaction.type
+                                }} </td>
+                            <td class=" px-4 py-2"
+                                [ngClass]="{'text-red-600':transaction.type ==='category','text-green-600': transaction.type === 'deposit'}">
+                                {{
+                                transaction.amount | currency: 'Ksh' }}</td>
                             <div class="py-3">
                                 <button
-                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
+                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full"
+                                    (click)="openEditModal(transaction.category ? transaction.category.name:transaction.type,transaction.amount)">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke="currentColor" class="h-4 w-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -90,40 +95,7 @@
                                     </svg>
                                 </button>
                             </div>
-
                         </tr>
-
-
-                        <!--testing -->
-                        <tr>
-                            <td class="px-4 py-2">
-                                <div class="flex items-center space-x-3">
-                                    <div>
-                                        <p> Mama mboga</p>
-                                        <p class="text-gray-500 text-xs font-bold tracking-wide">
-                                            25 March ,2023 at 7:15 AM
-                                        </p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class=" px-4 py-2">Mboga</td>
-                            <td class=" px-4 py-2 text-red-600">Ksh 10.00</td>
-                            <td class="py-3">
-                                <button
-                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full"
-                                    (click)="openEditModal('Mama boga', 10.00)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" class="h-4 w-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <!-- modal for testing  -->
-                        <!-- Modal for Editing Spending -->
                         <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="showEditModal">
                             <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
                                 <!-- Modal backdrop -->
@@ -156,9 +128,9 @@
                                                     for="editSpending">Edit Spending:</label>
                                                 <input type="number"
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="editSpending" [(ngModel)]="editCategorySpending" name="editSpending"
-                                                    placeholder=" Edit spending">
-                                            </div>"
+                                                    id="editSpending" [(ngModel)]="editCategorySpending"
+                                                    name="editSpending" placeholder=" Edit spending">
+                                            </div>
                                         </form>
                                     </div>
 
@@ -171,119 +143,10 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <tr>
-                            <td class="px-4 py-2">
-                                <div class="flex items-center space-x-3">
-                                    <div>
-                                        <p> Naivas </p>
-                                        <p class="text-gray-500 text-xs font-bold tracking-wide">
-                                            25 March ,2023 at 7:15 AM</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class=" px-4 py-2">Food</td>
-                            <td class=" px-4 py-2 text-red-600">Ksh 40.00</td>
-                            <div class="py-3">
-                                <button
-                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" class="h-4 w-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </tr>
-                        <tr>
-                            <td class="px-4 py-2">
-                                <div class="flex items-center space-x-3">
-                                    <div>
-                                        <p> Mpesa</p>
-                                        <p class="text-gray-500 text-xs font-bold tracking-wide">
-                                            25 March ,2023 at 7:15 AM</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class=" px-4 py-2">Deposit</td>
-                            <td class=" px-4 py-2 text-green-600">Ksh 40.00</td>
-                            <div class="py-3">
-                                <button
-                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" class="h-4 w-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </tr>
-                        <tr>
-                            <td class="px-4 py-2">
-                                <div class="flex items-center space-x-3">
-                                    <div>
-                                        <p> Electronics </p>
-                                        <p class="text-gray-500 text-xs font-bold tracking-wide">
-                                            25 March ,2023 at 7:15 AM</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class=" px-4 py-2">Electronics</td>
-                            <td class=" px-4 py-2 text-red-600">Ksh 60.00</td>
-                            <div class="py-3">
-                                <button
-                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" class="h-4 w-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </tr>
-                        <tr>
-                            <td class="px-4 py-2">
-                                <div class="flex items-center space-x-3">
-                                    <div>
-                                        <p> Mpesa </p>
-                                        <p class="text-gray-500 text-xs font-bold tracking-wide">
-                                            25 March ,2023 at 7:15 AM</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class=" px-4 py-2">Transport</td>
-                            <td class=" px-4 py-2 text-green-600">Ksh 80.00</td>
-                            <div class="py-3">
-                                <button
-                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" class="h-4 w-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </tr>
                     </tbody>
                 </table>
             </div>
-
         </div>
-
     </div>
     <div class="w-3/12 p-4">
         <div class="flex flex-col">
@@ -328,7 +191,8 @@
                                         for="spending">Spending</label>
                                     <input type="text"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:shadow-outline"
-                                        id="spending" [(ngModel)]="newSpending" name="spending" placeholder="Enter spending">
+                                        id="spending" [(ngModel)]="newSpending" name="spending"
+                                        placeholder="Enter spending">
                                     <span class="p-1 text-xs text-gray-500">optional</span>
                                 </div>
 
@@ -339,7 +203,8 @@
                                         Limit</label>
                                     <input type="number"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:shadow-outline"
-                                        id="amountLimit" [(ngModel)]="newAmountLimit" name="amountLimit" placeholder="Enter amount limit">
+                                        id="amountLimit" [(ngModel)]="newAmountLimit" name="amountLimit"
+                                        placeholder="Enter amount limit">
                                     <span class="p-1 text-xs text-gray-500">optional</span>
 
                                 </div>
@@ -388,11 +253,11 @@
                 <h1 class="font-medium text-gray-500">Monthly Category Totals</h1>
 
                 <div class="flex flex-col m-6 mt-2">
-                    <div *ngFor="let category of categories"  class="flex justify-between">
+                    <div *ngFor="let category of categories" class="flex justify-between">
                         <span class="font-medium">{{category.name}}</span>
                         <span class="text-red-600"> {{category.amountSpent.toFixed(2)}} </span>
                     </div>
-        
+
                     <!-- Add more categories as needed -->
                 </div>
             </div>

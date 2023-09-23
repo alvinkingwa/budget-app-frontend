@@ -44,30 +44,29 @@ export class AuthService {
         complete: () => console.log('complete'),
       });
   }
+  getTransaction(userId: string): Observable<any[]> {
+    const endpoint = `account/all-transaction/${userId}`;
+    return this.http.get<any[]>(`${this.baseUrl}${endpoint}`)
+  }
+
   getUserBalance(userId: string): Observable<any> {
     const endpoint = `user/${userId}`;
     return this.http.get<any>(`${this.baseUrl}${endpoint}`);
   }
-  // categoryTransaction(userId: string): Observable<any> {
-  //   const categoryEndpoint = `account/all-transaction/${userId}`;
-  //   return this.http.get<any>(`${this.baseUrl}${categoryEndpoint}`);
-  // }
+
   categoryWithNoSpend(): Observable<any[]> {
     const noSpentCategoryEndpoint = 'categories/without-amount-spent';
     return this.http.get<any[]>(`${this.baseUrl}${noSpentCategoryEndpoint}`);
   }
 
-  updateCategoryLimit(categoryId: string,amountLimit:number): Observable<void> {
+  updateCategoryLimit(
+    categoryId: string,
+    amountLimit: number
+  ): Observable<void> {
     const endpoint = `amountLimit/${categoryId}/update`;
-    const requestBody = {categoryId,amountLimit}
-    return this.http.patch<any>(`${this.baseUrl}${endpoint}`,requestBody);
+    const requestBody = { categoryId, amountLimit };
+    return this.http.patch<any>(`${this.baseUrl}${endpoint}`, requestBody);
   }
-
-  getTransactionsForUser(userId: string): Observable<any[]> {
-    const endpoint = `account/all-transaction/${userId}`;
-    return this.http.get<any[]>(`${this.baseUrl}${endpoint}`);
-  }
-
 
   deleteCategory(categoryId: string): Observable<void> {
     const endpoint = `categories/${categoryId}/delete`;

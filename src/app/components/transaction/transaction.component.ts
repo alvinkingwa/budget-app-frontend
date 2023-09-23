@@ -7,68 +7,61 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-transaction',
   templateUrl: './transaction.component.html',
-  styleUrls: ['./transaction.component.css']
+  styleUrls: ['./transaction.component.css'],
 })
-
-
-export class TransactionComponent implements OnInit{
-  faBudget = faChartPie
-  faExchange = faExchange
+export class TransactionComponent implements OnInit {
+  faBudget = faChartPie;
+  faExchange = faExchange;
   faDashboard = faDashboard;
   editCategoryName: string | undefined;
   editCategorySpending: number | undefined;
   showEditModal = false;
   showCreateCategoryModal = false;
-  public transactions:any[] = []
+  public transactions: any[] = [];
 
-  public categories:any = []
+  public categories: any = [];
 
-
-constructor(private auth:AuthService){}
+  constructor(private auth: AuthService) {}
   ngOnInit(): void {
-      this.auth.getUserIdFromToken();
-      this.listCategory()
+    this.auth.getUserIdFromToken();
+    this.listCategory();
+    this.loadTransaction();
+  }
+  loadTransaction(): void {
+    const userId = this.auth.getUserIdFromToken();
+    this.auth.getTransaction(userId).subscribe({
+      next: (data) => {
+        console.log('transaction category shown', data);
+        this.transactions = data.map((transaction)=>({
+          ...transaction,
+          receiverName:transaction.receiver?transaction.receiver.name:'N/A'
+        }))
+      },
+      error: (error) => {
+        console.log('error fetching transaction', error);
+      },
+    });
   }
 
-
-  fetchUserTransaction(){
-    const userId = this.auth.getUserIdFromToken()
-    if(userId){
-      this.auth.getTransactionsForUser(userId).subscribe({
-        next:(response)=>{
-          this.transactions = response
+  listCategory(): void {
+    const userId = this.auth.getUserIdFromToken();
+    if (userId) {
+      this.auth.getUserBalance(userId).subscribe({
+        next: (data) => {
+          this.categories = data.categories;
         },
-        error: (error) => {
-          console.error('Error fetching transactions', error);
-        },
+        error: (err) => console.log(err),
+        complete: () => console.log('complete'),
       });
-    }else{
-      console.log("errorrrrr")
     }
   }
-
-listCategory():void{
-  const userId = this.auth.getUserIdFromToken()
-if(userId){
-  this.auth.getUserBalance(userId).subscribe({
-    next:(data)=>{
-      this.categories = data.categories},
-    error:(err)=> console.log(err),
-    complete:()=>console.log('complete')
-  })
-}
-
-}
-
-
-
 
   // Function to open the edit modal
   openEditModal(categoryName: string, spending: number) {
     this.editCategoryName = categoryName;
     this.editCategorySpending = spending;
     this.showEditModal = true;
-    console.log("hope it work")
+    console.log('hope it work');
   }
 
   // Function to close the edit modal
@@ -88,21 +81,14 @@ if(userId){
     this.closeEditModal();
   }
 
-
-
-
-
-
-
   newCategoryName: string = '';
   newSpending: string = '';
   newAmountLimit: number | undefined;
 
-
   // Function to open the Create Category modal
   openCreateCategoryModal() {
     this.showCreateCategoryModal = true;
-    console.log("opnnned")
+    console.log('opnnned');
   }
 
   // Function to close the Create Category modal
@@ -121,8 +107,4 @@ if(userId){
     // Close the modal
     this.closeCreateCategoryModal();
   }
-
-
-
-
 }
