@@ -40,9 +40,15 @@
             <div class="font-medium text-lg">
                 All Transactions
             </div>
-            <input
-                class="appearance-none border-2 p-4 border-gray-300 hover:border-gray-400 transition-colors rounded-md  py-1 px-1 text-gray-800 leading-tight focus:outline-none focus:ring-primary focus:border-primary focus:shadow-outline"
-                id="username" type="text" placeholder="Search..." />
+            <div>
+                <span class="p-2 font-bold font-mono">search:</span>
+                  <input
+                class="appearance-none border-2 p-4 text-sm border-gray-300 hover:border-gray-400 transition-colors rounded-md py-1 px-1 text-gray-800 leading-tight focus:outline-none focus:ring-primary focus:border-primary focus:shadow-outline"
+                [(ngModel)]="searchQuery" (input)="filterTransactions()" id="search" type="text"
+                placeholder="Search by category or receiver..." />
+            </div>
+          
+
         </nav>
 
         <!-- transaction table -->
@@ -68,26 +74,35 @@
 
                     <tbody>
 
-                        <tr *ngFor="let transaction of transactions">
+                        <tr *ngFor="let transaction of filteredTransactions">
                             <td class="px-4 py-2">
                                 <div class="flex items-center space-x-3">
                                     <div>
-                                        <p> {{transaction.receiverName}} </p>
+                                        <p>{{ transaction.receiverName }}</p>
                                         <p class="text-gray-500 text-xs font-bold tracking-wide">
-                                            {{ transaction.timestamp | date: 'dd MMM, yyyy h:mm a' }}</p>
+                                            {{ transaction.timestamp | date: 'dd MMM, yyyy h:mm a' }}
+                                        </p>
                                     </div>
                                 </div>
                             </td>
-                            <td class=" px-4 py-2"> {{transaction.category ? transaction.category.name:transaction.type
-                                }} </td>
-                            <td class=" px-4 py-2"
-                                [ngClass]="{'text-red-600':transaction.type ==='category','text-green-600': transaction.type === 'deposit'}">
-                                {{
-                                transaction.amount | currency: 'Ksh' }}</td>
+                            <td class="px-4 py-2">
+                                {{ transaction.category ? transaction.category.name : 'N/A' }}
+                            </td>
+                            <td class="px-4 py-2" [ngClass]="{
+                              'text-red-600': transaction.category,
+                              'text-green-600': !transaction.category
+                            }">
+                                {{ transaction.amount | currency: 'Ksh' }}
+                            </td>
                             <div class="py-3">
                                 <button
-                                    class="flex items-center justify-center hover:bg-opacity-60  w-7 h-7 bg-gray-200 rounded-full"
-                                    (click)="openEditModal(transaction.category ? transaction.category.name:transaction.type,transaction.amount,transaction.receiver ? transaction.receiver.name:'N/A')">
+                                    class="flex items-center justify-center hover:bg-opacity-60 w-7 h-7 bg-gray-200 rounded-full"
+                                    (click)="openEditModal(
+                                  transaction.category ? transaction.category.name : 'N/A',
+                                  transaction.amount,
+                                  transaction.receiver ? transaction.receiver.name : 'N/A',
+                                  getCategoryId(transaction)
+                                )">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke="currentColor" class="h-4 w-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -96,6 +111,7 @@
                                 </button>
                             </div>
                         </tr>
+
                         <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="showEditModal">
                             <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
                                 <!-- Modal backdrop -->
@@ -122,22 +138,17 @@
                                                 <p class="text-gray-800 font-medium">{{ editCategoryName }}</p>
                                             </div>
                                             <div class="mb-4">
-                                                <label class="block text-gray-700 text-sm font-bold mb-2">
-                                                    Recieved from/Sent</label>
-                                                <p class="text-gray-800 font-medium">{{ receiverName}}</p>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label class="block text-gray-700 text-sm font-bold mb-2"
-                                                    for="editedAmount">Previous Amount:</label>
-                                                <p class="text-purple-600"> {{editCategorySpending}} </p>
+                                                <label class="block text-gray-700 text-sm font-bold mb-2">Received
+                                                    from/Sent</label>
+                                                <p class="text-gray-800 font-medium">{{ receiverName }}</p>
                                             </div>
                                             <div class="mb-4">
                                                 <label class="block text-gray-700 text-sm font-bold mb-2"
                                                     for="editSpending">Edit Spending:</label>
                                                 <input type="number"
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="editSpending" [(ngModel)]="depositAmount" name="editSpending"
-                                                    placeholder=" Edit spending">
+                                                    id="editSpending" [(ngModel)]="editCategorySpending"
+                                                    name="editSpending" placeholder="Edit spending">
                                             </div>
                                         </form>
                                     </div>
@@ -151,6 +162,9 @@
                                 </div>
                             </div>
                         </div>
+
+
+
                     </tbody>
                 </table>
             </div>
@@ -229,16 +243,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
             <div>
                 <h1 class="text-lg text-center font-medium">Spending Limit</h1>
             </div>
@@ -260,23 +264,15 @@
             <div class="mt-8">
                 <h1 class="font-medium text-gray-500">Monthly Category Totals</h1>
 
-                <div class="flex flex-col m-6 mt-2">
+                <div class="overflow-x-auto h-monthly-category scrollbar-thin scrollbar-thumb-slate-400 shadow-xl rounded-md flex flex-col m-4 p-4 mt-2">
                     <div *ngFor="let category of categories" class="flex justify-between">
                         <span class="font-medium">{{category.name}}</span>
                         <span class="text-red-600"> {{category.amountSpent.toFixed(2)}} </span>
                     </div>
 
-                    <!-- Add more categories as needed -->
+                   
                 </div>
             </div>
-
-            <!-- testing now -->
-
-
-
-
-
-
 
 
         </div>

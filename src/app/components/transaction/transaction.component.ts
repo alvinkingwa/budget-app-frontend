@@ -13,26 +13,27 @@ export class TransactionComponent implements OnInit {
   faBudget = faChartPie;
   faExchange = faExchange;
   faDashboard = faDashboard;
-  editCategoryName: string | undefined;
-  editCategorySpending: number | undefined;
+  editCategoryName: string = '';
+  editCategorySpending: number = 0;
   showEditModal = false;
   showCreateCategoryModal = false;
   public transactions: any[] = [];
   depositAmount: number = 0;
   receiverName: string = '';
   public categories: any = [];
+  categoryId: string = '';
+  searchQuery: string = '';
+  filteredTransactions: any[] = [];
+  
+
 
   constructor(private auth: AuthService) {}
   ngOnInit(): void {
     this.auth.getUserIdFromToken();
     this.listCategory();
     this.loadTransaction();
+    this.filteredTransactions = this.transactions
   }
-  // deposit(): void {
-  //   this.auth.deposit(this.receiverName, this.depositAmount);
-  //   console.log('checking if patch is intitiated');
-  //   this.closeEditModal();
-  // }
 
   loadTransaction(): void {
     const userId = this.auth.getUserIdFromToken();
@@ -45,12 +46,35 @@ export class TransactionComponent implements OnInit {
             ? transaction.receiver.name
             : 'N/A',
         }));
+        this.filteredTransactions = this.transactions;
       },
       error: (error) => {
         console.log('error fetching transaction', error);
       },
     });
   }
+
+  filterTransactions(): void {
+    // Create a copy of the original transactions array
+    let filteredTransactions = [...this.transactions];
+  
+    // Convert the search query to lowercase for case-insensitive search
+    const query = this.searchQuery.toLowerCase();
+  
+    // Filter transactions based on category name or receiver name
+    filteredTransactions = filteredTransactions.filter((transaction) => {
+      const categoryName = transaction.category ? transaction.category.name.toLowerCase() : '';
+      const receiverName = transaction.receiver ? transaction.receiver.name.toLowerCase() : '';
+  
+      // Check if the search query matches category name or receiver name
+      return categoryName.includes(query) || receiverName.includes(query);
+    });
+  
+    // Update the transactions array with the filtered results
+    this.filteredTransactions = filteredTransactions;
+  }
+  
+
 
   listCategory(): void {
     const userId = this.auth.getUserIdFromToken();
@@ -64,38 +88,72 @@ export class TransactionComponent implements OnInit {
       });
     }
   }
+  getCategoryId(transaction: any): string {
+    // Check if the transaction has a category, and return its categoryId, otherwise return an empty string
+    return transaction.category ? transaction.category.categoryId : '';
+  }
 
   // Function to open the edit modal
-  openEditModal(categoryName: string, spending: number,receiverName:string) {
+  openEditModal(
+    categoryName: string,
+    spending: number,
+    receiverName: string,
+    categoryId: string
+  ) {
     this.editCategoryName = categoryName;
     this.editCategorySpending = spending;
     this.showEditModal = true;
-    this.receiverName = receiverName
-    console.log('hope it work');
+    this.receiverName = receiverName;
+    this.categoryId = categoryId;
+    console.log('category Id ',categoryId);
   }
 
   // Function to close the edit modal
   closeEditModal() {
     this.showEditModal = false;
-    this.editCategoryName = undefined;
-    this.editCategorySpending = undefined;
   }
 
   // Function to save the edited spending
+
   saveEditedSpending(): void {
-    this.auth.deposit(this.receiverName, this.depositAmount);
-    console.log('checking if patch is intitiated');
+    if (this.categoryId) {
+      // Handle category spending edit
+      this.auth
+        .editCategorySpending(
+          this.categoryId,
+          this.editCategorySpending,
+          this.receiverName
+        )
+        .subscribe({
+          next: (data) => {
+            console.log('Category spending edited successfully', data);
+            this.closeEditModal();
+          },
+          error: (error) => {
+            console.error('Error editing category spending', error);
+          },
+        });
+    } else {
+      // Handle deposit edit
+      this.auth
+        .deposit(this.receiverName, this.editCategorySpending)
+        .subscribe({
+          next: (data) => {
+            console.log('Deposit successful', data);
 
-    console.log('Category Name:', this.editCategoryName);
-    console.log('Edited Spending:', this.editCategorySpending);
-
-    // Close the modal
-    this.closeEditModal();
+            this.closeEditModal();
+          },
+          error: (error) => {
+            console.error('Error depositing', error);
+          },
+        });
+    }
   }
+
 
   newCategoryName: string = '';
   newSpending: string = '';
-  newAmountLimit: number | undefined;
+  newAmountLimit: number = 0;
 
   // Function to open the Create Category modal
   openCreateCategoryModal() {
@@ -110,7 +168,11 @@ export class TransactionComponent implements OnInit {
 
   // Function to create a new category
   createCategory() {
-    // Implement logic to create the new category with the provided inputs
+
+
+
+
+    
     console.log('Creating a new category:');
     console.log('Category Name:', this.newCategoryName);
     console.log('Spending:', this.newSpending);

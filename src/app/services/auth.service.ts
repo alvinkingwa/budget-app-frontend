@@ -30,23 +30,41 @@ export class AuthService {
     return this.http.post<any>(`${this.baseUrl}${endpoint}`, loginObj);
   }
 
-  deposit(receiverName:string,amount: number): void {
-    const endpoint = 'account/deposit';
-    const depositAmount = { receiverName,amount };
+  // deposit(receiverName: string, amount: number): Observable<any> {
+  //   const endpoint = 'account/deposit';
+  //   const depositAmount = { receiverName, amount };
 
-    this.http
-      .patch<any>(`${this.baseUrl}${endpoint}`, depositAmount)
-      .subscribe({
-        next: (response) => {
-          this.userDataService.setUserBalance(response.account.balance);
-        },
-        error: (error) => console.log(error),
-        complete: () => console.log('complete'),
-      });
+  //   this.http
+  //     .patch<any>(`${this.baseUrl}${endpoint}`, depositAmount)
+  //     .subscribe({
+  //       next: (response) => {
+  //         this.userDataService.setUserBalance(response.account.balance);
+  //       },
+  //       error: (error) => console.log(error),
+  //       complete: () => console.log('complete'),
+  //     });
+  // }
+  deposit(receiverName: string, amount: number): Observable<any> {
+    const endpoint = 'account/deposit';
+    const depositAmount = { receiverName, amount };
+  
+    return this.http.patch<any>(`${this.baseUrl}${endpoint}`, depositAmount);
   }
+
+  editCategorySpending(
+    categoryId: string,
+    amount: number,
+    receiverName: string
+  ): Observable<any> {
+    const endpoint = `categories/${categoryId}/spend`;
+    const requestBody = { amount, receiverName };
+
+    return this.http.patch<any>(`${this.baseUrl}${endpoint}`, requestBody);
+  }
+
   getTransaction(userId: string): Observable<any[]> {
     const endpoint = `account/all-transaction/${userId}`;
-    return this.http.get<any[]>(`${this.baseUrl}${endpoint}`)
+    return this.http.get<any[]>(`${this.baseUrl}${endpoint}`);
   }
 
   getUserBalance(userId: string): Observable<any> {
