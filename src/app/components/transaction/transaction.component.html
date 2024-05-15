@@ -1,281 +1,402 @@
 <div class="flex bg-latestbg h-screen w-full">
-    <div class="w-2/12  p-6">
-        <div class="px-8 ">
-            <h1 class="text-4xl font-display">Trail<span class="text-primary">evy</span></h1>
-        </div>
-        <ul class="mt-4 pl-4 space-y-4">
-            <li>
-                <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}
-                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300">
-                    <div class="">
-                        <fa-icon [icon]="faDashboard" class="text-lg text-primary"></fa-icon>
-                    </div>
-                    <span class="ml-2">Dashboard</span>
-                </a>
-            </li>
-            <!-- second link -->
-            <li>
-                <a routerLink="/transaction" routerLinkActive="active"
-                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300">
-                    <div class="">
-                        <fa-icon [icon]="faExchange" class="text-lg text-primary "></fa-icon>
-                    </div>
-                    <span class="ml-2">Transactions</span>
-                </a>
-            </li>
-            <!-- third link -->
-            <li>
-                <a routerLink="/set-budget" routerLinkActive="active"
-                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300">
-                    <div class="">
-                        <fa-icon [icon]="faBudget" class="text-lg text-primary"></fa-icon>
-                    </div>
-                    <span class="ml-2">Set Budget</span>
-                </a>
-            </li>
-        </ul>
+  <div class="w-2/12 p-6">
+    <div class="px-8">
+      <h1 class="text-4xl font-display">
+        Trail<span class="text-primary">evy</span>
+      </h1>
     </div>
-    <div class="w-7/12 bg-white">
-        <nav class="flex justify-between mt-8 px-4">
-            <div class="font-medium text-lg">
-                All Transactions
+    <ul class="mt-4 pl-4 space-y-4">
+      <li>
+        <a
+          routerLink="/dashboard"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300"
+        >
+          <div class="">
+            <fa-icon
+              [icon]="faDashboard"
+              class="text-lg text-primary"
+            ></fa-icon>
+          </div>
+          <span class="ml-2">Dashboard</span>
+        </a>
+      </li>
+      <!-- second link -->
+      <li>
+        <a
+          routerLink="/transaction"
+          routerLinkActive="active"
+          class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300"
+        >
+          <div class="">
+            <fa-icon [icon]="faExchange" class="text-lg text-primary"></fa-icon>
+          </div>
+          <span class="ml-2">Transactions</span>
+        </a>
+      </li>
+      <!-- third link -->
+      <li>
+        <a
+          routerLink="/set-budget"
+          routerLinkActive="active"
+          class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300"
+        >
+          <div class="">
+            <fa-icon [icon]="faBudget" class="text-lg text-primary"></fa-icon>
+          </div>
+          <span class="ml-2">Set Budget</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="w-7/12 bg-white">
+    <nav class="flex justify-between mt-8 px-4">
+      <div class="font-medium text-lg">All Transactions</div>
+      <div>
+        <span class="p-2 font-bold font-mono">search:</span>
+        <input
+          class="appearance-none border-2 p-4 text-sm border-gray-300 hover:border-gray-400 transition-colors rounded-md py-1 px-1 text-gray-800 leading-tight focus:outline-none focus:ring-primary focus:border-primary focus:shadow-outline"
+          [(ngModel)]="searchQuery"
+          (input)="filterTransactions()"
+          id="search"
+          type="text"
+          placeholder="Search by category or receiver..."
+        />
+      </div>
+    </nav>
+
+    <!-- transaction table -->
+    <div class="bg-white m-4">
+      <div class="overflow-x-auto h-trans-h shadow-xl rounded-md">
+        <table class="min-w-full border-collapse table-auto">
+          <thead
+            class="text-xs sticky top-0 uppercase bg-gray-300 dark:text-black"
+          >
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left">Reciever</th>
+              <th scope="col" class="px-6 py-3 text-left">Categories</th>
+              <th scope="col" class="px-6 py-3 text-left">Amount Spent</th>
+              <th scope="col" class="px-6 py-3 text-left">spend</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let transaction of filteredTransactions">
+              <td class="px-4 py-2">
+                <div class="flex items-center space-x-3">
+                  <div>
+                    <p>{{ transaction.receiverName }}</p>
+                    <p class="text-gray-500 text-xs font-bold tracking-wide">
+                      {{ transaction.timestamp | date : "dd MMM, yyyy h:mm a" }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-4 py-2">
+                {{ transaction.category ? transaction.category.name : "N/A" }}
+              </td>
+              <td
+                class="px-4 py-2"
+                [ngClass]="{
+                  'text-red-600': transaction.category,
+                  'text-green-600': !transaction.category
+                }"
+              >
+                {{ transaction.amount | currency : "Ksh" }}
+              </td>
+              <div class="py-3">
+                <button
+                  class="flex items-center justify-center hover:bg-opacity-60 w-7 h-7 bg-gray-200 rounded-full"
+                  (click)="
+                    openEditModal(
+                      transaction.category ? transaction.category.name : 'N/A',
+                      transaction.amount,
+                      transaction.receiver ? transaction.receiver.name : 'N/A',
+                      getCategoryId(transaction)
+                    )
+                  "
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    class="h-4 w-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </tr>
+
+            <div
+              class="fixed z-10 inset-0 overflow-y-auto"
+              *ngIf="showEditModal"
+            >
+              <div
+                class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center"
+              >
+                <!-- Modal backdrop -->
+                <div
+                  class="fixed inset-0 transition-opacity"
+                  (click)="closeEditModal()"
+                  aria-hidden="true"
+                >
+                  <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+
+                <!-- Modal content -->
+                <div
+                  class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                  role="dialog"
+                  aria-modal="true"
+                >
+                  <!-- Modal header -->
+                  <div class="bg-gray-200 px-4 py-2">
+                    <h3 class="text-lg font-medium text-gray-800">
+                      Edit Spending
+                    </h3>
+                  </div>
+
+                  <!-- Modal body -->
+                  <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <form>
+                      <!-- Category Name Display -->
+                      <div class="mb-4">
+                        <label
+                          class="block text-gray-700 text-sm font-bold mb-2"
+                          >Category Name:</label
+                        >
+                        <p class="text-gray-800 font-medium">
+                          {{ editCategoryName }}
+                        </p>
+                      </div>
+                      <div class="mb-4">
+                        <label
+                          class="block text-gray-700 text-sm font-bold mb-2"
+                          >Received from/Sent</label
+                        >
+                        <p class="text-gray-800 font-medium">
+                          {{ receiverName }}
+                        </p>
+                      </div>
+                      <div class="mb-4">
+                        <label
+                          class="block text-gray-700 text-sm font-bold mb-2"
+                          for="editSpending"
+                          >Edit Spending:</label
+                        >
+                        <input
+                          type="number"
+                          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          id="editSpending"
+                          [(ngModel)]="editCategorySpending"
+                          name="editSpending"
+                          placeholder="Edit spending"
+                        />
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- Modal footer -->
+                  <div
+                    class="bg-gray-200 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
+                  >
+                    <button
+                      class="bg-primary hover:bg-opacity-60 text-black font-mono py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      type="button"
+                      (click)="saveEditedSpending()"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div>
-                <span class="p-2 font-bold font-mono">search:</span>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="w-3/12 p-4">
+    <div class="flex flex-col">
+      <button
+        (click)="openCreateCategoryModal()"
+        class="flex items-center justify-center hover:bg-opacity-60 p- w-30 m-4 h-10 bg-primary text-black rounded-md shadow-md"
+      >
+        Create Category
+      </button>
+
+      <!-- Modal for Creating a Category -->
+      <div
+        class="fixed z-10 inset-0 overflow-y-auto"
+        *ngIf="showCreateCategoryModal"
+      >
+        <div
+          class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center"
+        >
+          <!-- Modal backdrop -->
+          <div
+            class="fixed inset-0 transition-opacity"
+            (click)="closeCreateCategoryModal()"
+            aria-hidden="true"
+          >
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+          </div>
+
+          <!-- Modal content -->
+          <div
+            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-headline"
+          >
+            <!-- Modal header -->
+            <div class="bg-gray-200 px-4 py-2">
+              <h3 class="text-lg font-medium text-gray-800" id="modal-headline">
+                Add Category
+              </h3>
+            </div>
+
+            <!-- Modal body -->
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <!-- Your category form content goes here -->
+              <!-- Example: -->
+              <form>
+                <div class="mb-4">
+                  <label
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    for="categoryName"
+                  >
+                    Category Name
+                  </label>
                   <input
-                class="appearance-none border-2 p-4 text-sm border-gray-300 hover:border-gray-400 transition-colors rounded-md py-1 px-1 text-gray-800 leading-tight focus:outline-none focus:ring-primary focus:border-primary focus:shadow-outline"
-                [(ngModel)]="searchQuery" (input)="filterTransactions()" id="search" type="text"
-                placeholder="Search by category or receiver..." />
+                    type="text"
+                    [(ngModel)]="newCategory"
+                    name="newCategory"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="categoryName"
+                    placeholder="Enter category name"
+                  />
+                </div>
+
+                <!-- Additional form fields for category -->
+
+                <div class="mt-4">
+                  <button
+                    class="bg-primary text-black font-mono py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="button"
+                    (click)="createCategory()"
+                  >
+                    Add Category
+                  </button>
+                </div>
+              </form>
             </div>
-          
+          </div>
+        </div>
+      </div>
+      <div>
+        <h1 class="text-lg text-center font-medium">Spending Limit</h1>
+      </div>
+      <div>
+        <h1 class="text-xs pl-6 pt-1 text-gray-600">
+          Monthly Transaction Limit
+        </h1>
+        <p class="text-xs font-semibold pl-2 pt-2">Ksh 140000 of 80000</p>
 
-        </nav>
+        <div class="flex justify-between mb-1">
+          <span class="text-base font-medium text-blue-700 dark:text-gray-400"
+            >Spendings</span
+          >
+          <span class="text-sm font-medium text-blue-700 dark:text-black"
+            >45%</span
+          >
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-300">
+          <div class="bg-blue-600 h-2.5 rounded-full" style="width: 45%"></div>
+        </div>
+        <span class="pt-2 text-xs text-red-600"
+          >! Your spendings has reached limits</span
+        >
+      </div>
 
-        <!-- transaction table -->
-        <div class=" bg-white m-4 ">
-            <div class="overflow-x-auto h-trans-h shadow-xl rounded-md">
-                <table class="min-w-full border-collapse table-auto">
-                    <thead class="text-xs sticky top-0 uppercase bg-gray-300 dark:text-black">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-left">
-                                Reciever
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left">
-                                Categories
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left">
-                                Amount Spent
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left">
-                                spend
-                            </th>
-                        </tr>
-                    </thead>
+      <div class="mt-8">
+        <h1 class="font-medium text-gray-500">Monthly Category Totals</h1>
 
-                    <tbody>
+        <div
+          class="overflow-x-auto h-monthly-category scrollbar-thin scrollbar-thumb-slate-400 shadow-xl rounded-md flex flex-col m-4 p-4 mt-2"
+        >
+          <div *ngFor="let category of categories" class="flex justify-between">
+            <span class="font-medium">
+              <a
+              href="javascript:void(0);"
+                class="font-medium text-lg"
+                (click)="openModal(category)"
+                >{{ category.name }}</a
+              >
+            </span>
+            <span class="text-red-600">{{
+              category.amountSpent.toFixed(2)
+            }}</span>
+          </div>
+        </div>
+      </div>
+      
+    <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="showModal">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
+                <!-- Modal backdrop -->
+                <div class="fixed inset-0 transition-opacity" (click)="closeModal()" aria-hidden="true">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
 
-                        <tr *ngFor="let transaction of filteredTransactions">
-                            <td class="px-4 py-2">
-                                <div class="flex items-center space-x-3">
-                                    <div>
-                                        <p>{{ transaction.receiverName }}</p>
-                                        <p class="text-gray-500 text-xs font-bold tracking-wide">
-                                            {{ transaction.timestamp | date: 'dd MMM, yyyy h:mm a' }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-4 py-2">
-                                {{ transaction.category ? transaction.category.name : 'N/A' }}
-                            </td>
-                            <td class="px-4 py-2" [ngClass]="{
-                              'text-red-600': transaction.category,
-                              'text-green-600': !transaction.category
-                            }">
-                                {{ transaction.amount | currency: 'Ksh' }}
-                            </td>
-                            <div class="py-3">
+                <!-- Modal content -->
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                    role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                    <!-- Modal header -->
+                    <div class="bg-gray-200 px-4 py-2">
+                        <h3 class="text-lg font-mono text-gray-800" id="modal-headline">Category: {{selectedCategory.name}}</h3>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <!-- Your deposit form content goes here -->
+                        <!-- Example: -->
+                        <form>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="amount">
+                                    Receiver
+                                </label>
+                                <input type="string" [(ngModel)]="receiverName" name="receiveName"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary"
+                                    id="amount" placeholder="Reciever...">
+                                <label class="block text-gray-700 text-sm font-bold m-2" for="amount">
+                                    Amount
+                                </label>              
+                                <input type="number" [(ngModel)]="editCategorySpending" name="spendingAmount"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary"
+                                    id="amount" placeholder="Enter amount">
+                            </div>
+
+                            <!-- Additional form fields for deposit -->
+
+                            <div class="mt-4 flex justify-end">
                                 <button
-                                    class="flex items-center justify-center hover:bg-opacity-60 w-7 h-7 bg-gray-200 rounded-full"
-                                    (click)="openEditModal(
-                                  transaction.category ? transaction.category.name : 'N/A',
-                                  transaction.amount,
-                                  transaction.receiver ? transaction.receiver.name : 'N/A',
-                                  getCategoryId(transaction)
-                                )">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" class="h-4 w-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                    </svg>
-                                </button>
+                                    class="bg-primary hover:bg-primary text-black  font-mono py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                    type="button" (click)="spendOnCategory()">Spend</button>
                             </div>
-                        </tr>
-
-                        <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="showEditModal">
-                            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
-                                <!-- Modal backdrop -->
-                                <div class="fixed inset-0 transition-opacity" (click)="closeEditModal()"
-                                    aria-hidden="true">
-                                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                                </div>
-
-                                <!-- Modal content -->
-                                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-                                    role="dialog" aria-modal="true">
-                                    <!-- Modal header -->
-                                    <div class="bg-gray-200 px-4 py-2">
-                                        <h3 class="text-lg font-medium text-gray-800">Edit Spending</h3>
-                                    </div>
-
-                                    <!-- Modal body -->
-                                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                        <form>
-                                            <!-- Category Name Display -->
-                                            <div class="mb-4">
-                                                <label class="block text-gray-700 text-sm font-bold mb-2">Category
-                                                    Name:</label>
-                                                <p class="text-gray-800 font-medium">{{ editCategoryName }}</p>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label class="block text-gray-700 text-sm font-bold mb-2">Received
-                                                    from/Sent</label>
-                                                <p class="text-gray-800 font-medium">{{ receiverName }}</p>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label class="block text-gray-700 text-sm font-bold mb-2"
-                                                    for="editSpending">Edit Spending:</label>
-                                                <input type="number"
-                                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="editSpending" [(ngModel)]="editCategorySpending"
-                                                    name="editSpending" placeholder="Edit spending">
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                    <!-- Modal footer -->
-                                    <div class="bg-gray-200 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                        <button
-                                            class="bg-primary hover:bg-opacity-60 text-black font-mono py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                            type="button" (click)="saveEditedSpending()">Save</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                    </tbody>
-                </table>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="w-3/12 p-4">
-        <div class="flex flex-col">
-            <button (click)="openCreateCategoryModal()"
-                class="flex items-center justify-center hover:bg-opacity-60 p- w-30 m-4 h-10 bg-primary text-black rounded-md shadow-md">
-                Create Category
-            </button>
 
-            <!-- Modal for Creating a Category -->
-            <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="showCreateCategoryModal">
-                <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
-                    <!-- Modal backdrop -->
-                    <div class="fixed inset-0 transition-opacity" (click)="closeCreateCategoryModal()"
-                        aria-hidden="true">
-                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                    </div>
-
-                    <!-- Modal content -->
-                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-                        role="dialog" aria-modal="true">
-                        <!-- Modal header -->
-                        <div class="bg-gray-200 px-4 py-2">
-                            <h3 class="text-lg font-medium text-gray-800">Create Category</h3>
-                        </div>
-
-                        <!-- Modal body -->
-                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <form>
-                                <!-- Category Name Input -->
-                                <div class="mb-2">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2"
-                                        for="categoryName">Category Name</label>
-                                    <input type="text"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:shadow-outline"
-                                        id="categoryName" [(ngModel)]="newCategoryName" name="categoryName"
-                                        placeholder="Enter category name">
-                                </div>
-
-                                <!-- Spending Input -->
-                                <div class="mb-2">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2"
-                                        for="spending">Spending</label>
-                                    <input type="text"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:shadow-outline"
-                                        id="spending" [(ngModel)]="newSpending" name="spending"
-                                        placeholder="Enter spending">
-                                    <span class="p-1 text-xs text-gray-500">optional</span>
-                                </div>
-
-
-                                <!-- Amount Limit Input -->
-                                <div class="mb-2">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="amountLimit">Amount
-                                        Limit</label>
-                                    <input type="number"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:shadow-outline"
-                                        id="amountLimit" [(ngModel)]="newAmountLimit" name="amountLimit"
-                                        placeholder="Enter amount limit">
-                                    <span class="p-1 text-xs text-gray-500">optional</span>
-
-                                </div>
-                            </form>
-                        </div>
-
-                        <!-- Modal footer -->
-                        <div class="bg-gray-200 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                            <button
-                                class="bg-primary hover:bg-opacity-60 text-black font-mono py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                type="button" (click)="createCategory()">Create</button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <h1 class="text-lg text-center font-medium">Spending Limit</h1>
-            </div>
-            <div>
-                <h1 class="text-xs pl-6 pt-1 text-gray-600">Monthly Transaction Limit</h1>
-                <p class="text-xs font-semibold pl-2 pt-2">Ksh 140000 of 80000</p>
-
-                <div class="flex justify-between mb-1">
-                    <span class="text-base  font-medium text-blue-700 dark:text-gray-400">Spendings</span>
-                    <span class="text-sm font-medium text-blue-700 dark:text-black">45%</span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-300">
-                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 45%"></div>
-                </div>
-                <span class="pt-2 text-xs text-red-600">! Your spendings has reached limits</span>
-            </div>
-
-
-            <div class="mt-8">
-                <h1 class="font-medium text-gray-500">Monthly Category Totals</h1>
-
-                <div class="overflow-x-auto h-monthly-category scrollbar-thin scrollbar-thumb-slate-400 shadow-xl rounded-md flex flex-col m-4 p-4 mt-2">
-                    <div *ngFor="let category of categories" class="flex justify-between">
-                        <span class="font-medium">{{category.name}}</span>
-                        <span class="text-red-600"> {{category.amountSpent.toFixed(2)}} </span>
-                    </div>
-
-                   
-                </div>
-            </div>
-
-
-        </div>
-    </div>
-
+    
+  </div>
 </div>

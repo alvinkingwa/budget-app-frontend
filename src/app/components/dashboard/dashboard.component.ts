@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
 
   isDepositInProgress = false;
   depositAmount: number = 0;
-  receiverName: string = '';
+  receivedFrom: string = '';
 
   constructor(
     private auth: AuthService,
@@ -44,15 +44,6 @@ export class DashboardComponent implements OnInit {
     this.user.getUserName().subscribe((val) => {
       let userNameFromToken = this.auth.getUserNameFromToken();
       this.userName = val || userNameFromToken;
-
-      // this.user.getUserId().subscribe((val) => {
-      //   let userIdFromToken = this.auth.getUserId();
-      //   this.userId = val || userIdFromToken;
-      // });
-      // this.userDataService.userBalance$.subscribe((balance)=>{
-      //   this.incomeAmount = balance;
-      //   console.log('updated User balance',this.incomeAmount)
-      // })
 
       this.auth.getUserIdFromToken();
       this.loadUserBalance();
@@ -69,10 +60,32 @@ export class DashboardComponent implements OnInit {
     this.showModal = false;
   }
 
+  // deposit(): void {
+  //   this.auth.deposit(this.receivedFrom,this.depositAmount);
+  //   this.closeModal();
+  // }
+
+
   deposit(): void {
-    this.auth.deposit(this.receiverName,this.depositAmount);
-    this.closeModal();
+    if (this.receivedFrom && this.depositAmount > 0) {
+      this.auth.deposit(this.receivedFrom, this.depositAmount)
+        .subscribe({
+          next: (response) => {
+            console.log('Deposit successful:', response);
+            // Additional handling after successful deposit
+            this.closeModal(); // Close the modal after successful deposit
+          },
+          error: (error) => {
+            console.error('Error depositing funds:', error);
+            // Handle error response if needed
+          }
+        });
+    } else {
+      console.error('Invalid deposit details.');
+      // Handle invalid deposit details (optional)
+    }
   }
+
 
   loadUserBalance(): void {
     const userId = this.auth.getUserIdFromToken();

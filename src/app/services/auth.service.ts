@@ -30,28 +30,34 @@ export class AuthService {
     return this.http.post<any>(`${this.baseUrl}${endpoint}`, loginObj);
   }
 
-  // deposit(receiverName: string, amount: number): Observable<any> {
-  //   const endpoint = 'account/deposit';
-  //   const depositAmount = { receiverName, amount };
-
-  //   this.http
-  //     .patch<any>(`${this.baseUrl}${endpoint}`, depositAmount)
-  //     .subscribe({
-  //       next: (response) => {
-  //         this.userDataService.setUserBalance(response.account.balance);
-  //       },
-  //       error: (error) => console.log(error),
-  //       complete: () => console.log('complete'),
-  //     });
-  // }
   deposit(receiverName: string, amount: number): Observable<any> {
     const endpoint = 'account/deposit';
     const depositAmount = { receiverName, amount };
+    console.log(
+     " receiverName",receiverName,
+     "amount",amount,
+      "money deposited successful")
   
     return this.http.patch<any>(`${this.baseUrl}${endpoint}`, depositAmount);
   }
+  createCategory(categoryData: any): Observable<any> {
+    const endpoint = 'categories/create';
+    return this.http.post<any>(`${this.baseUrl}${endpoint}`, categoryData);
+  }
 
-  editCategorySpending(
+  spendOnCategory(categoryId: string, amount: number ,receiverName:string): Observable<any> {
+    const endpoint = `categories/${categoryId}/spend`;
+    const requestBody = { amount ,receiverName};
+    return this.http.patch<any>(`${this.baseUrl}${endpoint}`, requestBody);
+  }
+
+  setAmountLimit(categoryId: string, limitAmount: number): Observable<any> {
+    const endpoint = `amountLimit/${categoryId}/create`;
+    const requestBody = { limitAmount };
+    return this.http.post<any>(`${this.baseUrl}${endpoint}`, requestBody);
+  }
+
+  editCategorySpending( 
     categoryId: string,
     amount: number,
     receiverName: string
@@ -90,10 +96,10 @@ export class AuthService {
     const endpoint = `categories/${categoryId}/delete`;
     return this.http.delete<void>(`${this.baseUrl}${endpoint}`);
   }
-  createCategory(category: any): Observable<any> {
-    const endpoint = 'categories/create';
-    return this.http.post<any>(`${this.baseUrl}${endpoint}`, category);
-  }
+  // createCategory(category: any): Observable<any> {
+  //   const endpoint = 'categories/create';
+  //   return this.http.post<any>(`${this.baseUrl}${endpoint}`, category);
+  // }
   amountLimit(categoryId: string, amountLimit: number): Observable<any> {
     const endpoint = `amountLimit/${categoryId}/create`;
     const requestBody = { categoryId, amountLimit };
