@@ -78,6 +78,11 @@ export class AuthService {
     return this.http.get<any>(`${this.baseUrl}${endpoint}`);
   }
 
+  getDailyExpenseTotal(userId: string, date: string): Observable<number> {
+    const endpoint = `user/${userId}?date=${date}`;
+    return this.http.get<number>(`${this.baseUrl}/${endpoint}`);
+  }
+
   categoryWithNoSpend(): Observable<any[]> {
     const noSpentCategoryEndpoint = 'categories/without-amount-spent';
     return this.http.get<any[]>(`${this.baseUrl}${noSpentCategoryEndpoint}`);

@@ -79,16 +79,20 @@ throw new Error('Method not implemented.');
 
   categoryAmountLimit(): void {
     const userId = this.auth.getUserIdFromToken();
+   
     if (userId) {
-      this.auth.getUserBalance(userId).subscribe({
+      this.auth.getUserBalance(userId,).subscribe({
         next: (response) => {
-          console.log('users info', response);
-          const test = (this.displayAmountLimit = response.categories);
-          console.log('testing display', test);
+          console.log('User info:', response);
+          this.displayAmountLimit = response.categories;
+          console.log('Testing display:', this.displayAmountLimit);
         },
+        error: (err) => console.error('Error fetching user balance:', err),
+        complete: () => console.log('Category amount limit load complete'),
       });
     }
   }
+  
 
   categoriesWithNoSpend(): void {
     this.auth.categoryWithNoSpend().subscribe({

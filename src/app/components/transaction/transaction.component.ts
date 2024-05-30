@@ -83,8 +83,9 @@ export class TransactionComponent implements OnInit {
 
   listCategory(): void {
     const userId = this.auth.getUserIdFromToken();
+  
     if (userId) {
-      this.auth.getUserBalance(userId).subscribe({
+      this.auth.getUserBalance(userId,).subscribe({
         next: (data) => {
           this.categories = data.categories;
         },
@@ -93,6 +94,7 @@ export class TransactionComponent implements OnInit {
       });
     }
   }
+  
   getCategoryId(transaction: any): string {
     // Check if the transaction has a category, and return its categoryId, otherwise return an empty string
     return transaction.category ? transaction.category.categoryId : '';

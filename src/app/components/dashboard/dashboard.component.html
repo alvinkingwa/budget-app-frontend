@@ -1,264 +1,340 @@
 <!-- YourComponent.component.html -->
 <div class="flex bg-latestbg h-screen w-full">
-    <!-- Sidebar Column -->
-    <div class="w-2/12  p-6">
-        <div class="px-8 ">
-            <h1 class="text-4xl font-display">Trail<span class="text-primary">evy</span></h1>
-        </div>
-        <ul class="mt-4 pl-4 space-y-4">
-            <li>
-                <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}
-                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300">
-                    <div class="">
-                        <fa-icon [icon]="faDashboard" class="text-lg text-black"></fa-icon>
-                    </div>
-                    <span class="ml-2">Dashboard</span>
-                </a>
-            </li>
-            <!-- second link -->
-            <li>
-                <a routerLink="/transaction" routerLinkActive="active"
-                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300">
-                    <div class="">
-                        <fa-icon [icon]="faExchange" class="text-lg text-black"></fa-icon>
-                    </div>
-                    <span class="ml-2">Transactions</span>
-                </a>
-            </li>
-            <!-- third link -->
-            <li>
-                <a routerLink="/set-budget" routerLinkActive="active"
-                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300">
-                    <div class="">
-                        <fa-icon [icon]="faBudget" class="text-lg text-black"></fa-icon>
-                    </div>
-                    <span class="ml-2">Set Budget</span>
-                </a>
-            </li>
-        </ul>
-
-        <div class="p-4 rounded-lg text-center hover:cursor-pointer bg-red-300">
-            <button (click)="logout()" class="">logout</button>
-        </div>
+  <!-- Sidebar Column -->
+  <div class="w-2/12 p-6">
+    <div class="px-8">
+      <h1 class="text-4xl font-display">
+        Trail<span class="text-primary">evy</span>
+      </h1>
     </div>
+    <ul class="mt-4 pl-4 space-y-4">
+      <li>
+        <a
+          routerLink="/dashboard"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300"
+        >
+          <div class="">
+            <fa-icon [icon]="faDashboard" class="text-lg text-black"></fa-icon>
+          </div>
+          <span class="ml-2">Dashboard</span>
+        </a>
+      </li>
+      <!-- second link -->
+      <li>
+        <a
+          routerLink="/transaction"
+          routerLinkActive="active"
+          class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300"
+        >
+          <div class="">
+            <fa-icon [icon]="faExchange" class="text-lg text-black"></fa-icon>
+          </div>
+          <span class="ml-2">Transactions</span>
+        </a>
+      </li>
+      <!-- third link -->
+      <li>
+        <a
+          routerLink="/set-budget"
+          routerLinkActive="active"
+          class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300"
+        >
+          <div class="">
+            <fa-icon [icon]="faBudget" class="text-lg text-black"></fa-icon>
+          </div>
+          <span class="ml-2">Set Budget</span>
+        </a>
+      </li>
+    </ul>
 
-    <!-- Middle Column -->
+    <div class="p-4 rounded-lg text-center hover:cursor-pointer bg-red-300">
+      <button (click)="logout()" class="">logout</button>
+    </div>
+  </div>
 
-    <div class="w-7/12 bg-white">
-        <nav class="flex justify-between mt-8 px-4">
-            <div class="font-medium text-lg">
-                welcome {{userName}}
-            </div>
-            <div class="text-gray-400 text-sm">
-                24 March, 2023
-            </div>
-        </nav>
-        <div class="flex justify-between  space-x-2 p-4">
-            <!-- Card 1 -->
-            <div class="w-1/3">
-                <div
-                    class="relative flex flex-col min-w-0 shadow-md break-words bg-firstcard shadow-soft-xl rounded-xl bg-clip-border hover:bg-opacity-60">
-                    <div class="flex-auto p-4">
-                        <div class="flex flex-wrap -mx-3">
-                            <div class="flex-none w-2/3 max-w-full px-3">
-                                <div>
-                                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Income This Month</p>
-                                    <h5 class="mb-0 font-mono">
-                                        ksh {{incomeAmount | number}}
-                                        <span
-                                            class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
-                                <div
-                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tr from-primary  via-purple-600 to-primary  shadow-soft-2xl">
-                                    <fa-icon [icon]="faMoney" class="text-lg relative top-3.5 text-white"></fa-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <!-- Middle Column -->
 
-            <!-- Card 2 -->
-            <div class="w-1/3 ">
-                <!-- Card content here -->
-                <div
-                    class="relative flex flex-col min-w-0 shadow-md break-words bg-secondcard shadow-soft-xl rounded-xl bg-clip-border hover:bg-opacity-20">
-                    <div class="flex-auto p-4">
-                        <div class="flex flex-wrap -mx-3">
-                            <div class="flex-none w-2/3 max-w-full px-3">
-                                <div>
-                                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Expense This Month
-                                    </p>
-                                    <h5 class="mb-0 font-mono">
-                                        {{spending | number}}
-                                        <span
-                                            class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
-                                <div
-                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tr from-primary  via-purple-600 to-primary  shadow-soft-2xl">
-                                    <fa-icon [icon]="faWallet" class="text-lg relative top-3.5 text-white"></fa-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Card 3 -->
-            <div class="w-1/3">
-                <!-- Card content here -->
-                <div
-                    class="relative flex flex-col min-w-0 shadow-md break-words bg-thirdcard shadow-soft-xl rounded-xl bg-clip-border hover:bg-opacity-20">
-                    <div class="flex-auto p-4">
-                        <div class="flex flex-wrap -mx-3">
-                            <div class="flex-none w-2/3 max-w-full px-3">
-                                <div>
-                                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Savings This Month
-                                    </p>
-                                    <h5 class="mb-0 font-mono">
-                                        ksh 53,000
-                                        <span
-                                            class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
-                                <div
-                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tr from-primary  via-purple-600 to-primary shadow-soft-2xl">
-                                    <fa-icon [icon]="faPiggy" class="text-lg relative top-3.5 text-white"></fa-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- another card  -->
+  <div class="w-7/12 bg-white">
+    <nav class="flex justify-between mt-8 px-4">
+      <div class="font-medium text-lg">welcome {{ userName }}</div>
+      <div class="text-gray-400 text-sm">24 March, 2023</div>
+    </nav>
+    <div class="flex justify-between space-x-2 p-4">
+      <!-- Card 1 -->
+      <div class="w-1/3">
         <div
-            class="relative flex flex-col min-w-0 mx-4 break-words shadow-md bg-gradient-to-r from-fourthcard via-thirdcard to-green-100 shadow-soft-xl rounded-xl bg-clip-border ">
-            <div class="flex-auto p-4">
-                <div class="flex flex-wrap -mx-3">
-                    <div class="flex-none w-2/3 max-w-full px-3">
-                        <div>
-                            <p class="mb-0 font-sans font-semibold leading-normal text-sm">Today's Spending</p>
-                            <h5 class="mb-0 font-mono">
-                                ksh 53,000
-                                <span class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
-                            </h5>
-                        </div>
-                    </div>
-                    <div class="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
-                        <div
-                            class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 via-primary to-pink-500 shadow-soft-2xl">
-                            <fa-icon [icon]="faCredit" class="text-lg relative top-3.5 text-white"></fa-icon>
-                        </div>
-                    </div>
+          class="relative flex flex-col min-w-0 shadow-md break-words bg-firstcard shadow-soft-xl rounded-xl bg-clip-border hover:bg-opacity-60"
+        >
+          <div class="flex-auto p-4">
+            <div class="flex flex-wrap -mx-3">
+              <div class="flex-none w-2/3 max-w-full px-3">
+                <div>
+                  <p
+                    class="mb-0 font-sans font-semibold leading-normal text-sm"
+                  >
+                    Income This Month
+                  </p>
+                  <h5 class="mb-0 font-mono">
+                    ksh {{ monthlyDepositTotal | number }}
+                    <span
+                      class="leading-normal text-sm font-weight-bolder text-lime-500"
+                      >+55%</span
+                    >
+                  </h5>
                 </div>
+              </div>
+              <div class="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
+                <div
+                  class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tr from-primary via-purple-600 to-primary shadow-soft-2xl"
+                >
+                  <fa-icon
+                    [icon]="faMoney"
+                    class="text-lg relative top-3.5 text-white"
+                  ></fa-icon>
+                </div>
+              </div>
             </div>
-
+          </div>
         </div>
-        <div class="px-4 mt-2">
-            <app-transaction-table></app-transaction-table>
+      </div>
 
+      <!-- Card 2 -->
+      <div class="w-1/3">
+        <!-- Card content here -->
+        <div
+          class="relative flex flex-col min-w-0 shadow-md break-words bg-secondcard shadow-soft-xl rounded-xl bg-clip-border hover:bg-opacity-20"
+        >
+          <div class="flex-auto p-4">
+            <div class="flex flex-wrap -mx-3">
+              <div class="flex-none w-2/3 max-w-full px-3">
+                <div>
+                  <p
+                    class="mb-0 font-sans font-semibold leading-normal text-sm"
+                  >
+                    Expense This Month
+                  </p>
+                  <h5 class="mb-0 font-mono">
+                    {{ monthlyExpenseTotal | number }}
+                    <span
+                      class="leading-normal text-sm font-weight-bolder text-lime-500"
+                      >+55%</span
+                    >
+                  </h5>
+                </div>
+              </div>
+              <div class="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
+                <div
+                  class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tr from-primary via-purple-600 to-primary shadow-soft-2xl"
+                >
+                  <fa-icon
+                    [icon]="faWallet"
+                    class="text-lg relative top-3.5 text-white"
+                  ></fa-icon>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="w-1/3">
+        <!-- Card content here -->
+        <div
+          class="relative flex flex-col min-w-0 shadow-md break-words bg-thirdcard shadow-soft-xl rounded-xl bg-clip-border hover:bg-opacity-20"
+        >
+          <div class="flex-auto p-4">
+            <div class="flex flex-wrap -mx-3">
+              <div class="flex-none w-2/3 max-w-full px-3">
+                <div>
+                  <p
+                    class="mb-0 font-sans font-semibold leading-normal text-sm"
+                  >
+                    Savings This Month
+                  </p>
+                  <h5 class="mb-0 font-mono">
+                    {{ savings | number }}
+                    <span
+                      class="leading-normal text-sm font-weight-bolder text-lime-500"
+                      >+55%</span
+                    >
+                  </h5>
+                </div>
+              </div>
+              <div class="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
+                <div
+                  class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tr from-primary via-purple-600 to-primary shadow-soft-2xl"
+                >
+                  <fa-icon
+                    [icon]="faPiggy"
+                    class="text-lg relative top-3.5 text-white"
+                  ></fa-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <!-- last column -->
-    <div class="w-3/12 b p-4">
-        <div class=" flex justify-end">
-            <button type="button" (click)="openModal()"
-                class="flex items-center justify-center  hover:bg-opacity-60 p-2 w-30 m-4 h-10 bg-primary text-black rounded-md shadow-md">
-                Deposit Money <span class="pl-2">+</span>
-            </button>
-        </div>
-        <!-- modal start for deposit -->
-        <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="showModal">
-            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
-                <!-- Modal backdrop -->
-                <div class="fixed inset-0 transition-opacity" (click)="closeModal()" aria-hidden="true">
-                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                </div>
-
-                <!-- Modal content -->
-                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-                    role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                    <!-- Modal header -->
-                    <div class="bg-gray-200 px-4 py-2">
-                        <h3 class="text-lg font-mono text-gray-800" id="modal-headline">Deposit Funds</h3>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <!-- Your deposit form content goes here -->
-                        <!-- Example: -->
-                        <form>
-                            <div class="mb-4">
-                                <label class="block text-gray-700 text-sm font-bold mb-2" for="amount">
-                                    Received From
-                                </label>
-                                <input type="string" [(ngModel)]="receivedFrom" name="receivefFrom"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary"
-                                    id="amount" placeholder="money received from...">
-                                <label class="block text-gray-700 text-sm font-bold m-2" for="amount">
-                                    Amount
-                                </label>
-                                <input type="number" [(ngModel)]="depositAmount" name="depositAmount"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary"
-                                    id="amount" placeholder="Enter amount">
-                            </div>
-
-                            <!-- Additional form fields for deposit -->
-
-                            <div class="mt-4 flex justify-end">
-                                <button
-                                    class="bg-primary hover:bg-primary text-black  font-mono py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                    type="button" (click)="deposit()">Deposit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+    <!-- another card  -->
+    <div
+      class="relative flex flex-col min-w-0 mx-4 break-words shadow-md bg-gradient-to-r from-fourthcard via-thirdcard to-green-100 shadow-soft-xl rounded-xl bg-clip-border"
+    >
+      <div class="flex-auto p-4">
+        <div class="flex flex-wrap -mx-3">
+          <div class="flex-none w-2/3 max-w-full px-3">
+            <div>
+              <p class="mb-0 font-sans font-semibold leading-normal text-sm">
+                Today's Spending
+              </p>
+              <h5 class="mb-0 font-mono">
+               {{ dailyExpenseTotal | currency}}
+                <span
+                  class="leading-normal text-sm font-weight-bolder text-lime-500"
+                  >+55%</span
+                >
+              </h5>
             </div>
-        </div>
-        <!--end of modal  -->
-
-
-
-
-        <div class="bg-primary p-3 shadow-2xl rounded-md hover:bg-opacity-60">
-
-            <div class="mb-1 ">
-                <label for="" class="text-lg font-semibold font-display">Total Balance:</label>
+          </div>
+          <div class="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
+            <div
+              class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 via-primary to-pink-500 shadow-soft-2xl"
+            >
+              <fa-icon
+                [icon]="faCredit"
+                class="text-lg relative top-3.5 text-white"
+              ></fa-icon>
             </div>
-            <div class=" text-center ">
-                <span class="outline-none bg-transparent block font-mono ">ksh {{incomeAmount | number}}
-                </span>
-            </div>
-            <div class="w-full flex flex-row justify-between">
-                <div class="w-full flex flex-col">
-                    <label for="" class="font-display">Card holder</label>
-                    <input type="text" id="" value="Alvin kingwa" readonly
-                        class="outline-none bg-transparent font-mono">
-                </div>
-                <div class="w-1/4 flex flex-col">
-                    <label for="">Expires</label>
-                    <input type="text" id="" value="Null" readonly class="outline-none bg-transparent">
-                </div>
-            </div>
+          </div>
         </div>
-        <div class="  m-4">
-            <h1 class="m-2">Categories Monthly Spending</h1>
-            <app-line-chart></app-line-chart>
-        </div>
-
-
+      </div>
     </div>
+    <div class="px-4 mt-2">
+      <app-transaction-table></app-transaction-table>
+    </div>
+  </div>
 
+  <!-- last column -->
+  <div class="w-3/12 b p-4">
+    <div class="flex justify-end">
+      <button
+        type="button"
+        (click)="openModal()"
+        class="flex items-center justify-center hover:bg-opacity-60 p-2 w-30 m-4 h-10 bg-primary text-black rounded-md shadow-md"
+      >
+        Deposit Money <span class="pl-2">+</span>
+      </button>
+    </div>
+    <!-- modal start for deposit -->
+    <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="showModal">
+      <div
+        class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center"
+      >
+        <!-- Modal backdrop -->
+        <div
+          class="fixed inset-0 transition-opacity"
+          (click)="closeModal()"
+          aria-hidden="true"
+        >
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
 
+        <!-- Modal content -->
+        <div
+          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-headline"
+        >
+          <!-- Modal header -->
+          <div class="bg-gray-200 px-4 py-2">
+            <h3 class="text-lg font-mono text-gray-800" id="modal-headline">
+              Deposit Funds
+            </h3>
+          </div>
+
+          <!-- Modal body -->
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <!-- Your deposit form content goes here -->
+            <!-- Example: -->
+            <form>
+              <div class="mb-4">
+                <label
+                  class="block text-gray-700 text-sm font-bold mb-2"
+                  for="amount"
+                >
+                  Received From
+                </label>
+                <input
+                  type="string"
+                  [(ngModel)]="receivedFrom"
+                  name="receivefFrom"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary"
+                  id="amount"
+                  placeholder="money received from..."
+                />
+                <label
+                  class="block text-gray-700 text-sm font-bold m-2"
+                  for="amount"
+                >
+                  Amount
+                </label>
+                <input
+                  type="number"
+                  [(ngModel)]="depositAmount"
+                  name="depositAmount"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary"
+                  id="amount"
+                  placeholder="Enter amount"
+                />
+              </div>
+
+              <!-- Additional form fields for deposit -->
+
+              <div class="mt-4 flex justify-end">
+                <button
+                  class="bg-primary hover:bg-primary text-black font-mono py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="button"
+                  (click)="deposit()"
+                >
+                  Deposit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end of modal  -->
+
+    <div class="bg-primary p-3 shadow-2xl rounded-md hover:bg-opacity-60">
+      <div class="mb-1">
+        <label for="" class="text-lg font-semibold font-display"
+          >Total Balance:</label
+        >
+      </div>
+      <div class="text-center">
+        <span class="outline-none bg-transparent block font-mono"
+          >ksh {{ incomeAmount | number }}
+        </span>
+      </div>
+      <div class="w-full flex flex-row justify-between">
+        <div class="w-full flex flex-col">
+         <div class="font-thin text-lg">{{ userName }}'s account</div>
+        </div>
+        <div class="w-2/4 flex flex-col">
+          <label class="font-normal">Total Spending</label>
+          <h5 class=" font-mono">
+            {{ spending | number }}
+          </h5>
+        </div>
+      </div>
+    </div>
+    <div class="m-4">
+      <h1 class="m-2">Categories Monthly Spending</h1>
+      <app-line-chart></app-line-chart>
+    </div>
+  </div>
 </div>
