@@ -10,6 +10,8 @@ import { faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 import { faPiggyBank } from '@fortawesome/free-solid-svg-icons';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -25,6 +27,7 @@ export class DashboardComponent implements OnInit {
   faMoney = faMoneyBill;
   faWallet = faWallet;
   faCredit = faCreditCard;
+  todayDate: Date | undefined;
 
   public userName: any = '';
   public userId: any = '';
@@ -45,13 +48,15 @@ export class DashboardComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private user: UserService,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
+    private cdr:ChangeDetectorRef
   ) {}
   ngOnInit(): void {
     this.user.getUserName().subscribe((val) => {
       let userNameFromToken = this.auth.getUserNameFromToken();
       this.userName = val || userNameFromToken;
 
+      this.todayDate = new Date();
       this.auth.getUserIdFromToken();
       this.loadUserBalance();
       this.loadDailyExpenseTotal();
@@ -98,14 +103,15 @@ export class DashboardComponent implements OnInit {
     if (userId) {
       this.auth.getDailyExpenseTotal(userId, date).subscribe({
         next: (data) => {
-          this.dailyExpenseTotal = data;
+          console.log('Daily Expense Data:', data); // Debugging log
+          this.dailyExpenseTotal = data.dailyExpenseTotal;
+          this.cdr.detectChanges(); // Manually trigger change detection
         },
         error: (err) => console.error('Error fetching daily expense total:', err),
         complete: () => console.log('Load daily expense total complete'),
       });
     }
   }
-
 
   loadUserBalance(): void {
     const userId = this.auth.getUserIdFromToken();

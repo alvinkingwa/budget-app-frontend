@@ -10,6 +10,7 @@ import { UserDataService } from './user-data.service';
 })
 export class AuthService {
   private baseUrl: string = 'http://localhost:3001/api/';
+  private baseURLdaily: string = 'http://localhost:3001/api';
   private userPayload: any;
 
   constructor(
@@ -78,9 +79,9 @@ export class AuthService {
     return this.http.get<any>(`${this.baseUrl}${endpoint}`);
   }
 
-  getDailyExpenseTotal(userId: string, date: string): Observable<number> {
-    const endpoint = `user/${userId}?date=${date}`;
-    return this.http.get<number>(`${this.baseUrl}/${endpoint}`);
+  getDailyExpenseTotal(userId: string, date: string): Observable<any> {
+    const endpoint = `user/${userId}/daily-expense-total?date=${date}`;
+    return this.http.get<any>(`${this.baseURLdaily}/${endpoint}`);
   }
 
   categoryWithNoSpend(): Observable<any[]> {

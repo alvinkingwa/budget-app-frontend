@@ -59,7 +59,7 @@
   <div class="w-7/12 bg-white">
     <nav class="flex justify-between mt-8 px-4">
       <div class="font-medium text-lg">welcome {{ userName }}</div>
-      <div class="text-gray-400 text-sm">24 March, 2023</div>
+      <div class="text-gray-400 text-sm">{{ todayDate | date:'d MMMM, y' }}</div>
     </nav>
     <div class="flex justify-between space-x-2 p-4">
       <!-- Card 1 -->
@@ -77,11 +77,8 @@
                     Income This Month
                   </p>
                   <h5 class="mb-0 font-mono">
-                    ksh {{ monthlyDepositTotal | number }}
-                    <span
-                      class="leading-normal text-sm font-weight-bolder text-lime-500"
-                      >+55%</span
-                    >
+                  {{ monthlyDepositTotal | currency:'Ksh':'symbol':'1.2-2'  }}
+              
                   </h5>
                 </div>
               </div>
@@ -116,11 +113,8 @@
                     Expense This Month
                   </p>
                   <h5 class="mb-0 font-mono">
-                    {{ monthlyExpenseTotal | number }}
-                    <span
-                      class="leading-normal text-sm font-weight-bolder text-lime-500"
-                      >+55%</span
-                    >
+                    {{ monthlyExpenseTotal |currency:'Ksh':'symbol':'1.2-2' }}
+              
                   </h5>
                 </div>
               </div>
@@ -155,11 +149,8 @@
                     Savings This Month
                   </p>
                   <h5 class="mb-0 font-mono">
-                    {{ savings | number }}
-                    <span
-                      class="leading-normal text-sm font-weight-bolder text-lime-500"
-                      >+55%</span
-                    >
+                    {{ savings | currency:'Ksh':'symbol':'1.2-2' }}
+              
                   </h5>
                 </div>
               </div>
@@ -190,11 +181,8 @@
                 Today's Spending
               </p>
               <h5 class="mb-0 font-mono">
-               {{ dailyExpenseTotal | currency}}
-                <span
-                  class="leading-normal text-sm font-weight-bolder text-lime-500"
-                  >+55%</span
-                >
+                {{ dailyExpenseTotal | currency:'Ksh':'symbol':'1.2-2' }}
+            
               </h5>
             </div>
           </div>
@@ -317,7 +305,7 @@
       </div>
       <div class="text-center">
         <span class="outline-none bg-transparent block font-mono"
-          >ksh {{ incomeAmount | number }}
+          >ksh {{ incomeAmount |currency:'Ksh':'symbol':'1.2-2' }}
         </span>
       </div>
       <div class="w-full flex flex-row justify-between">
@@ -327,7 +315,7 @@
         <div class="w-2/4 flex flex-col">
           <label class="font-normal">Total Spending</label>
           <h5 class=" font-mono">
-            {{ spending | number }}
+            {{ spending |currency:'Ksh':'symbol':'1.2-2' }}
           </h5>
         </div>
       </div>
