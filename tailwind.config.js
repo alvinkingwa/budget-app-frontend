@@ -21,7 +21,8 @@ module.exports = {
         'transaction-table-h': '19rem',
         'trans-h':'33rem',
         'set-budget':'33rem',
-        'monthly-category':'20rem'
+        'monthly-category':'20rem',
+        'height-trasaction-table':'23rem'
       },
       width: {
         '120': '25rem',

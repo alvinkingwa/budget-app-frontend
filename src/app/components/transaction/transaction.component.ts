@@ -30,7 +30,6 @@ export class TransactionComponent implements OnInit {
   selectedCategory: any;
   showModal = false;
 
-
   totalMonthlyLimit: number = 0;
   totalMonthlySpending: number = 0;
   spendingPercentage: number = 0;
@@ -42,10 +41,11 @@ export class TransactionComponent implements OnInit {
     this.listCategory();
     this.loadTransaction();
     this.filteredTransactions = this.transactions;
-    this.getTotalAmountLimit()
-    this.loadUserBalance()
+    this.getTotalAmountLimit();
+    this.loadUserBalance();
   }
 
+  //loads user transactions
   loadTransaction(): void {
     const userId = this.auth.getUserIdFromToken();
     this.auth.getTransaction(userId).subscribe({
@@ -78,7 +78,7 @@ export class TransactionComponent implements OnInit {
     });
   }
 
-
+  //loads and calculate amount spent gainst amount limit
   loadUserBalance(): void {
     const userId = this.auth.getUserIdFromToken();
     if (userId) {
@@ -96,17 +96,17 @@ export class TransactionComponent implements OnInit {
     }
   }
 
-
-
   calculateSpendingPercentage(): void {
     // Calculate spending percentage
-    this.spendingPercentage = (this.totalMonthlySpending / this.totalMonthlyLimit) * 100;
+    this.spendingPercentage =
+      (this.totalMonthlySpending / this.totalMonthlyLimit) * 100;
 
     // Check if spending has reached the limit
     this.spendingLimitReached = this.spendingPercentage >= 100;
   }
 
   filterTransactions(): void {
+    //DETETE
     // Create a copy of the original transactions array
     let filteredTransactions = [...this.transactions];
 
@@ -132,9 +132,9 @@ export class TransactionComponent implements OnInit {
 
   listCategory(): void {
     const userId = this.auth.getUserIdFromToken();
-  
+
     if (userId) {
-      this.auth.getUserBalance(userId,).subscribe({
+      this.auth.getUserBalance(userId).subscribe({
         next: (data) => {
           this.categories = data.categories;
         },
@@ -143,13 +143,14 @@ export class TransactionComponent implements OnInit {
       });
     }
   }
-  
+
   getCategoryId(transaction: any): string {
+    //DELETE
     // Check if the transaction has a category, and return its categoryId, otherwise return an empty string
     return transaction.category ? transaction.category.categoryId : '';
   }
 
-  // Function to open the edit modal
+  // Function to open the edit modal //delete
   openEditModal(
     categoryName: string,
     spending: number,
@@ -184,6 +185,8 @@ export class TransactionComponent implements OnInit {
           next: (data) => {
             console.log('Category spending edited successfully', data);
             this.closeEditModal();
+            this.loadTransaction();
+            this.loadUserBalance()
           },
           error: (error) => {
             console.error('Error editing category spending', error);
@@ -196,8 +199,9 @@ export class TransactionComponent implements OnInit {
         .subscribe({
           next: (data) => {
             console.log('Deposit successful', data);
-
+            this.loadTransaction();
             this.closeEditModal();
+            this.loadUserBalance()
           },
           error: (error) => {
             console.error('Error depositing', error);
@@ -206,13 +210,12 @@ export class TransactionComponent implements OnInit {
     }
   }
 
- 
   openModal(category: any): void {
     this.selectedCategory = category;
     console.log(category);
     this.showModal = true;
   }
-  
+
   closeModal(): void {
     this.showModal = false;
   }
@@ -228,15 +231,13 @@ export class TransactionComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log('Spending successful:', response);
-        
+
           this.closeModal();
         },
         error: (error) => {
           console.error('Error spending on category:', error);
-      
         },
       });
-
   }
 
   // Function to open the Create Category modal
@@ -260,6 +261,7 @@ export class TransactionComponent implements OnInit {
         this.closeCreateCategoryModal();
         console.log('category created', response);
         this.newCategory = '';
+        this.listCategory();
       },
       error: (error) => {
         console.log('error creating category', error);

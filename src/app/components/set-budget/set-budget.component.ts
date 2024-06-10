@@ -42,7 +42,10 @@ export class SetBudgetComponent implements OnInit {
         this.closeModal();
         console.log('Category created', response);
         this.newCategory = '';
+        // this.categoriesWithNoSpend(); // Refresh the categoriesthis.newCategory = '';
         this.categoriesWithNoSpend(); // Refresh the categories
+        this.categoryAmountLimit(); // Refresh the category limits
+        
       },
       error: (error) => {
         console.error('Error creating category', error);
@@ -54,7 +57,9 @@ export class SetBudgetComponent implements OnInit {
     this.auth.deleteCategory(categoryId).subscribe({
       next: () => {
         console.log(`Category ${categoryId} deleted successfully`);
+        // this.categoriesWithNoSpend(); // Refresh the categories
         this.categoriesWithNoSpend(); // Refresh the categories
+        this.categoryAmountLimit(); // Refresh the category limits
       },
       error: (err) => console.error('Cannot delete category', err),
     });
@@ -118,10 +123,12 @@ export class SetBudgetComponent implements OnInit {
 
   closeModal(): void {
     this.showModalTransaction = false;
+    this.showModal = false
   }
   openModal(): void {
     this.showModal = true;
   }
+
 
   openAmountLimitModal(category: any,) {
     

@@ -70,11 +70,11 @@
         </form>
         <p class=" mt-2 flex items-center justify-center font-light">
             <span *ngIf="signupMessage" class="text-green-500"> {{signupMessage}} </span>
-            <span *ngIf="!signupMessage">already have an account?<span 
+            <span *ngIf="!signupMessage">already have an account?<span (click)="navigate()"
                     class="text-black font-normal underline hover:text-primary hover:cursor-pointer">login</span>
             </span>
         </p>
-        <div
+        <!-- <div
             class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-400 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-400">
             <p class="mx-4 mb-0 text-center font-semibold dark:text-black">
                 Or
@@ -108,7 +108,7 @@
                 </g>
             </svg>
             <span class="text-black">Sign Up with Google</span>
-        </button>
+        </button> -->
 
     </div>
 

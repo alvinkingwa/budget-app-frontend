@@ -38,9 +38,9 @@ export class SignupComponent implements OnInit {
       password: ['', Validators.required],
     });
   }
-  // navigate(){
-  //   this.router.navigate(['login'])
-  // }
+  navigate(){
+    this.router.navigate(['login'])
+  }
 
   onSubmit() {
     if (this.signUpForm.valid) {

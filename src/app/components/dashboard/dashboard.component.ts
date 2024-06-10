@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit {
 
 
 
+
   constructor(
     private auth: AuthService,
     private user: UserService,
@@ -85,6 +86,8 @@ export class DashboardComponent implements OnInit {
           console.log('Deposit successful:', response);
           // Additional handling after successful deposit
           this.closeModal(); // Close the modal after successful deposit
+          this.loadDailyExpenseTotal()
+          this.loadUserBalance()
         },
         error: (error) => {
           console.error('Error depositing funds:', error);
