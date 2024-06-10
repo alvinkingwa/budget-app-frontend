@@ -58,6 +58,12 @@ export class AuthService {
     return this.http.post<any>(`${this.baseUrl}${endpoint}`, requestBody);
   }
 
+ updateCategoryLimit(categoryId: string, limitAmount: number): Observable<any> {
+    const endpoint = `amountLimit/${categoryId}/update`;
+    const requestBody = { limitAmount };
+    return this.http.patch<any>(`${this.baseUrl}${endpoint}`, requestBody);
+  }
+
   editCategorySpending( 
     categoryId: string,
     amount: number,
@@ -84,18 +90,22 @@ export class AuthService {
     return this.http.get<any>(`${this.baseURLdaily}/${endpoint}`);
   }
 
+  getTotalAmountLimit(userId: string): Observable<any> {
+    const endpoint = `amountLimit/${userId}/total/monthly`;
+    return this.http.get<any>(`${this.baseUrl}${endpoint}`);
+  }
+  
+
   categoryWithNoSpend(): Observable<any[]> {
     const noSpentCategoryEndpoint = 'categories/without-amount-spent';
     return this.http.get<any[]>(`${this.baseUrl}${noSpentCategoryEndpoint}`);
   }
+ 
 
-  updateCategoryLimit(
-    categoryId: string,
-    amountLimit: number
-  ): Observable<void> {
-    const endpoint = `amountLimit/${categoryId}/update`;
-    const requestBody = { categoryId, amountLimit };
-    return this.http.patch<any>(`${this.baseUrl}${endpoint}`, requestBody);
+amountLimit(categoryId: string, limitAmount: number): Observable<any> {
+    const endpoint = `amountLimit/${categoryId}/create`;
+    const requestBody = {limitAmount};
+    return this.http.post<any>(`${this.baseUrl}${endpoint}`, requestBody);
   }
 
   deleteCategory(categoryId: string): Observable<void> {
@@ -106,11 +116,9 @@ export class AuthService {
   //   const endpoint = 'categories/create';
   //   return this.http.post<any>(`${this.baseUrl}${endpoint}`, category);
   // }
-  amountLimit(categoryId: string, amountLimit: number): Observable<any> {
-    const endpoint = `amountLimit/${categoryId}/create`;
-    const requestBody = { categoryId, amountLimit };
-    return this.http.post<any>(`${this.baseUrl}${endpoint}`, requestBody);
-  }
+  
+
+
   getToken() {
     return localStorage.getItem('access_token');
   }

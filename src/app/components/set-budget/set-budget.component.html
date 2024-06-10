@@ -1,242 +1,370 @@
 <div class="flex bg-l h-screen w-full">
-    <div class="w-2/12 p-6">
-        <div class="px-8 ">
-            <h1 class="text-4xl font-display">Trail<span class="text-primary">evy</span></h1>
-        </div>
-        <ul class="mt-4 pl-4 space-y-4">
-            <li>
-                <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}
-                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300">
-                    <div class="">
-                        <fa-icon [icon]="faDashboard" class="text-lg text-black"></fa-icon>
-                    </div>
-                    <span class="ml-2">Dashboard</span>
-                </a>
-            </li>
-            <!-- second link -->
-            <li>
-                <a routerLink="/transaction" routerLinkActive="active"
-                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300">
-                    <div class="">
-                        <fa-icon [icon]="faExchange" class="text-lg text-black"></fa-icon>
-                    </div>
-                    <span class="ml-2">Transactions</span>
-                </a>
-            </li>
-            <!-- third link -->
-            <li>
-                <a routerLink="/set-budget" routerLinkActive="active"
-                    class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300">
-                    <div class="">
-                        <fa-icon [icon]="faBudget" class="text-lg text-black"></fa-icon>
-                    </div>
-                    <span class="ml-2">Set Budget</span>
-                </a>
-            </li>
-        </ul>
+  <div class="w-2/12 p-6">
+    <div class="px-8">
+      <h1 class="text-4xl font-display">
+        Trail<span class="text-primary">evy</span>
+      </h1>
     </div>
-    <!-- second  -->
-    <div class="w-7/12 bg-white">
-        <nav class="flex justify-between mt-8 mb-2 px-4 h-10 border-2">
-            <div class="font-medium text-lg ">
-                Categories Budget
-            </div>
-            <!-- <input
-            class="appearance-none border-2 p-4 border-gray-300 hover:border-gray-400 transition-colors rounded-md  py-1 px-1 text-gray-800 leading-tight focus:outline-none focus:ring-primary focus:border-primary focus:shadow-outline"
-            id="username"
-            type="text"
-            placeholder="Search..."
-          /> -->
-        </nav>
-        <div class="overflow-x-auto h-set-budget shadow-xl bg-slate-100 rounded-md pt-6">
-            <table class="min-w-full border-collapse table-auto ">
-                <tbody class="mt-6">
-                    <tr *ngFor="let categories of displayAmountLimit">
-                        <td class="px-4 py-2">
-                        </td>
-                        <td class=" px-4 py-2"> {{categories.name}} </td>
-                        <td class=" px-4 py-2 text-purple-600"> {{categories.limit?.limitAmount}} </td>
-                        <button (click)="openEditModal(categories.name, categories.limit?.limitAmount)"
-                            class="flex items-center justify-center hover:bg-opacity-60 w-7 h-7 bg-gray-200 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" class="h-4 w-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                            </svg>
-                        </button>
-                    </tr>
-                    <!-- modal Modal for editing amount -->
-                    <div *ngIf="showModalTransaction" class="fixed z-10 inset-0 overflow-y-auto">
-                        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
-                            <!-- Modal backdrop -->
-                            <div class="fixed inset-0 transition-opacity" (click)="closeModal()" aria-hidden="true">
-                                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                            </div>
+    <ul class="mt-4 pl-4 space-y-4">
+      <li>
+        <a
+          routerLink="/dashboard"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300"
+        >
+          <div class="">
+            <fa-icon [icon]="faDashboard" class="text-lg text-black"></fa-icon>
+          </div>
+          <span class="ml-2">Dashboard</span>
+        </a>
+      </li>
+      <!-- second link -->
+      <li>
+        <a
+          routerLink="/transaction"
+          routerLinkActive="active"
+          class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300"
+        >
+          <div class="">
+            <fa-icon [icon]="faExchange" class="text-lg text-black"></fa-icon>
+          </div>
+          <span class="ml-2">Transactions</span>
+        </a>
+      </li>
+      <!-- third link -->
+      <li>
+        <a
+          routerLink="/set-budget"
+          routerLinkActive="active"
+          class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300"
+        >
+          <div class="">
+            <fa-icon [icon]="faBudget" class="text-lg text-black"></fa-icon>
+          </div>
+          <span class="ml-2">Set Budget</span>
+        </a>
+      </li>
+    </ul>
+  </div>
 
-                            <!-- Modal content -->
-                            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-                                role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                                <!-- Modal header -->
-                                <div class="bg-gray-200 px-4 py-2">
-                                    <h3 class="text-lg font-medium text-gray-800" id="modal-headline">Edit Amount Limit
-                                    </h3>
-                                </div>
-
-                                <!-- Modal body -->
-                                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                    <div class="mb-4">
-                                        <label class="block text-gray-700 text-sm font-bold mb-2"
-                                            for="editedAmount">Category Name</label>
-                                        <p class="text-gray-800">{{ selectedCategory }}</p>
-                                    </div>
-                                    <div class="mb-4">
-                                        <label class="block text-gray-700 text-sm font-bold mb-2"
-                                            for="editedAmount">Previous Amount</label>
-                                        <p class="text-purple-600">{{ previousAmount }}</p>
-                                    </div>
-                                    <div class="mb-4">
-                                        <label class="block text-gray-700 text-sm font-bold mb-2"
-                                            for="editedAmount">Edited Amount</label>
-                                        <input type="number"
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="editedAmount" [(ngModel)]="editedAmount" name="editedAmount"
-                                            placeholder="Enter edited amount">
-                                    </div>
-                                </div>
-
-                                <!-- Modal footer -->
-                                <div class="bg-gray-200 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                    <button type="button"
-                                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm"
-                                        (click)="updateCategoryLimit(selectedCategory, editedAmount)">Save</button>
-                                    <button type="button"
-                                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm"
-                                        (click)="closeModal()">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </tbody>
-            </table>
-        </div>
+ <!-- Middle column displaying categories and their amount limits -->
+<div class="w-7/12 bg-white">
+    <nav class="flex justify-between mt-8 mb-2 px-4 h-10 border-2">
+      <div class="font-medium text-lg">Categories Budget</div>
+    </nav>
+    <div class="overflow-x-auto h-set-budget shadow-xl bg-slate-100 rounded-md pt-6">
+      <table class="min-w-full border-collapse table-auto">
+        <thead class="bg-gray-200">
+          <tr class="text-left">
+            <th class="px-4 py-2 font-medium">Category</th>
+            <th class="px-4 py-2 font-medium">Limit Amount</th>
+            <th class="px-4 py-2 font-medium">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of displayAmountLimit" class="hover:bg-gray-100">
+            <td class="px-4 py-2">{{ category.name }}</td>
+            <td class="px-4 py-2 text-purple-600">
+              {{
+                category.limit?.limitAmount !== null
+                  ? category.limit?.limitAmount
+                  : 0
+              }}
+            </td>
+            <td class="px-4 py-2">
+              <button
+                (click)="openEditModal(category, category.limit?.limitAmount)"
+                class="flex items-center justify-center hover:bg-opacity-60 w-7 h-7 bg-gray-200 rounded-full"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  ></path>
+                </svg>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-
-    <!-- third  -->
-    <div class="w-3/12 b p-4">
-        <div class="flex flex-col">
-            <button (click)="openModal()"
-                class="flex items-center justify-center hover:bg-opacity-60  m-4 h-10 bg-primary text-black rounded-md shadow-md">
-                Create Category <span class="pl-2">+</span>
-            </button>
-            <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="showModal">
-                <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
-                    <!-- Modal backdrop -->
-                    <div class="fixed inset-0 transition-opacity" (click)="closeModal()" aria-hidden="true">
-                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                    </div>
-
-                    <!-- Modal content -->
-                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-                        role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                        <!-- Modal header -->
-                        <div class="bg-gray-200 px-4 py-2">
-                            <h3 class="text-lg font-medium text-gray-800" id="modal-headline">Add Category</h3>
-                        </div>
-
-                        <!-- Modal body -->
-                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <!-- Your category form content goes here -->
-                            <!-- Example: -->
-                            <form>
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="categoryName">
-                                        Category Name
-                                    </label>
-                                    <input type="text" [(ngModel)]="newCategory" name="newCategory"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="categoryName" placeholder="Enter category name">
-                                </div>
-
-                                <!-- Additional form fields for category -->
-
-                                <div class="mt-4">
-                                    <button
-                                        class="bg-primary text-black font-mono py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                        type="button" (click)="createCategory()">Add Category</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-8">
-                <h1 class="font-medium text-gray-500 pl-6">Categories Created</h1>
-                <div class="flex flex-col m-10 mt-2 space-y-3">
-                    <div *ngFor="let category of categoriesNoSpend" class="flex justify-between items-center">
-                        <a href="javascript:void(0);" class="font-medium text-lg"
-                            (click)="openAmountLimitModal(category)">{{ category.name }}</a>
-                        <fa-icon [icon]="faTrash" class="text-lg text-black cursor-pointer"
-                            (click)="deleteCategory(category)"></fa-icon>
-                    </div>
-                </div>
-
-                <!-- set amount Limit modal -->
-                <!-- Modal for setting amount limit -->
-                <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="selectedCategoryLimitModel">
-                    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
-                        <!-- Modal backdrop -->
-                        <div class="fixed inset-0 transition-opacity" (click)="closeAmountLimitModal()"
-                            aria-hidden="true">
-                            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                        </div>
-
-                        <!-- Modal content -->
-                        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-                            role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                            <!-- Modal header -->
-                            <div class="bg-gray-200 px-4 py-2">
-                                <h3 class="text-lg font-medium text-gray-800" id="modal-headline">Set Amount Limit for
-                                    {{ selectedCategoryLimit.name }}</h3>
-                            </div>
-
-                            <!-- Modal body -->
-                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                <!-- Your category form content goes here -->
-                                <!-- Example: -->
-                                <form>
-                                    <div class="mb-4">
-                                        <label class="block text-gray-700 text-sm font-bold mb-2" for="categoryName">
-                                            {{selectedCategoryLimit.name}}
-                                        </label>
-                                        <input type="number" [(ngModel)]="amountLimit" name="amountLimit"
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="categoryName" placeholder="Enter budget Limit">
-                                    </div>
-
-                                    <div *ngIf="selectedCategoryLimit && !selectedCategoryLimit.limit">
-                                        <!-- Display a message if the amount limit is null -->
-                                        <p class="text-sm text-red-600 font">No amount limit set for {{
-                                            selectedCategoryLimit.name }}</p>
-                                    </div>
-
-                                    <!-- Additional form fields for category -->
-
-                                    <div class="mt-4 flex flex-row-reverse">
-                                        <button type="button"
-                                            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm"
-                                            (click)="saveAmountLimit()">Save</button>
-                                        <button type="button"
-                                            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm"
-                                            (click)="closeModal()">Cancel</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  </div>
+  
+  <!-- Modal for editing amount -->
+  <div *ngIf="showModalTransaction" class="fixed z-10 inset-0 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
+      <!-- Modal backdrop -->
+      <div
+        class="fixed inset-0 transition-opacity"
+        (click)="closeModal()"
+        aria-hidden="true"
+      >
+        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+      </div>
+  
+      <!-- Modal content -->
+      <div
+        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-headline"
+      >
+        <!-- Modal header -->
+        <div class="bg-gray-200 px-4 py-2">
+          <h3 class="text-lg font-medium text-gray-800" id="modal-headline">
+            Edit Amount Limit
+          </h3>
         </div>
+  
+        <!-- Modal body -->
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2"
+              >Category Name</label
+            >
+            <p class="text-gray-800">{{ selectedCategory?.name }}</p>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2"
+              >Previous Amount</label
+            >
+            <p class="text-purple-600">{{ previousAmount }}</p>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2"
+              >Edited Amount</label
+            >
+            <input
+              type="number"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              [(ngModel)]="editedAmount"
+              name="editedAmount"
+              placeholder="Enter edited amount"
+            />
+          </div>
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="bg-gray-200 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <button
+            type="button"
+            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm"
+            (click)="saveEditedAmount()"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm"
+            (click)="closeModal()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
+
+
+  <!-- third  -->
+  <div class="w-3/12 b p-4">
+    <div class="flex flex-col">
+      <button
+        (click)="openModal()"
+        class="flex items-center justify-center hover:bg-opacity-60 m-4 h-10 bg-primary text-black rounded-md shadow-md"
+      >
+        Create Category <span class="pl-2">+</span>
+      </button>
+      <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="showModal">
+        <div
+          class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center"
+        >
+          <!-- Modal backdrop -->
+          <div
+            class="fixed inset-0 transition-opacity"
+            (click)="closeModal()"
+            aria-hidden="true"
+          >
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+          </div>
+
+          <!-- Modal content -->
+          <div
+            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-headline"
+          >
+            <!-- Modal header -->
+            <div class="bg-gray-200 px-4 py-2">
+              <h3 class="text-lg font-medium text-gray-800" id="modal-headline">
+                Add Category
+              </h3>
+            </div>
+
+            <!-- Modal body -->
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <!-- Your category form content goes here -->
+              <!-- Example: -->
+              <form>
+                <div class="mb-4">
+                  <label
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    for="categoryName"
+                  >
+                    Category Name
+                  </label>
+                  <input
+                    type="text"
+                    [(ngModel)]="newCategory"
+                    name="newCategory"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="categoryName"
+                    placeholder="Enter category name"
+                  />
+                </div>
+
+                <!-- Additional form fields for category -->
+
+                <div class="mt-4">
+                  <button
+                    class="bg-primary text-black font-mono py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="button"
+                    (click)="createCategory()"
+                  >
+                    Add Category
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <h1 class="font-medium text-gray-500 pl-6">Categories Created</h1>
+        <div class="flex flex-col m-10 mt-2 space-y-3">
+          <div
+            *ngFor="let category of categoriesNoSpend"
+            class="flex justify-between items-center"
+          >
+            <a
+              href="javascript:void(0);"
+              class="font-medium text-lg"
+              (click)="openAmountLimitModal(category)"
+              >{{ category.name }}</a
+            >
+
+            <!-- New column for amountLimit -->
+            <fa-icon
+              [icon]="faTrash"
+              class="text-lg text-black cursor-pointer"
+              (click)="deleteCategory(category)"
+            ></fa-icon>
+          </div>
+        </div>
+
+        <!-- set amount Limit modal -->
+        <!-- Modal for setting amount limit -->
+        <div
+          class="fixed z-10 inset-0 overflow-y-auto"
+          *ngIf="selectedCategoryLimitModel"
+        >
+          <div
+            class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center"
+          >
+            <!-- Modal backdrop -->
+            <div
+              class="fixed inset-0 transition-opacity"
+              (click)="closeAmountLimitModal()"
+              aria-hidden="true"
+            >
+              <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <!-- Modal content -->
+            <div
+              class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="modal-headline"
+            >
+              <!-- Modal header -->
+              <div class="bg-gray-200 px-4 py-2">
+                <h3
+                  class="text-lg font-medium text-gray-800"
+                  id="modal-headline"
+                >
+                  Set Amount Limit for {{ selectedCategoryLimit?.name }}
+                </h3>
+              </div>
+
+              <!-- Modal body -->
+              <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <!-- Your category form content goes here -->
+                <!-- Example: -->
+                <form>
+                  <div class="mb-4">
+                    <label
+                      class="block text-gray-700 text-sm font-bold mb-2"
+                      for="categoryName"
+                    >
+                      {{ selectedCategoryLimit?.name }}
+                    </label>
+                    <input
+                      type="number"
+                      [(ngModel)]="amountLimit"
+                      name="amountLimit"
+                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="categoryName"
+                      placeholder="Enter budget Limit"
+                    />
+                  </div>
+
+                  <div
+                    *ngIf="
+                      selectedCategoryLimit && !selectedCategoryLimit.limit
+                    "
+                  >
+                    <!-- Display a message if the amount limit is null -->
+                    <p class="text-sm text-red-600 font">
+                      No amount limit set for {{ selectedCategoryLimit.name }}
+                    </p>
+                  </div>
+
+                  <!-- Additional form fields for category -->
+
+                  <div class="mt-4 flex flex-row-reverse">
+                    <button
+                      type="button"
+                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm"
+                      (click)="saveAmountLimit()"
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm"
+                      (click)="closeModal()"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

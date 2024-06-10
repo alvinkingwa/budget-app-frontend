@@ -30,12 +30,20 @@ export class TransactionComponent implements OnInit {
   selectedCategory: any;
   showModal = false;
 
+
+  totalMonthlyLimit: number = 0;
+  totalMonthlySpending: number = 0;
+  spendingPercentage: number = 0;
+  spendingLimitReached: boolean = false;
+
   constructor(private auth: AuthService) {}
   ngOnInit(): void {
     this.auth.getUserIdFromToken();
     this.listCategory();
     this.loadTransaction();
     this.filteredTransactions = this.transactions;
+    this.getTotalAmountLimit()
+    this.loadUserBalance()
   }
 
   loadTransaction(): void {
@@ -55,6 +63,47 @@ export class TransactionComponent implements OnInit {
         console.log('error fetching transaction', error);
       },
     });
+  }
+
+  getTotalAmountLimit(): void {
+    const userId = this.auth.getUserIdFromToken();
+    this.auth.getTotalAmountLimit(userId).subscribe({
+      next: (data) => {
+        this.totalMonthlyLimit = data.totalAmountLimitMonthly;
+        this.calculateSpendingPercentage();
+      },
+      error: (error) => {
+        console.error('Error fetching total amount limit:', error);
+      },
+    });
+  }
+
+
+  loadUserBalance(): void {
+    const userId = this.auth.getUserIdFromToken();
+    if (userId) {
+      this.auth.getUserBalance(userId).subscribe({
+        next: (data) => {
+          console.log('User information:', data);
+
+          // Update monthly spending
+          this.totalMonthlySpending = data.monthlyExpenseTotal;
+          this.calculateSpendingPercentage();
+        },
+        error: (err) => console.error('Error fetching user balance:', err),
+        complete: () => console.log('Load user balance complete'),
+      });
+    }
+  }
+
+
+
+  calculateSpendingPercentage(): void {
+    // Calculate spending percentage
+    this.spendingPercentage = (this.totalMonthlySpending / this.totalMonthlyLimit) * 100;
+
+    // Check if spending has reached the limit
+    this.spendingLimitReached = this.spendingPercentage >= 100;
   }
 
   filterTransactions(): void {
@@ -163,6 +212,7 @@ export class TransactionComponent implements OnInit {
     console.log(category);
     this.showModal = true;
   }
+  
   closeModal(): void {
     this.showModal = false;
   }
@@ -186,7 +236,6 @@ export class TransactionComponent implements OnInit {
       
         },
       });
-
 
   }
 

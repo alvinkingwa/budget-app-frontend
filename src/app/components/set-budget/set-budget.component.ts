@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { faChartPie } from '@fortawesome/free-solid-svg-icons';
-import { faExchange } from '@fortawesome/free-solid-svg-icons';
-import { faDashboard } from '@fortawesome/free-solid-svg-icons';
+import { faChartPie, faExchange, faDashboard } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
@@ -11,183 +9,147 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
   styleUrls: ['./set-budget.component.css'],
 })
 export class SetBudgetComponent implements OnInit {
-parseFloat(arg0: string): number {
-throw new Error('Method not implemented.');
-}
   faBudget = faChartPie;
   faExchange = faExchange;
   faDashboard = faDashboard;
   faTrash = faTrashAlt;
 
+
+  selectedCategoryLimitModel = false;
   showModalTransaction = false;
-  showModalAmountLimit = false;
-  selectedCategory: string = '';
   previousAmount: number = 0;
   editedAmount: number = 0;
-  public categoriesNoSpend: any = [];
-  public newCategory: string = '';
-  selectedCategoryLimit: any;
-  selectedCategoryLimitModel = false;
-  showModal = false;
-  public displayAmountLimit: any = [];
-
+  categoriesNoSpend: any[] = [];
+  newCategory: string = '';
+  selectedCategory: any = null;
+  displayAmountLimit: any[] = [];
   amountLimit: number = 0;
+  showModal = false;
+  selectedCategoryLimit: any;
+
 
   constructor(private auth: AuthService) {}
+
   ngOnInit(): void {
     this.categoriesWithNoSpend();
     this.categoryAmountLimit();
   }
+
   createCategory() {
-    const newCategoryData = {
-      name: this.newCategory,
-    };
+    const newCategoryData = { name: this.newCategory };
     this.auth.createCategory(newCategoryData).subscribe({
       next: (response) => {
         this.closeModal();
-        console.log('category created', response);
+        console.log('Category created', response);
         this.newCategory = '';
+        this.categoriesWithNoSpend(); // Refresh the categories
       },
       error: (error) => {
-        console.log('error creating category', error);
+        console.error('Error creating category', error);
       },
     });
   }
 
-  deleteCategory(category: { categoryId: string }) {
-    this.auth.deleteCategory(category.categoryId).subscribe({
+  deleteCategory(categoryId: string) {
+    this.auth.deleteCategory(categoryId).subscribe({
       next: () => {
-        console.log(`category ${category.categoryId} deleted successful`);
+        console.log(`Category ${categoryId} deleted successfully`);
+        this.categoriesWithNoSpend(); // Refresh the categories
       },
-      error: (err) => console.log('cannot delete', err),
-      complete: () => {
-        this.categoriesWithNoSpend();
-      },
+      error: (err) => console.error('Cannot delete category', err),
     });
   }
 
-  updateCategoryLimit( categoryId: string ,amountLimit:number) {
-    this.auth.updateCategoryLimit(categoryId,amountLimit).subscribe({
-      next: (response) => {
-        console.log('checking my response', response);
-      },
-      error:(error)=>{
-        console.log('error updating amount Limit',error)
-      }
-    });
+  setOrUpdateAmountLimit(): void {
+    if (this.selectedCategory && this.selectedCategory.categoryId) {
+      const categoryId = this.selectedCategory.categoryId;
+      this.auth.updateCategoryLimit(categoryId, this.amountLimit).subscribe({
+        next: (response) => {
+          console.log('Amount limit set/updated:', response);
+          this.closeModal();
+          this.categoryAmountLimit(); // Refresh the category limits
+        },
+        error: (error) => {
+          console.error('Error setting/updating amount limit:', error);
+        },
+      });
+    } else {
+      console.error('Invalid category or category ID');
+    }
   }
 
   categoryAmountLimit(): void {
     const userId = this.auth.getUserIdFromToken();
-   
     if (userId) {
-      this.auth.getUserBalance(userId,).subscribe({
+      this.auth.getUserBalance(userId).subscribe({
         next: (response) => {
           console.log('User info:', response);
           this.displayAmountLimit = response.categories;
-          console.log('Testing display:', this.displayAmountLimit);
         },
         error: (err) => console.error('Error fetching user balance:', err),
         complete: () => console.log('Category amount limit load complete'),
       });
     }
   }
-  
 
   categoriesWithNoSpend(): void {
     this.auth.categoryWithNoSpend().subscribe({
       next: (response) => {
-        console.log('no spent', response);
+        console.log('Categories with no spend:', response);
         this.categoriesNoSpend = response;
       },
-      error: (err) => console.log(err),
-      complete: () => console.log('complete'),
+      error: (err) => console.error(err),
+      complete: () => console.log('Categories with no spend load complete'),
     });
   }
-
-  openAmountLimitModal(category: any) {
-    this.selectedCategoryLimitModel = true;
-    console.log('check if it is working ', this.amountLimit);
-  }
-  saveAmountLimit() {
-    if (this.selectedCategoryLimit && this.amountLimit > 0) {
-      this.auth
-        .amountLimit(this.selectedCategoryLimit.categoryId, this.amountLimit)
-        .subscribe({
-          next: (response) => {
-            console.log('amount Limit set:', response);
-            this.closeAmountLimitModal();
-          },
-          error: (error) => {
-            console.log('cannot set amount Limit twice', error);
-          },
-        });
-    }
-  }
-
-  openEditModal(categoryName: string, previousAmount: number) {
+  openEditModal(category: any, previousAmount: number | null) {
+    this.selectedCategory = category;
+    this.previousAmount = previousAmount !== null ? previousAmount : 0;
+    this.editedAmount = this.previousAmount;
     this.showModalTransaction = true;
-    this.selectedCategory = categoryName;
-
-    if (previousAmount !== null && previousAmount !== undefined) {
-      this.previousAmount = previousAmount;
-      this.editedAmount = this.previousAmount;
-    } else {
-      this.previousAmount = 0;
-      this.editedAmount = 0;
-    }
   }
+  
 
   saveEditedAmount() {
-    console.log('Category:', this.selectedCategory);
-    console.log('Previous Amount:', this.previousAmount);
-    console.log('Edited Amount:', this.editedAmount);
+    this.amountLimit = this.editedAmount;
+    this.setOrUpdateAmountLimit(); // Save the edited amount
     this.showModalTransaction = false;
-
-    // Close the modal (you can implement this using Tailwind CSS classes or Angular ngIf/ngClass)
-    // For example, you can remove the CSS class to hide the modal
   }
 
+  closeModal(): void {
+    this.showModalTransaction = false;
+  }
   openModal(): void {
     this.showModal = true;
   }
+
+  openAmountLimitModal(category: any,) {
+    
+    this.selectedCategory = category
+    this.selectedCategoryLimitModel = true;
+  
+  }
+
   closeAmountLimitModal(): void {
     this.selectedCategoryLimitModel = false;
     this.selectedCategoryLimit = null;
     this.amountLimit = 0;
   }
-
-  closeModal(): void {
-    this.showModal = false;
-    this.showModalTransaction = false;
-    this.showModalAmountLimit = false;
-    this.selectedCategoryLimitModel = false;
-  }
-
-  editCategoryName(): void {
-    // Implement logic to edit the category name
-    // You can use a form within the modal to get the new name
-    // Update the category name accordingly
-    this.closeModal();
-  }
-
-  deleteyCategory(): void {
-    // Implement logic to delete the category
-    // Confirm the deletion with the user and handle it accordingly
-    this.closeModal();
-  }
-
-  setBudgetLimit(): void {
-    // Implement logic to set the budget limit for the category
-    // You can use a form within the modal to get the new budget limit
-    // Update the category's budget limit accordingly
-    this.closeModal();
-  }
-
-  addCategory(): void {
-    // Implement your category addition logic here
-    // You can send data to your backend, update categories, etc.
-    // After adding the category, close the modal
-    this.closeModal();
+  saveAmountLimit(): void {
+    if (this.selectedCategory && this.selectedCategory.categoryId) {
+      const categoryId = this.selectedCategory.categoryId;
+      this.auth.updateCategoryLimit(categoryId, this.amountLimit)
+        .subscribe({
+          next: (response) => {
+            console.log('Amount limit set:', response);
+            this.closeAmountLimitModal();
+          },
+          error: (error) => {
+            console.error('Error setting amount limit:', error);
+          },
+        });
+    } else {
+      console.error('Invalid category or category ID');
+    }
   }
 }
