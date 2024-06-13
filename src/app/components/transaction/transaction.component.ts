@@ -34,6 +34,7 @@ export class TransactionComponent implements OnInit {
   totalMonthlySpending: number = 0;
   spendingPercentage: number = 0;
   spendingLimitReached: boolean = false;
+  amountLimitMessage:string|null= null
 
   constructor(private auth: AuthService) {}
   ngOnInit(): void {
@@ -186,10 +187,17 @@ export class TransactionComponent implements OnInit {
             console.log('Category spending edited successfully', data);
             this.closeEditModal();
             this.loadTransaction();
-            this.loadUserBalance()
+            this.loadUserBalance();
+            this.listCategory()
           },
           error: (error) => {
             console.error('Error editing category spending', error);
+            this.amountLimitMessage = 'exceeded_spending'
+
+          setTimeout(()=>{
+            this.amountLimitMessage = null
+          },3000)
+            
           },
         });
     } else {
@@ -225,7 +233,6 @@ export class TransactionComponent implements OnInit {
     const { categoryId, name } = this.selectedCategory;
     const { editCategorySpending, receiverName } = this;
 
-    // Call AuthService's spendOnCategory method with provided inputs
     this.auth
       .spendOnCategory(categoryId, editCategorySpending, receiverName)
       .subscribe({
@@ -233,9 +240,15 @@ export class TransactionComponent implements OnInit {
           console.log('Spending successful:', response);
 
           this.closeModal();
+          this.listCategory()
         },
         error: (error) => {
           console.error('Error spending on category:', error);
+          this.amountLimitMessage = 'exceeded_spending'
+
+          setTimeout(()=>{
+            this.amountLimitMessage = null
+          },3000)
         },
       });
   }

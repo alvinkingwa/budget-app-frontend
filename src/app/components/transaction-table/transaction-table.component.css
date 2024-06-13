@@ -1,0 +1,5 @@
+/* Custom style to ensure table covers the available height */
+.h-screen-adjusted {
+    height: calc(100vh - 64px); /* Adjust based on your navbar height */
+  }
+  

@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('access_token', res.access_token);
             this.loginMessage = res.message;
           } else {
-            this.loginMessage = 'user logged in successful';
+            this.loginMessage = 'User logged in successfully';
           }
           setTimeout(() => {
             this.loginMessage = null;
@@ -67,7 +67,15 @@ export class LoginComponent implements OnInit {
         error: (err) => {
           console.log('Login error:', err);
 
-          alert('An error occurred during login'); 
+          if (err.status === 401) {
+            this.loginErrorMessage = 'wrong_password';
+          } else {
+            this.loginErrorMessage = 'server_down';
+          }
+
+          setTimeout(() => {
+            this.loginErrorMessage = null;
+          }, 5000);
         },
       });
     } else {

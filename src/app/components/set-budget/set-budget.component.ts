@@ -82,6 +82,7 @@ export class SetBudgetComponent implements OnInit {
       console.error('Invalid category or category ID');
     }
   }
+  
 
   categoryAmountLimit(): void {
     const userId = this.auth.getUserIdFromToken();
@@ -114,7 +115,6 @@ export class SetBudgetComponent implements OnInit {
     this.showModalTransaction = true;
   }
   
-
   saveEditedAmount() {
     this.amountLimit = this.editedAmount;
     this.setOrUpdateAmountLimit(); // Save the edited amount

@@ -53,50 +53,59 @@
     <nav class="flex justify-between mt-8 mb-2 px-4 h-10 border-2">
       <div class="font-medium text-lg">Categories Budget</div>
     </nav>
-    <div class="overflow-x-auto h-set-budget shadow-xl bg-slate-100 rounded-md ">
-      <table class="min-w-full border-collapse table-auto">
-        <thead class="bg-gray-200 sticky top-0 z-10">
-          <tr class="text-left">
-            <th class="px-4 py-2 font-medium">Category</th>
-            <th class="px-4 py-2 font-medium">Limit Amount</th>
-            <th class="px-4 py-2 font-medium">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let category of displayAmountLimit" class="hover:bg-gray-100">
-            <td class="px-4 py-2">{{ category.name }}</td>
-            <td class="px-4 py-2 text-purple-600">
-              {{
-                category.limit?.limitAmount !== null
-                  ? category.limit?.limitAmount
-                  : 0
-              }}
-            </td>
-            <td class="px-4 py-2">
-              <button
-                (click)="openEditModal(category, category.limit?.limitAmount)"
-                class="flex items-center justify-center hover:bg-opacity-60 w-7 h-7 bg-gray-200 rounded-full"
+
+    <div
+    class="overflow-x-auto h-set-budget shadow-xl bg-slate-100 rounded-md "
+  >
+    <table class="min-w-full border-collapse table-auto">
+      <thead class="bg-gray-200 sticky top-0">
+        <tr class="text-left">
+          <th class="px-4 py-2 font-medium">Category</th>
+          <th class="px-4 py-2 font-medium">Limit Amount</th>
+          <th class="px-4 py-2 font-medium">Actions</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="displayAmountLimit.length > 0">
+        <tr
+          *ngFor="let category of displayAmountLimit"
+          class="hover:bg-gray-100"
+        >
+          <td class="px-4 py-2">{{ category.name }}</td>
+          <td class="px-4 py-2 text-purple-600">
+            {{
+              category.limit?.limitAmount !== null
+                ? category.limit?.limitAmount
+                : 0
+            }}
+          </td>
+          <td class="px-4 py-2">
+            <button
+              (click)="openEditModal(category, category.limit?.limitAmount)"
+              class="flex items-center justify-center hover:bg-opacity-60 w-7 h-7 bg-gray-200 rounded-full"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="h-4 w-4"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  class="h-4 w-4"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  ></path>
-                </svg>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                ></path>
+              </svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="displayAmountLimit.length === 0" class="text-center justify-center py-4 text-gray-500">All budgeted categories will appear here</div>
+
+  </div>
+
   </div>
   
 
