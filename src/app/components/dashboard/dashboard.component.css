@@ -4,3 +4,6 @@
 .active{
 background-color:#00F0FF;	
 }
+.active {
+    @apply bg-gray-200 text-black;
+  }

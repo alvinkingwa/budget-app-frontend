@@ -19,9 +19,10 @@ module.exports = {
       },
       height: {
         'transaction-table-h': '19rem',
-        'trans-h':'33rem',
-        'set-budget':'33rem',
-        'monthly-category':'20rem',
+        'trans-h':'36rem',
+        'set-budget':'39rem',
+        'set-bdudget-small-screen':'70rem',
+        'monthly-category':'28rem',
         'height-trasaction-table':'23rem'
       },
       width: {

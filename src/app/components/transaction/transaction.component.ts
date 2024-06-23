@@ -3,6 +3,7 @@ import { faDashboard, faL } from '@fortawesome/free-solid-svg-icons';
 import { faChartPie } from '@fortawesome/free-solid-svg-icons';
 import { faExchange } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-transaction',
@@ -10,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./transaction.component.css'],
 })
 export class TransactionComponent implements OnInit {
+  faBars = faBars
   faBudget = faChartPie;
   faExchange = faExchange;
   faDashboard = faDashboard;
@@ -44,7 +46,53 @@ export class TransactionComponent implements OnInit {
     this.filteredTransactions = this.transactions;
     this.getTotalAmountLimit();
     this.loadUserBalance();
+    this.setupSidebar();
+    this.setupThirdColumn()
+    
   }
+
+
+  setupSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const menuToggle = document.getElementById('menu-toggle');
+  document.body.classList.toggle('third-column-open');
+  document.body.classList.remove('third-column-open');
+
+    if (menuToggle && sidebar && sidebarOverlay) {
+      menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+        sidebarOverlay.classList.toggle('hidden');
+      });
+  
+      sidebarOverlay.addEventListener('click', () => {
+        sidebar.classList.add('-translate-x-full');
+        sidebarOverlay.classList.add('hidden');
+      });
+    } else {
+      console.error('One or more sidebar elements not found');
+    }
+  }
+
+
+  setupThirdColumn() {
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const thirdColumn = document.getElementById('third-column');
+    // const overlay = document.getElementById('overlay');
+  
+    if (hamburgerMenu && thirdColumn) {
+      hamburgerMenu.addEventListener('click', () => {
+        thirdColumn.classList.toggle('translate-x-full');
+        // overlay.classList.toggle('hidden');
+      });
+  
+      // overlay.addEventListener('click', () => {
+      //   thirdColumn.classList.add('translate-x-full');
+      //   overlay.classList.add('hidden');
+      // });
+    }
+  }
+
 
   //loads user transactions
   loadTransaction(): void {

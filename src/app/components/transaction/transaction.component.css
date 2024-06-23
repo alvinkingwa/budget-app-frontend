@@ -1,4 +1,35 @@
 .active{
     background-color:#00F0FF;	
     }
-    
+
+    .active {
+        @apply bg-gray-200 text-black;
+      }
+
+      @media (max-width: 1024px) {
+        body.third-column-open {
+          overflow: hidden;
+        }
+      }
+
+      /* #overlay {
+        pointer-events: auto;
+      } */
+/*       
+      #third-column {
+        pointer-events: auto;
+      }
+      
+      #third-column.translate-x-full {
+        pointer-events: none;
+      }
+      
+      #third-column.translate-x-full > * {
+        pointer-events: none;
+      } */
+
+      @media (max-width: 640px) {
+        body {
+          font-size: 14px;
+        }
+      }

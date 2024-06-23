@@ -1,5 +1,8 @@
 <div class="flex bg-latestbg h-screen w-full">
-  <div class="w-2/12 p-6">
+  <div
+    class="fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out md:w-2/12 p-6 bg-white z-30"
+    id="sidebar"
+  >
     <div class="px-8">
       <h1 class="text-4xl font-display">
         Trail<span class="text-primary">evy</span>
@@ -14,10 +17,7 @@
           class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300"
         >
           <div class="">
-            <fa-icon
-              [icon]="faDashboard"
-              class="text-lg text-primary"
-            ></fa-icon>
+            <fa-icon [icon]="faDashboard" class="text-lg text-black"></fa-icon>
           </div>
           <span class="ml-2">Dashboard</span>
         </a>
@@ -30,7 +30,7 @@
           class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300"
         >
           <div class="">
-            <fa-icon [icon]="faExchange" class="text-lg text-primary"></fa-icon>
+            <fa-icon [icon]="faExchange" class="text-lg text-black"></fa-icon>
           </div>
           <span class="ml-2">Transactions</span>
         </a>
@@ -43,7 +43,7 @@
           class="flex items-center rounded-xl justify-center w-full py-2 text-black hover:bg-gray-300 hover:text-black transition duration-300"
         >
           <div class="">
-            <fa-icon [icon]="faBudget" class="text-lg text-primary"></fa-icon>
+            <fa-icon [icon]="faBudget" class="text-lg text-black"></fa-icon>
           </div>
           <span class="ml-2">Set Budget</span>
         </a>
@@ -51,37 +51,167 @@
     </ul>
   </div>
 
-<!-- middle column -->
+  <div
+    class="fixed inset-0 bg-black opacity-50 z-20 hidden"
+    id="sidebar-overlay"
+  ></div>
 
-  <div class="w-7/12 bg-white">
+  <button
+    class="md:hidden fixed top-4 left-4 z-40 p-2 bg-white rounded-md"
+    id="menu-toggle"
+  >
+    <fa-icon [icon]="faBars" class="text-lg"></fa-icon>
+  </button>
 
-    <nav class="flex justify-between mt-8 px-4">
-      <div class="font-medium text-lg">All Transactions</div>
-      <div>
-        <span class="p-2 font-bold font-mono">search:</span>
-        <input
-          class="appearance-none border-2 p-4 text-sm border-gray-300 hover:border-gray-400 transition-colors rounded-md py-1 px-1 text-gray-800 leading-tight focus:outline-none focus:ring-primary focus:border-primary focus:shadow-outline"
-          [(ngModel)]="searchQuery"
-          (input)="filterTransactions()"
-          id="search"
-          type="text"
-          placeholder="Search by category or receiver..."
-        />
-      </div>
+  <!-- middle column -->
+  <div class="w-full md:w-8/12 lg:w-7/12 bg-white">
+    <nav
+      class="flex flex-col md:flex-row justify-center items-center mt-8 mb-4"
+    >
+      <div class="font-medium text-lg md:mb-0">ALL TRANSACTIONS</div>
     </nav>
 
+    <div class="md:hidden w-full flex justify-end p-4">
+      <button
+      (click)="openCreateCategoryModal()"
+      class="flex items-center justify-center px-4 py-2 bg-primary text-black font-semibold text-sm rounded-md shadow-md hover:bg-opacity-90 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+      </svg>
+      Create Category
+    </button>
+
+      <!-- Modal for Creating a Category -->
+      <div
+        class="fixed z-10 inset-0 overflow-y-auto"
+        *ngIf="showCreateCategoryModal"
+      >
+        <div
+          class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center"
+        >
+          <!-- Modal backdrop -->
+          <div
+            class="fixed inset-0 transition-opacity"
+            (click)="closeCreateCategoryModal()"
+            aria-hidden="true"
+          >
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+          </div>
+
+          <!-- Modal content -->
+          <div
+            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-headline"
+          >
+            <!-- Modal header -->
+            <div class="bg-gray-200 px-4 py-2">
+              <h3 class="text-lg font-medium text-gray-800" id="modal-headline">
+                Add Category
+              </h3>
+            </div>
+
+            <!-- Modal body -->
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <!-- Your category form content goes here -->
+              <!-- Example: -->
+              <form>
+                <div class="mb-4">
+                  <label
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    for="categoryName"
+                  >
+                    Category Name
+                  </label>
+                  <input
+                    type="text"
+                    [(ngModel)]="newCategory"
+                    name="newCategory"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="categoryName"
+                    placeholder="Enter category name"
+                  />
+                </div>
+
+                <!-- Additional form fields for category -->
+
+                <div class="mt-4">
+                  <button
+                    class="bg-primary text-black font-mono py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="button"
+                    (click)="createCategory()"
+                  >
+                    Add Category
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="md:hidden p-4">
+      <div>
+        <h1 class="text-lg text-center font-medium">Spending Limit</h1>
+      </div>
+      <div>
+        <h1 class="text-xs pl-6 pt-1 text-gray-600">Monthly Transaction</h1>
+        <p class="text-xs font-semibold pl-2 pt-2">
+          {{ totalMonthlySpending }} of {{ totalMonthlyLimit }}
+        </p>
+        <div class="flex justify-between mb-1">
+          <span class="text-base font-medium text-blue-700 dark:text-gray-400"
+            >Spendings</span
+          >
+          <span class="text-sm font-medium text-blue-700 dark:text-black"
+            >{{ spendingPercentage }}%</span
+          >
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-300">
+          <div
+            class="bg-blue-600 h-2.5 rounded-full"
+            [style.width.%]="spendingPercentage"
+          ></div>
+        </div>
+        <span class="pt-2 text-xs text-red-600" *ngIf="spendingLimitReached">
+          ! Your spending has reached the limit
+        </span>
+      </div>
+    </div>
+
+    <div class="w-full md:w-auto p-4 md:p-0">
+      <span class="p-2 font-bold font-mono">Search:</span>
+      <input
+        class="w-full md:w-auto appearance-none border-2 p-2 text-sm border-gray-300 hover:border-gray-400 transition-colors rounded-md text-gray-800 leading-tight focus:outline-none focus:ring-primary focus:border-primary focus:shadow-outline"
+        [(ngModel)]="searchQuery"
+        (input)="filterTransactions()"
+        id="search"
+        type="text"
+        placeholder="Search by category or receiver..."
+      />
+    </div>
+
     <!-- transaction table -->
-     <div class="bg-white m-4">
+    <div class="bg-white m-4">
       <div class="overflow-x-auto h-trans-h shadow-xl rounded-md">
         <table class="min-w-full border-collapse table-auto">
           <thead
             class="text-xs uppercase bg-gray-300 dark:text-black sticky top-0"
           >
             <tr class="text-left">
-              <th scope="col" class="px-6 py-3 font-medium">Receiver</th>
-              <th scope="col" class="px-6 py-3 font-medium">Categories</th>
-              <th scope="col" class="px-6 py-3 font-medium">Amount Spent</th>
-              <th scope="col" class="px-6 py-3 font-medium">Action</th>
+              <th scope="col" class="px-2 md:px-6 py-3 font-medium">
+                Receiver
+              </th>
+              <th scope="col" class="px-2 md:px-6 py-3 font-medium">
+                Categories
+              </th>
+              <th scope="col" class="px-2 md:px-6 py-3 font-medium">
+                Amount Spent
+              </th>
+              <th scope="col" class="px-2 md:px-6 py-3 font-medium">Action</th>
             </tr>
           </thead>
 
@@ -90,7 +220,7 @@
               *ngFor="let transaction of filteredTransactions"
               class="hover:bg-gray-100"
             >
-              <td class="px-4 py-2">
+              <td class="px-2 md:px-4 py-2">
                 <div class="flex items-center space-x-3">
                   <div>
                     <p>{{ transaction.receiverName }}</p>
@@ -100,11 +230,11 @@
                   </div>
                 </div>
               </td>
-              <td class="px-4 py-2">
+              <td class="px-2 md:px-4 py-2">
                 {{ transaction.category ? transaction.category.name : "N/A" }}
               </td>
               <td
-                class="px-4 py-2"
+                class="px-2 md:px-4 py-2"
                 [ngClass]="{
                   'text-red-600': transaction.category,
                   'text-green-600': !transaction.category
@@ -112,9 +242,9 @@
               >
                 {{ transaction.amount | currency : "Ksh" }}
               </td>
-              <td class="px-4 py-2">
+              <td class="px-2 md:px-4 py-2">
                 <button
-                  class="flex items-center justify-center hover:bg-opacity-60 w-7 h-7 bg-gray-200 rounded-full"
+                  class="flex items-center justify-center hover:bg-opacity-60 w-10 h-10 md:w-7 md:h-7 bg-gray-200 rounded-full"
                   (click)="
                     openEditModal(
                       transaction.category ? transaction.category.name : 'N/A',
@@ -160,7 +290,7 @@
 
                 <!-- Modal content -->
                 <div
-                  class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                  class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-full sm:max-w-lg"
                   role="dialog"
                   aria-modal="true"
                 >
@@ -209,7 +339,11 @@
                         />
                       </div>
                     </form>
-                    <small *ngIf="amountLimitMessage === 'exceeded_spending'" class="text-red-500">cannot spend more than your budget</small>
+                    <small
+                      *ngIf="amountLimitMessage === 'exceeded_spending'"
+                      class="text-red-500"
+                      >cannot spend more than your budget</small
+                    >
                   </div>
 
                   <!-- Modal footer -->
@@ -230,17 +364,48 @@
           </tbody>
         </table>
 
-        <div *ngIf="filterTransactions.length === 0" class="text-center justify-center py-4 text-gray-500">All transactions will appear here</div>
+        <div
+          *ngIf="filterTransactions.length === 0"
+          class="text-center justify-center py-4 text-gray-500"
+        >
+          All transactions will appear here
+        </div>
       </div>
-      
     </div>
-
 
     <!-- transaction table end -->
   </div>
 
+  <button
+    id="hamburger-menu"
+    class="fixed top-4 right-4 z-50 p-2 rounded-md bg-gray-200 lg:hidden"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"
+      />
+    </svg>
+  </button>
+
+  <div
+    id="overlay"
+    class="fixed inset-0 bg-black opacity-50 z-40 hidden lg:hidden"
+  ></div>
+
   <!-- third column -->
-  <div class="w-3/12 p-4">
+  <div
+    id="third-column"
+    class="fixed top-0 right-0 w-80 h-full bg-white p-4 overflow-y-auto transition-transform duration-300 ease-in-out transform translate-x-full lg:relative lg:translate-x-0 lg:w-3/12"
+  >
     <div class="flex flex-col">
       <button
         (click)="openCreateCategoryModal()"
@@ -248,7 +413,6 @@
       >
         Create Category
       </button>
-
 
       <!-- Modal for Creating a Category -->
       <div
@@ -324,7 +488,7 @@
         <h1 class="text-lg text-center font-medium">Spending Limit</h1>
       </div>
       <div>
-        <h1 class="text-xs pl-6 pt-1 text-gray-600">Monthly Transaction</h1>
+        <h1 class="text-xs pl-6 pt-1 text-gray-600">Monthly Budget</h1>
         <p class="text-xs font-semibold pl-2 pt-2">
           {{ totalMonthlySpending }} of {{ totalMonthlyLimit }}
         </p>
@@ -349,36 +513,35 @@
       </div>
 
       <div class="mt-8">
-        <h1 class="font-medium text-gray-500">Monthly Category Totals</h1>
+        <h1 class="font-medium text-gray-500">Categories created</h1>
 
         <div
-        class="overflow-x-auto h-monthly-category scrollbar-thin scrollbar-thumb-slate-400 shadow-xl rounded-md flex flex-col m-4 p-4 mt-2"
-      >
-      <div class="flex justify-between mb-2">
-        <span class="font-medium text-lg">Category</span>
-        <span class="font-medium text-lg">Amount Spent</span>
-      </div>
-      
+          class="overflow-x-auto h-monthly-category scrollbar-thin scrollbar-thumb-slate-400 shadow-xl rounded-md flex flex-col m-4 p-4 mt-2"
+        >
+          <div class="flex justify-between mb-2">
+            <span class="font-medium text-lg">Category</span>
+            <span class="font-medium text-lg">Amount Spent</span>
+          </div>
+
           <div *ngFor="let category of categories" class="flex justify-between">
-          <span class="font-medium">
-            <a
-              href="javascript:void(0);"
-              class="font-medium text-lg"
-              (click)="openModal(category)"
-              >{{ category.name }}</a
-            >
-          </span>
-          <span class="text-red-600">{{
-            category.amountSpent.toFixed(2)
-          }}</span>
+            <span class="font-medium">
+              <a
+                href="javascript:void(0);"
+                class="font-medium text-lg"
+                (click)="openModal(category)"
+                >{{ category.name }}</a
+              >
+            </span>
+            <span class="text-red-600">{{
+              category.amountSpent.toFixed(2)
+            }}</span>
+          </div>
+
+          <div
+            *ngIf="categories.length === 0"
+            class="text-center py-4 text-gray-500"
+          ></div>
         </div>
-
-        <div *ngIf="categories.length === 0" class="text-center py-4 text-gray-500">
-
-        </div>
-      </div>
-        
-
       </div>
 
       <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="showModal">
@@ -442,7 +605,11 @@
                     id="amount"
                     placeholder="Enter amount"
                   />
-                  <small *ngIf="amountLimitMessage === 'exceeded_spending'" class="text-red-500">cannot spend more than your budget</small>
+                  <small
+                    *ngIf="amountLimitMessage === 'exceeded_spending'"
+                    class="text-red-500"
+                    >cannot spend more than your budget</small
+                  >
                 </div>
 
                 <!-- Additional form fields for deposit -->

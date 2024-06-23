@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { faChartPie, faExchange, faDashboard } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-set-budget',
@@ -13,7 +14,7 @@ export class SetBudgetComponent implements OnInit {
   faExchange = faExchange;
   faDashboard = faDashboard;
   faTrash = faTrashAlt;
-
+  faBars = faBars
 
   selectedCategoryLimitModel = false;
   showModalTransaction = false;
@@ -33,7 +34,30 @@ export class SetBudgetComponent implements OnInit {
   ngOnInit(): void {
     this.categoriesWithNoSpend();
     this.categoryAmountLimit();
+    this.setupSidebar()
   }
+
+
+  setupSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const menuToggle = document.getElementById('menu-toggle');
+  
+    if (menuToggle && sidebar && sidebarOverlay) {
+      menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+        sidebarOverlay.classList.toggle('hidden');
+      });
+  
+      sidebarOverlay.addEventListener('click', () => {
+        sidebar.classList.add('-translate-x-full');
+        sidebarOverlay.classList.add('hidden');
+      });
+    } else {
+      console.error('One or more sidebar elements not found');
+    }
+  }
+
 
   createCategory() {
     const newCategoryData = { name: this.newCategory };

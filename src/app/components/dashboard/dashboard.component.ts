@@ -11,6 +11,7 @@ import { faPiggyBank } from '@fortawesome/free-solid-svg-icons';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import { ChangeDetectorRef } from '@angular/core';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class DashboardComponent implements OnInit {
   faMoney = faMoneyBill;
   faWallet = faWallet;
   faCredit = faCreditCard;
+  faBars = faBars
   todayDate: Date | undefined;
 
   public userName: any = '';
@@ -61,8 +63,32 @@ export class DashboardComponent implements OnInit {
       this.auth.getUserIdFromToken();
       this.loadUserBalance();
       this.loadDailyExpenseTotal();
+      this.setupSidebar();
+
     });
   }
+
+  setupSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const menuToggle = document.getElementById('menu-toggle');
+  
+    if (menuToggle && sidebar && sidebarOverlay) {
+      menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+        sidebarOverlay.classList.toggle('hidden');
+      });
+  
+      sidebarOverlay.addEventListener('click', () => {
+        sidebar.classList.add('-translate-x-full');
+        sidebarOverlay.classList.add('hidden');
+      });
+    } else {
+      console.error('One or more sidebar elements not found');
+    }
+  }
+
+  
   // modal
   showModal = false;
 
