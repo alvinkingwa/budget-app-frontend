@@ -9,8 +9,8 @@ import { UserDataService } from './user-data.service';
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl: string = 'http://localhost:3001/api/';
-  private baseURLdaily: string = 'http://localhost:3001/api';
+  private baseUrl: string = 'https://alvinkingwa.zeabur.app/api/';
+  private baseURLdaily: string = 'https://alvinkingwa.zeabur.app/api';
   private userPayload: any;
 
   constructor(
