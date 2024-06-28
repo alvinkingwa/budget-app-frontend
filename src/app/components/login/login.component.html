@@ -30,7 +30,7 @@
                 </span>
                 <small *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required','password')"
                     class="text-red-500">password required</small>
-                <small *ngIf="loginErrorMessage === 'wrong_password'" class="text-red-500">Incorrect password</small>
+                <small *ngIf="loginErrorMessage === 'wrong_password'" class="text-red-500">Incorrect email or password</small>
                 <small *ngIf="loginErrorMessage === 'server_down'" class="text-red-500">Could not reach server</small>
             </div>
             <button type="submit"
